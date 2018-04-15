@@ -142,11 +142,11 @@ EtherFairy.Layout = CLASS((cls) => {
 								padding : 10,
 								fontSize : 15
 							},
-							c : MSG('LAYOUT_LOGIN_BUTTON')
+							c : MSG('LAYOUT_START_BUTTON')
 						})],
 						on : {
 							tap : () => {
-								EtherFairy.GO('login');
+								EtherFairy.GO('start');
 								menuLayout.hideLeftMenu();
 							}
 						}

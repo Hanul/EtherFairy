@@ -23,8 +23,8 @@ EtherFairy.MAIN = METHOD({
 			LAYOUT_HOME_BUTTON : {
 				ko : '처음으로'
 			},
-			LAYOUT_LOGIN_BUTTON : {
-				ko : '로그인'
+			LAYOUT_START_BUTTON : {
+				ko : '시작하기'
 			},
 			
 			INTRO_TITLE : {
@@ -127,14 +127,17 @@ EtherFairy.MAIN = METHOD({
 				ko : 'Ether Fairy의 개발자는 심영재이며, 6년차 모바일 게임 개발사 BTNcafe를 운영하고 있다. BTNcafe의 게임들을 모두 직접 개발하였으며, 이더리움 네트워크에 큰 관심을 가지고 있고 게임에 접목시키기 위한 다양한 방법을 모색하고 있다. Ether Fairy는 그러한 연구의 첫 결과물이다.'
 			},
 			
-			LOGIN_TITLE : {
-				ko : 'Ether Fairy 로그인'
+			START_TITLE : {
+				ko : 'Ether Fairy 시작하기'
 			},
-			LOGIN_DESCRIPTION : {
+			START_DESCRIPTION : {
 				ko : '메타마스크를 이용해 로그인합니다.'
 			},
-			LOGIN_BUTTON : {
-				ko : '로그인'
+			START_BUTTON : {
+				ko : '시작하기'
+			},
+			PLEASE_UNLOCK_METAMASK : {
+				ko : '메타마스크가 잠겨있습니다. 메타마스크에 로그인해주시기 바랍니다.'
 			},
 			PLEASE_INSTALL_METAMASK : {
 				ko : '메타마스크를 설치해주시기 바랍니다.'
@@ -165,8 +168,8 @@ EtherFairy.MAIN = METHOD({
 		});
 		
 		EtherFairy.MATCH_VIEW({
-			uri : 'login',
-			target : EtherFairy.Login
+			uri : 'start',
+			target : EtherFairy.Start
 		});
 	}
 });

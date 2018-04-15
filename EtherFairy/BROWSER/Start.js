@@ -1,4 +1,4 @@
-EtherFairy.Login = CLASS({
+EtherFairy.Start = CLASS({
 	
 	preset : () => {
 		return VIEW;
@@ -20,19 +20,19 @@ EtherFairy.Login = CLASS({
 					color : '#FFEA4F',
 					textShadow : '0 0 20px #000000'
 				},
-				c : MSG('LOGIN_TITLE')
+				c : MSG('START_TITLE')
 			})
 			
 			]
 		}));
 		
 		// 메타마스크가 설치되어 있는 경우
-		if (typeof web3 !== 'undefined') {
+		if (EtherFairy.WalletManager.checkIsEnable() === true) {
 			content.append(P({
 				style : {
 					marginTop : 20
 				},
-				c : MSG('LOGIN_DESCRIPTION')
+				c : MSG('START_DESCRIPTION')
 			}));
 			
 			content.append(Yogurt.Button({
@@ -40,10 +40,25 @@ EtherFairy.Login = CLASS({
 					marginTop : 20,
 					border : 'none'
 				},
-				title : MSG('LOGIN_BUTTON')
+				title : MSG('START_BUTTON'),
+				on : {
+					tap : () => {
+						
+						if (EtherFairy.WalletManager.checkIsLocked() === true) {
+							Yogurt.Alert({
+								msg : MSG('PLEASE_UNLOCK_METAMASK')
+							});
+						}
+						
+						else {
+							
+						}
+					}
+				}
 			}));
 		}
 		
+		// 메타마스크가 없는 경우 설치 경로 안내
 		else {
 			content.append(P({
 				style : {

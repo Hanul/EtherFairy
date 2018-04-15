@@ -14,7 +14,9 @@ BOOT({
 		Yogurt : {
 			toolbarColor : '#222',
 			buttonColor : '#222',
-			buttonMouseoverColor : '#eee'
+			buttonTitleColor : '#eee',
+			buttonMouseoverColor : '#444',
+			buttonMouseoverTitleColor : '#eee'
 		}
 	},
 	
