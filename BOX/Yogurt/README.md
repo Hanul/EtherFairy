@@ -6,27 +6,26 @@ Yogurt는 [UPPERCASE](http://uppercase.io) 기반 UI 프레임워크입니다.
 ## 설치하기
 프로젝트의 `DEPENDENCY` 파일에 `Hanul/Yogurt`를 추가합니다.
 
-## 설정
+## 테마 설정
+프로젝트의 BROWSER 폴더에 `Yogurt.Theme.js`파일을 생성합니다.
 ```javascript
-BROWSER_CONFIG : {
-	Yogurt : {
-		wrapperStyle : 
-		buttonColor : 
-		buttonTitleColor : 
-		buttonMouseoverColor : 
-		buttonMouseoverTitleColor : 
-		toolbarBackground : 
-		toolbarBackgroundImage : 
-		toolbarColor : 
-		toolbarTextColor : 
-		bottomBarColor : 
-		bottomBarTextColor : 
-		bottomBarHeight : 
-		menuLayoutMenuWidth : 
-		menuLayoutHideMenuWinWidth : 
-		menuLayoutMenuBackgroundColor : 
-	}
-}
+Yogurt.Theme = {
+	wrapperStyle : ,
+	buttonColor : ,
+	buttonTitleColor : ,
+	buttonMouseoverColor : ,
+	buttonMouseoverTitleColor : ,
+	toolbarBackground : ,
+	toolbarBackgroundImage : ,
+	toolbarColor : ,
+	toolbarTextColor : ,
+	bottomBarColor : ,
+	bottomBarTextColor : ,
+	bottomBarHeight : ,
+	menuLayoutMenuWidth : ,
+	menuLayoutHideMenuWinWidth : ,
+	menuLayoutMenuBackgroundColor : 
+};
 ```
 
 ## Wrapper

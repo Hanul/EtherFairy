@@ -154,7 +154,7 @@ EtherFairy.Intro = CLASS({
 					margin : 'auto',
 					marginTop : 20
 				},
-				src : EtherFairy.R('property-sample.jpg')
+				src : EtherFairy.R('properties.png')
 			}),
 			
 			H2({

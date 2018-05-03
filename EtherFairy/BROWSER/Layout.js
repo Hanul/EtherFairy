@@ -28,10 +28,10 @@ EtherFairy.Layout = CLASS((cls) => {
 					contentStyle : {
 						onDisplayResize : (width, height) => {
 							
-							if (width > Yogurt.MenuLayout.getHideMenuWinWidth()) {
+							if (width > Yogurt.Theme.menuLayoutHideMenuWinWidth) {
 								return {
-									left : Yogurt.MenuLayout.getMenuWidth(),
-									width : BODY.getWidth() - Yogurt.MenuLayout.getMenuWidth() * 2
+									left : Yogurt.Theme.menuLayoutMenuWidth,
+									width : BODY.getWidth() - Yogurt.Theme.menuLayoutMenuWidth * 2
 								};
 							} else {
 								return {
@@ -49,7 +49,7 @@ EtherFairy.Layout = CLASS((cls) => {
 							color : '#999',
 							onDisplayResize : (width, height) => {
 	
-								if (width > Yogurt.MenuLayout.getHideMenuWinWidth()) {
+								if (width > Yogurt.Theme.menuLayoutHideMenuWinWidth) {
 									return {
 										display : 'none'
 									};
@@ -75,7 +75,7 @@ EtherFairy.Layout = CLASS((cls) => {
 							color : '#999',
 							onDisplayResize : (width, height) => {
 	
-								if (width > Yogurt.MenuLayout.getHideMenuWinWidth()) {
+								if (width > Yogurt.Theme.menuLayoutHideMenuWinWidth) {
 									return {
 										display : 'none'
 									};
