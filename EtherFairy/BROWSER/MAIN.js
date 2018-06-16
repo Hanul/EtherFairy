@@ -44,6 +44,30 @@ EtherFairy.MAIN = METHOD({
 				uri : 'start',
 				target : EtherFairy.Start
 			});
+			
+			// 디자이너로 시작하기 화면
+			EtherFairy.MATCH_VIEW({
+				uri : 'startdesigner',
+				target : EtherFairy.StartDesigner
+			});
+			
+			// 소유주 홈
+			EtherFairy.MATCH_VIEW({
+				uri : 'owner',
+				target : EtherFairy.OwnerHome
+			});
+			
+			// 디자이너 홈
+			EtherFairy.MATCH_VIEW({
+				uri : 'designer',
+				target : EtherFairy.DesignerHome
+			});
+			
+			// 페어리 원형 디자인 폼
+			EtherFairy.MATCH_VIEW({
+				uri : 'designfairy',
+				target : EtherFairy.DesignFairy
+			});
 		});
 	}
 });

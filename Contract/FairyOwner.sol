@@ -1,4 +1,4 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.6;
 
 // 요정 소유자 정보
 // 이름을 저장합니다.

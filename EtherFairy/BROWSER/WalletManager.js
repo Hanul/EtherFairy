@@ -20,8 +20,8 @@ EtherFairy.WalletManager = OBJECT({
 			return web3.eth.accounts.length === 0
 		};
 		
-		// 지갑 ID를 가져옵니다.
-		let getWalletId = self.getWalletId = () => {
+		// 지갑 주소를 가져옵니다.
+		let getWalletAddress = self.getWalletAddress = () => {
 			if (checkIsEnable() === true && checkIsLocked() !== true) {
 				return web3.eth.accounts[0];
 			}

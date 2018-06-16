@@ -1,4 +1,4 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.6;
 
 // Fairy Root 정보
 // 신규 요정을 생성합니다.
