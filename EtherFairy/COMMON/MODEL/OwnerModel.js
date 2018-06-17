@@ -14,11 +14,27 @@ EtherFairy.OwnerModel = OBJECT({
 				size : 42
 			},
 			
-			name : {
+			nickname : {
 				notEmpty : true,
 				size : {
 					min : 1,
 					max : 20
+				}
+			},
+
+			isAgreedTerms : {
+				notEmpty : true,
+				equal : true
+			},
+
+			isAgreedPrivacy : {
+				notEmpty : true,
+				equal : true
+			},
+			
+			language : {
+				size : {
+					max : 5
 				}
 			}
 		};

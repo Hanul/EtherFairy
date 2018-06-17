@@ -86,7 +86,12 @@ EtherFairy.Start = CLASS({
 						marginTop : 20,
 						border : 'none'
 					},
-					title : MSG('START_BUTTON')
+					title : MSG('START_BUTTON'),
+					on : {
+						tap : () => {
+							EtherFairy.GO('startdesigner');
+						}
+					}
 				})]
 			}),
 			
@@ -128,11 +133,11 @@ EtherFairy.Start = CLASS({
 								
 								// 존재하지 않으면, 생성
 								else {
-									Yogurt.Prompt(MSG('PLEASE_ENTER_OWNER_NAME'), (value) => {
+									Yogurt.Prompt(MSG('PLEASE_ENTER_OWNER_NICKNAME'), (value) => {
 										
 										EtherFairy.OwnerModel.create({
 											id : EtherFairy.WalletManager.getWalletAddress(),
-											name : value
+											nickname : value
 										}, () => {
 											EtherFairy.GO('owner');
 										});

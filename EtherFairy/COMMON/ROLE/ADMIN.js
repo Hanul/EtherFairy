@@ -1,0 +1,1 @@
+EtherFairy('ROLE').ADMIN = 'Admin';
