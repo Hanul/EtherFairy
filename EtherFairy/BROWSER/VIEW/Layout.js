@@ -289,6 +289,20 @@ EtherFairy.Layout = CLASS((cls) => {
 									backgroundColor : '#333'
 								},
 								c : MSG('MANAGE_SALES')
+							}), DIV({
+								style : {
+									borderTop : '1px solid #222',
+									padding : 10,
+									paddingLeft : 15,
+									fontSize : 15,
+									backgroundColor : '#333'
+								},
+								c : MSG('LOGOUT'),
+								on : {
+									tap : () => {
+										EtherFairy.DesignerModel.logout();
+									}
+								}
 							})]
 						}));
 						
