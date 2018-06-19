@@ -36,19 +36,31 @@ EtherFairy.MAIN = METHOD({
 			});
 			
 			EtherFairy.MATCH_VIEW({
-				uri : 'game',
-				target : EtherFairy.Game
+				uri : 'start',
+				target : EtherFairy.Start
 			});
 			
 			EtherFairy.MATCH_VIEW({
-				uri : 'start',
-				target : EtherFairy.Start
+				uri : 'ranking',
+				target : EtherFairy.Ranking
 			});
 			
 			// 디자이너로 시작하기 화면
 			EtherFairy.MATCH_VIEW({
 				uri : 'startdesigner',
 				target : EtherFairy.StartDesigner
+			});
+			
+			// 디자이너로 가입하기 화면
+			EtherFairy.MATCH_VIEW({
+				uri : 'joindesigner',
+				target : EtherFairy.JoinDesigner
+			});
+			
+			// 소유주로 가입하기 화면
+			EtherFairy.MATCH_VIEW({
+				uri : 'joinowner',
+				target : EtherFairy.JoinOwner
 			});
 			
 			// 소유주 홈

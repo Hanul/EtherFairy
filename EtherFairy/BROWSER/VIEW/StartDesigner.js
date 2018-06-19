@@ -31,33 +31,13 @@ EtherFairy.StartDesigner = CLASS({
 							return MSG('NOT_VALID_USERNAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						},
 						username : MSG('NOT_VALID_USERNAME_FORMAT'),
-						existed : MSG('NOT_VALID_USERNAME_EXISTED'),
-						notAllowed : MSG('NOT_VALID_USERNAME_NOT_ALLOWED')
+						login : MSG('OAUTH_ERROR')
 					},
 					password : {
 						notEmpty : MSG('NOT_VALID_PASSWORD_NOT_EMPTY'),
 						size : (validParams) => {
 							return MSG('NOT_VALID_PASSWORD_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						}
-					},
-					email : {
-						notEmpty : MSG('NOT_VALID_EMAIL_NOT_EMPTY'),
-						size : (validParams) => {
-							return MSG('NOT_VALID_EMAIL_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
-						},
-						email : MSG('NOT_VALID_EMAIL_FORMAT')
-					},
-					nickname : {
-						notEmpty : MSG('NOT_VALID_NICKNAME_NOT_EMPTY'),
-						size : (validParams) => {
-							return MSG('NOT_VALID_NICKNAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
-						}
-					},
-					isAgreedTerms : {
-						equal : MSG('NOT_VALID_AGREED_TERMS')
-					},
-					isAgreedPrivacy : {
-						equal : MSG('NOT_VALID_AGREED_PRIVACY')
 					}
 				},
 				errorMsgStyle : {
@@ -77,66 +57,16 @@ EtherFairy.StartDesigner = CLASS({
 					style : {
 						marginTop : 10
 					},
-					name : 'nickname',
-					placeholder : MSG('NICKNAME')
-				}),
-				
-				Yogurt.Input({
-					style : {
-						marginTop : 10
-					},
 					name : 'password',
 					type : 'password',
 					placeholder : MSG('PASSWORD')
-				}),
-				
-				Yogurt.Input({
-					style : {
-						marginTop : 10
-					},
-					name : 'email',
-					placeholder : MSG('EMAIL_FOR_PASSWORD')
-				}),
-				
-				DIV({
-					style : {
-						marginTop : 10
-					},
-					c : [Yogurt.Button({
-						href : INFO.getLang() === 'ko' ? EtherFairy.R('terms-kr.html') : EtherFairy.R('terms.html'),
-						target : '_blank',
-						title : MSG('VIEW_TERMS')
-					}), UUI.FULL_CHECKBOX({
-						style : {
-							marginTop : 10
-						},
-						name : 'isAgreedTerms',
-						label : MSG('AGREE_TERMS')
-					})]
-				}),
-				
-				DIV({
-					style : {
-						marginTop : 10
-					},
-					c : [Yogurt.Button({
-						href : INFO.getLang() === 'ko' ? 'https://btncafe.com/R/privacy-kr.html' : (INFO.getLang().substring(0, 2) === 'zh' ? 'https://btncafe.com/R/privacy-zh.html' : 'https://btncafe.com/R/privacy.html'),
-						target : '_blank',
-						title : MSG('VIEW_PRIVACY')
-					}), UUI.FULL_CHECKBOX({
-						style : {
-							marginTop : 10
-						},
-						name : 'isAgreedPrivacy',
-						label : MSG('AGREE_PRIVACY')
-					})]
 				}),
 				
 				Yogurt.Submit({
 					style : {
 						marginTop : 10
 					},
-					value : MSG('JOIN_DONE')
+					value : MSG('LOGIN_DESIGNER')
 				})
 				],
 				on : {
@@ -144,10 +74,12 @@ EtherFairy.StartDesigner = CLASS({
 						
 						let data = form.getData();
 						
-						EtherFairy.DesignerModel.create(data, {
+						data.language = INFO.getLang();
+						
+						EtherFairy.DesignerModel.login(data, {
 							notValid : form.showErrors,
-							success : (r) => {
-								console.log(r);
+							success : (userData) => {
+								EtherFairy.REFRESH('');
 							}
 						});
 					}

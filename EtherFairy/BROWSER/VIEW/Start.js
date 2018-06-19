@@ -128,11 +128,13 @@ EtherFairy.Start = CLASS({
 							EtherFairy.OwnerModel.checkExists(EtherFairy.WalletManager.getWalletAddress(), (exists) => {
 								
 								if (exists === true) {
-									EtherFairy.GO('owner');
+									EtherFairy.REFRESH('owner');
 								}
 								
 								// 존재하지 않으면, 생성
 								else {
+									EtherFairy.GO('joinowner');
+									/*
 									Yogurt.Prompt(MSG('PLEASE_ENTER_OWNER_NICKNAME'), (value) => {
 										
 										EtherFairy.OwnerModel.create({
@@ -142,6 +144,7 @@ EtherFairy.Start = CLASS({
 											EtherFairy.GO('owner');
 										});
 									});
+									*/
 								}
 							});
 						}

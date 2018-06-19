@@ -15,6 +15,9 @@ EtherFairy.Layout = CLASS((cls) => {
 		
 		init : (inner, self) => {
 			
+			let leftMenu;
+			let startButton;
+			
 			let menuLayout = Yogurt.MenuLayout({
 				
 				style : {
@@ -111,7 +114,7 @@ EtherFairy.Layout = CLASS((cls) => {
 					})
 				}),
 	
-				leftMenu : DIV({
+				leftMenu : leftMenu = DIV({
 					c : [DIV({
 						style : {
 							width : '100%',
@@ -131,7 +134,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								menuLayout.hideLeftMenu();
 							}
 						}
-					}), DIV({
+					}), startButton = DIV({
 						style : {
 							width : '100%',
 							borderBottom : '1px solid #333',
@@ -147,6 +150,25 @@ EtherFairy.Layout = CLASS((cls) => {
 						on : {
 							tap : () => {
 								EtherFairy.GO('start');
+								menuLayout.hideLeftMenu();
+							}
+						}
+					}), DIV({
+						style : {
+							width : '100%',
+							borderBottom : '1px solid #333',
+							cursor : 'pointer'
+						},
+						c : [DIV({
+							style : {
+								padding : 10,
+								fontSize : 15
+							},
+							c : MSG('LAYOUT_RANKING_BUTTON')
+						})],
+						on : {
+							tap : () => {
+								EtherFairy.GO('ranking');
 								menuLayout.hideLeftMenu();
 							}
 						}
@@ -184,6 +206,99 @@ EtherFairy.Layout = CLASS((cls) => {
 					})]
 				})]
 			}).appendTo(BODY);
+			
+			NEXT([
+			(next) => {
+				
+				if (EtherFairy.WalletManager.checkIsLocked() !== true) {
+					
+					EtherFairy.OwnerModel.get(EtherFairy.WalletManager.getWalletAddress(), {
+						
+						notExists : () => {
+							next();
+						},
+						
+						success : () => {
+							
+							leftMenu.append(DIV({
+								style : {
+									width : '100%',
+									borderBottom : '1px solid #444',
+									cursor : 'pointer'
+								},
+								c : [DIV({
+									style : {
+										padding : 10,
+										fontSize : 15
+									},
+									c : MSG('LAYOUT_OWNER_MENU')
+								}), DIV({
+									style : {
+										padding : 10,
+										paddingLeft : 15,
+										fontSize : 15,
+										backgroundColor : '#333'
+									},
+									c : MSG('MANAGE_FAIRY')
+								})]
+							}));
+							
+							next(true);
+						}
+					});
+				}
+				
+				else {
+					next();
+				}
+			},
+			
+			() => {
+				return (isOwnerSigned) => {
+					
+					EtherFairy.DesignerModel.checkSigned((signedUserData) => {
+						
+						console.log(signedUserData);
+						
+						leftMenu.append(DIV({
+							style : {
+								width : '100%',
+								borderBottom : '1px solid #444',
+								cursor : 'pointer'
+							},
+							c : [DIV({
+								style : {
+									padding : 10,
+									fontSize : 15
+								},
+								c : MSG('LAYOUT_DESIGNER_MENU')
+							}), DIV({
+								style : {
+									padding : 10,
+									paddingLeft : 15,
+									fontSize : 15,
+									backgroundColor : '#333'
+								},
+								c : MSG('MANAGE_FAIRY_ORIGIN')
+							}), DIV({
+								style : {
+									borderTop : '1px solid #222',
+									padding : 10,
+									paddingLeft : 15,
+									fontSize : 15,
+									backgroundColor : '#333'
+								},
+								c : MSG('MANAGE_SALES')
+							})]
+						}));
+						
+						// 두 종류 모두 로그인한 경우에는 시작하기 버튼 제거
+						if (isOwnerSigned === true) {
+							startButton.remove();
+						}
+					});
+				};
+			}]);
 			
 			inner.on('close', () => {
 				menuLayout.remove();
