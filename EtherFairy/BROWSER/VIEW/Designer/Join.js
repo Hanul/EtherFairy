@@ -1,4 +1,4 @@
-EtherFairy.JoinDesigner = CLASS({
+EtherFairy('Designer').Join = CLASS({
 	
 	preset : () => {
 		return VIEW;

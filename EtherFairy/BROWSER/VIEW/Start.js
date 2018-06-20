@@ -89,7 +89,7 @@ EtherFairy.Start = CLASS({
 					title : MSG('START_BUTTON'),
 					on : {
 						tap : () => {
-							EtherFairy.GO('startdesigner');
+							EtherFairy.GO('designer/start');
 						}
 					}
 				})]
@@ -133,7 +133,7 @@ EtherFairy.Start = CLASS({
 								
 								// 존재하지 않으면, 생성
 								else {
-									EtherFairy.GO('joinowner');
+									EtherFairy.GO('owner/join');
 									/*
 									Yogurt.Prompt(MSG('PLEASE_ENTER_OWNER_NICKNAME'), (value) => {
 										

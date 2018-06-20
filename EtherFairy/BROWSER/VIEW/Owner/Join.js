@@ -1,4 +1,4 @@
-EtherFairy.JoinOwner = CLASS({
+EtherFairy('Owner').Join = CLASS({
 	
 	preset : () => {
 		return VIEW;

@@ -279,7 +279,12 @@ EtherFairy.Layout = CLASS((cls) => {
 									fontSize : 15,
 									backgroundColor : '#333'
 								},
-								c : MSG('MANAGE_FAIRY_ORIGIN')
+								c : MSG('MANAGE_FAIRY_ORIGIN'),
+								on : {
+									tap : () => {
+										EtherFairy.GO('designer/managefairyorigin');
+									}
+								}
 							}), DIV({
 								style : {
 									borderTop : '1px solid #222',
@@ -288,7 +293,12 @@ EtherFairy.Layout = CLASS((cls) => {
 									fontSize : 15,
 									backgroundColor : '#333'
 								},
-								c : MSG('MANAGE_SALES')
+								c : MSG('MANAGE_SALES'),
+								on : {
+									tap : () => {
+										EtherFairy.GO('designer/managesales');
+									}
+								}
 							}), DIV({
 								style : {
 									borderTop : '1px solid #222',

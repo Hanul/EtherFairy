@@ -1,4 +1,4 @@
-EtherFairy.StartDesigner = CLASS({
+EtherFairy('Designer').Start = CLASS({
 	
 	preset : () => {
 		return VIEW;
@@ -67,6 +67,16 @@ EtherFairy.StartDesigner = CLASS({
 						marginTop : 10
 					},
 					value : MSG('LOGIN_DESIGNER')
+				}),
+				
+				Yogurt.Button({
+					style : {
+						marginTop : 10
+					},
+					value : MSG('JOIN_DESIGNER'),
+					on : () => {
+						EtherFairy.GO('designer/join');
+					}
 				})
 				],
 				on : {

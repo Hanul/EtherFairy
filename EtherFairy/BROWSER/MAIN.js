@@ -20,6 +20,8 @@ EtherFairy.MAIN = METHOD({
 		// 텍스트 번역을 위한 데이터
 		MSG.loadCSV(EtherFairy.R('text.csv'), () => {
 			
+			TITLE(MSG('TITLE'));
+			
 			EtherFairy.MATCH_VIEW({
 				uri : '**',
 				target : EtherFairy.Layout
@@ -45,28 +47,28 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Ranking
 			});
 			
-			// 디자이너로 시작하기 화면
-			EtherFairy.MATCH_VIEW({
-				uri : 'startdesigner',
-				target : EtherFairy.StartDesigner
-			});
-			
-			// 디자이너로 가입하기 화면
-			EtherFairy.MATCH_VIEW({
-				uri : 'joindesigner',
-				target : EtherFairy.JoinDesigner
-			});
-			
 			// 소유주로 가입하기 화면
 			EtherFairy.MATCH_VIEW({
-				uri : 'joinowner',
-				target : EtherFairy.JoinOwner
+				uri : 'owner/join',
+				target : EtherFairy.Owner.Join
 			});
 			
 			// 소유주 홈
 			EtherFairy.MATCH_VIEW({
 				uri : 'owner',
 				target : EtherFairy.OwnerHome
+			});
+			
+			// 디자이너로 시작하기 화면
+			EtherFairy.MATCH_VIEW({
+				uri : 'designer/start',
+				target : EtherFairy.Designer.Start
+			});
+			
+			// 디자이너로 가입하기 화면
+			EtherFairy.MATCH_VIEW({
+				uri : 'designer/join',
+				target : EtherFairy.Designer.Join
 			});
 			
 			// 디자이너 홈
@@ -77,8 +79,14 @@ EtherFairy.MAIN = METHOD({
 			
 			// 페어리 원형 디자인 폼
 			EtherFairy.MATCH_VIEW({
-				uri : 'designfairy',
-				target : EtherFairy.DesignFairy
+				uri : 'designer/designfairy',
+				target : EtherFairy.Designer.DesignFairy
+			});
+			
+			// 페어리 원형 관리 폼
+			EtherFairy.MATCH_VIEW({
+				uri : 'designer/managefairyorigin',
+				target : EtherFairy.Designer.ManageFairyOrigin
 			});
 		});
 	}

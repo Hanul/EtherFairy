@@ -13,57 +13,62 @@ EtherFairy.FairyOriginModel = OBJECT({
 				integer : true
 			},
 			
-			hpLevel : {
+			fairyRootPercent : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			attackLevel : {
+			hpPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			defenseLevel : {
+			attackPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			agilityLevel : {
+			defensePointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			dexterityLevel : {
+			agilityPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			fireLevel : {
+			dexterityPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			waterLevel : {
+			firePointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			windLevel : {
+			waterPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			earthLevel : {
+			windPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			lightLevel : {
+			earthPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			darkLevel : {
+			lightPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			darkPointPerLevel : {
 				notEmpty : true,
 				integer : true
 			}
@@ -72,21 +77,7 @@ EtherFairy.FairyOriginModel = OBJECT({
 		return {
 			name : 'FairyOrigin',
 			initData : {
-				
-				point : 0,
-				
-				hpLevel : 5,
-				attackLevel : 5,
-				defenseLevel : 5,
-				agilityLevel : 0,
-				dexterityLevel : 0,
-				
-				fireLevel : 0,
-				waterLevel : 0,
-				windLevel : 0,
-				earthLevel : 0,
-				lightLevel : 0,
-				darkLevel : 0
+				point : 0
 			},
 			methodConfig : {
 				create : {
