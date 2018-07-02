@@ -19,7 +19,6 @@ EtherFairy.Start = CLASS({
 					fontSize : 30,
 					fontWeight : 'bold',
 					color : '#FFEA4F',
-					textShadow : '0 0 20px #000000',
 					marginBottom : 20
 				},
 				c : MSG('START_TITLE')
@@ -42,8 +41,7 @@ EtherFairy.Start = CLASS({
 							textAlign : 'center',
 							fontSize : 20,
 							fontWeight : 'bold',
-							color : '#FFEA4F',
-							textShadow : '0 0 20px #000000'
+							color : '#FFEA4F'
 						},
 						c : MSG('START_OWNER')
 					}), P({
@@ -71,8 +69,7 @@ EtherFairy.Start = CLASS({
 							textAlign : 'center',
 							fontSize : 20,
 							fontWeight : 'bold',
-							color : '#FFEA4F',
-							textShadow : '0 0 20px #000000'
+							color : '#FFEA4F'
 						},
 						c : MSG('START_DESIGNER')
 					}), P({

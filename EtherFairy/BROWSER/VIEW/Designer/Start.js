@@ -17,7 +17,6 @@ EtherFairy('Designer').Start = CLASS({
 					fontSize : 30,
 					fontWeight : 'bold',
 					color : '#FFEA4F',
-					textShadow : '0 0 20px #000000',
 					marginBottom : 20
 				},
 				c : MSG('START_DESIGNER')

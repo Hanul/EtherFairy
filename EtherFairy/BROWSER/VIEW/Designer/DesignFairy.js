@@ -10,7 +10,9 @@ EtherFairy('Designer').DesignFairy = CLASS({
 			fail : () => {
 				EtherFairy.GO('designer/start');
 			},
-			success : (signedUserData) => {
+			success : (signedDesignerData) => {
+				
+				let imageFileId;
 				
 				let availablePoints = 5;
 				
@@ -54,7 +56,6 @@ EtherFairy('Designer').DesignFairy = CLASS({
 							fontSize : 30,
 							fontWeight : 'bold',
 							color : '#FFEA4F',
-							textShadow : '0 0 20px #000000',
 							marginBottom : 20
 						},
 						c : MSG('DESIGN_FAIRY')
@@ -86,7 +87,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									src : EtherFairy.RF(fileInfo.id)
 								}));
 								
-								//TODO: 이미지 ID 저장해야함
+								imageFileId = fileInfo.id;
 							}
 						}),]
 					}),
@@ -97,12 +98,6 @@ EtherFairy('Designer').DesignFairy = CLASS({
 							marginLeft : 20,
 							flt : 'left'
 						},
-						errorMsgs : {
-						},
-						errorMsgStyle : {
-							marginTop : 5,
-							color : 'red'
-						},
 						c : [
 						H2({
 							style : {
@@ -112,6 +107,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 						}),
 						
 						UUI.FULL_INPUT({
+							name : 'name',
 							placeholder : MSG('FAIRY_ORIGIN_NAME')
 						}),
 						
@@ -176,8 +172,46 @@ EtherFairy('Designer').DesignFairy = CLASS({
 								
 								let data = form.getData();
 								
-								console.log(data);
-								//TODO:
+								data.designerId = signedDesignerData.id;
+								data.imageFileId = imageFileId;
+								
+								EtherFairy.FairyOriginModel.create(data, {
+									notValid : (validErrors) => {
+										
+										// 이름 검사 실패
+										if (validErrors.name !== undefined) {
+											let type = validErrors.name.type;
+											let validParams = validErrors.name.validParams;
+											
+											if (type === 'notEmpty') {
+												Yogurt.Alert({
+													msg : MSG('NOT_VALID_NAME_NOT_EMPTY')
+												});
+											}
+											
+											else if (type === 'size') {
+												Yogurt.Alert({
+													msg : MSG('NOT_VALID_NAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max)
+												});
+											}
+										}
+										
+										// 이미지 등록 실패
+										else if (validErrors.imageFileId !== undefined) {
+											let type = validErrors.imageFileId.type;
+											let validParams = validErrors.imageFileId.validParams;
+											
+											if (type === 'notEmpty') {
+												Yogurt.Alert({
+													msg : MSG('NOT_VALID_IMAGE_FILE_ID_NOT_EMPTY')
+												});
+											}
+										}
+									},
+									success : (savedData) => {
+										FairyOrigin.GO('fairyorigin/' + savedData.id);
+									}
+								});
 							}
 						}
 					}),

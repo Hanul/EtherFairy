@@ -12,14 +12,14 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 
 			let room = self.getRoom();
 			
-			let signedUserData;
+			let signedDesignerData;
 			
 			let rememberMeStore = EtherFairy.STORE('rememberMeStore');
 			
-			let setSignedUserData = self.setSignedUserData = (_signedUserData) => {
-				//REQUIRED: signedUserData
+			let setSignedDesignerData = self.setSignedDesignerData = (_signedDesignerData) => {
+				//REQUIRED: signedDesignerData
 				
-				signedUserData = _signedUserData;
+				signedDesignerData = _signedDesignerData;
 			};
 
 			let login = self.login = (data, callbackOrHandlers) => {
@@ -67,7 +67,7 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 						
 						else if (savedData !== undefined) {
 							
-							signedUserData = savedData;
+							signedDesignerData = savedData;
 							
 							rememberMeStore.save({
 								name : 'key',
@@ -75,17 +75,6 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 							});
 							
 							callback(savedData);
-							
-							// 푸시 키의 주인을 변경합니다.
-							if (BROWSER_CONFIG.__PUSH_KEY !== undefined) {
-								POST({
-									uri : 'savepushkeyuser',
-									params : {
-										pushKey : BROWSER_CONFIG.__PUSH_KEY,
-										userId : signedUserData.id
-									}
-								});
-							}
 						}
 					});
 				}
@@ -102,7 +91,7 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 						
 						rememberMeStore.remove('key');
 						
-						signedUserData = undefined;
+						signedDesignerData = undefined;
 						
 						EtherFairy.REFRESH('');
 					});
@@ -130,8 +119,8 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 					callback = callbackOrHandlers.success;
 				}
 				
-				if (signedUserData !== undefined) {
-					callback(signedUserData);
+				if (signedDesignerData !== undefined) {
+					callback(signedDesignerData);
 				}
 				
 				else if (rememberMeStore.get('key') !== undefined) {
@@ -139,9 +128,9 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 					room.send({
 						methodName : 'resign',
 						data : rememberMeStore.get('key')
-					}, (_signedUserData) => {
+					}, (_signedDesignerData) => {
 						
-						if (_signedUserData === undefined) {
+						if (_signedDesignerData === undefined) {
 							
 							if (nextURI !== undefined) {
 								DELAY(() => {
@@ -160,18 +149,7 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 						}
 						
 						else {
-							callback(signedUserData = _signedUserData);
-							
-							// 푸시 키의 주인을 변경합니다.
-							if (BROWSER_CONFIG.__PUSH_KEY !== undefined) {
-								POST({
-									uri : 'savepushkeyuser',
-									params : {
-										pushKey : BROWSER_CONFIG.__PUSH_KEY,
-										userId : signedUserData.id
-									}
-								});
-							}
+							callback(signedDesignerData = _signedDesignerData);
 						}
 					});
 				}

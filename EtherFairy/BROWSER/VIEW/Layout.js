@@ -256,9 +256,7 @@ EtherFairy.Layout = CLASS((cls) => {
 			() => {
 				return (isOwnerSigned) => {
 					
-					EtherFairy.DesignerModel.checkSigned((signedUserData) => {
-						
-						console.log(signedUserData);
+					EtherFairy.DesignerModel.checkSigned((signedDesignerData) => {
 						
 						leftMenu.append(DIV({
 							style : {

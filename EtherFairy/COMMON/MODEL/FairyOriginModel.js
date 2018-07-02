@@ -8,9 +8,22 @@ EtherFairy.FairyOriginModel = OBJECT({
 
 		let validDataSet = {
 			
-			point : {
+			designerId : {
 				notEmpty : true,
-				integer : true
+				id : true
+			},
+			
+			name : {
+				notEmpty : true,
+				size : {
+					min : 1,
+					max : 20
+				}
+			},
+			
+			imageFileId : {
+				notEmpty : true,
+				id : true
 			},
 			
 			fairyRootPercent : {
@@ -76,15 +89,14 @@ EtherFairy.FairyOriginModel = OBJECT({
 		
 		return {
 			name : 'FairyOrigin',
-			initData : {
-				point : 0
-			},
 			methodConfig : {
 				create : {
-					valid : VALID(validDataSet)
+					valid : VALID(validDataSet),
+					authKey : 'designerId'
 				},
 				update : {
-					valid : VALID(validDataSet)
+					valid : VALID(validDataSet),
+					authKey : 'designerId'
 				},
 				remove : false
 			}

@@ -10,7 +10,9 @@ EtherFairy('Designer').ManageFairyOrigin = CLASS({
 			fail : () => {
 				EtherFairy.GO('designer/start');
 			},
-			success : (signedUserData) => {
+			success : (signedDesignerData) => {
+				
+				let fairyOriginList;
 				
 				EtherFairy.Layout.setContent(DIV({
 					style : {
@@ -29,6 +31,8 @@ EtherFairy('Designer').ManageFairyOrigin = CLASS({
 						c : MSG('MANAGE_FAIRY_ORIGIN')
 					}),
 					
+					fairyOriginList = DIV(),
+					
 					Yogurt.Button({
 						c : MSG('DESIGN_FAIRY'),
 						on : {
@@ -38,6 +42,26 @@ EtherFairy('Designer').ManageFairyOrigin = CLASS({
 						}
 					})]
 				}));
+				
+				EtherFairy.FairyOriginModel.find({
+					filter : {
+						designerId : signedDesignerData.id
+					},
+					isToFindAll : true
+				}, (fairyOriginDataSet) => {
+					
+					EACH(fairyOriginDataSet, (fairyOriginData) => {
+						
+						fairyOriginList.append(A({
+							c : fairyOriginData.name,
+							on : {
+								tap : () => {
+									EtherFairy.GO('fairyorigin/' + fairyOriginData.id);
+								}
+							}
+						}));
+					});
+				});
 			}
 		});
 	}
