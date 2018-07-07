@@ -202,7 +202,7 @@ EtherFairy.Layout = CLASS((cls) => {
 							color : '#999',
 							padding : '20px'
 						},
-						c : '© Fairy Root'
+						c : '© BTNcafe'
 					})]
 				})]
 			}).appendTo(BODY);
@@ -239,7 +239,43 @@ EtherFairy.Layout = CLASS((cls) => {
 										fontSize : 15,
 										backgroundColor : '#333'
 									},
-									c : MSG('MANAGE_FAIRY')
+									c : MSG('BUY_FAIRY'),
+									on : {
+										tap : () => {
+											EtherFairy.GO('owner/buyfairy');
+											menuLayout.hideLeftMenu();
+										}
+									}
+								}), DIV({
+									style : {
+										borderTop : '1px solid #222',
+										padding : 10,
+										paddingLeft : 15,
+										fontSize : 15,
+										backgroundColor : '#333'
+									},
+									c : MSG('TRADE_FAIRY'),
+									on : {
+										tap : () => {
+											EtherFairy.GO('owner/tradefairy');
+											menuLayout.hideLeftMenu();
+										}
+									}
+								}), DIV({
+									style : {
+										borderTop : '1px solid #222',
+										padding : 10,
+										paddingLeft : 15,
+										fontSize : 15,
+										backgroundColor : '#333'
+									},
+									c : MSG('MANAGE_FAIRY'),
+									on : {
+										tap : () => {
+											EtherFairy.GO('owner/managefairy');
+											menuLayout.hideLeftMenu();
+										}
+									}
 								})]
 							}));
 							

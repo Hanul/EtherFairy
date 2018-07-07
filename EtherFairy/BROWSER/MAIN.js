@@ -23,8 +23,8 @@ EtherFairy.MAIN = METHOD({
 			});
 			
 			EtherFairy.MATCH_VIEW({
-				uri : 'intro',
-				target : EtherFairy.Intro
+				uri : 'oldintro',
+				target : EtherFairy.OldIntro
 			});
 			
 			EtherFairy.MATCH_VIEW({
@@ -47,6 +47,24 @@ EtherFairy.MAIN = METHOD({
 			EtherFairy.MATCH_VIEW({
 				uri : 'owner',
 				target : EtherFairy.OwnerHome
+			});
+			
+			// 요정 구매
+			EtherFairy.MATCH_VIEW({
+				uri : 'owner/buyfairy',
+				target : EtherFairy.Owner.BuyFairy
+			});
+			
+			// 요정 관리
+			EtherFairy.MATCH_VIEW({
+				uri : 'owner/managefairy',
+				target : EtherFairy.Owner.ManageFairy
+			});
+			
+			// 요정 거래
+			EtherFairy.MATCH_VIEW({
+				uri : 'owner/tradefairy',
+				target : EtherFairy.Owner.TradeFairy
 			});
 			
 			// 디자이너로 시작하기 화면

@@ -12,6 +12,7 @@ EtherFairy.FairyOrigin = CLASS({
 			
 			EtherFairy.FairyOriginModel.get(fairyOriginId, (fairyOriginData) => {
 				
+				let ownerMenu;
 				EtherFairy.Layout.setContent(DIV({
 					style : {
 						padding : 10
@@ -28,10 +29,40 @@ EtherFairy.FairyOrigin = CLASS({
 						c : fairyOriginData.name
 					}),
 					
+					IMG({
+						style : {
+							width : 250
+						},
+						src : EtherFairy.RF(fairyOriginData.imageFileId)
+					}),
+					
 					P({
 						c : 'test'
-					})]
+					}),
+					
+					ownerMenu = DIV()]
 				}));
+				
+				// 소유주가 접속해 있으면 소유주 메뉴 추가
+				if (EtherFairy.WalletManager.checkIsLocked() !== true) {
+					EtherFairy.OwnerModel.get(EtherFairy.WalletManager.getWalletAddress(), {
+						notExists : () => {
+							// ignore.
+						},
+						success : () => {
+							
+							ownerMenu.append(Yogurt.Button({
+								c : MSG('BUY_FAIRY_BUTTON'),
+								on : {
+									tap : () => {
+										
+										//TODO:
+									}
+								}
+							}));
+						}
+					});
+				}
 			});
 		});
 	}

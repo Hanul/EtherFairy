@@ -1,4 +1,4 @@
-EtherFairy.Intro = CLASS({
+EtherFairy.OldIntro = CLASS({
 	
 	preset : () => {
 		return VIEW;

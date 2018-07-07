@@ -1,4 +1,4 @@
-EtherFairy.Home = CLASS({
+EtherFairy('Owner').TradeFairy = CLASS({
 	
 	preset : () => {
 		return VIEW;
