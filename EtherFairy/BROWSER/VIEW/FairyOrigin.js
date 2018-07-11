@@ -57,6 +57,7 @@ EtherFairy.FairyOrigin = CLASS({
 									tap : () => {
 										
 										//TODO:
+										
 									}
 								}
 							}));
