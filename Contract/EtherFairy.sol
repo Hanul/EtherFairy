@@ -165,11 +165,38 @@ contract EtherFairy is Ownable {
 		);
 	}
 	
+	//TODO: 돈을 지불하고 레벨업 합니다.
+	// 요정의 개수는 중간에 데이터가 변경되었는지에 대한 검증을 위해서 받습니다.
+	function levelUpFairy(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	
+	//TODO: 돈을 지불하고 레벨 당 증가 포인트를 올립니다.
+	function increaseHPPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseAttackPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseDefensePointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseAgilityPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseDexterityPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseFirePointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseWaterPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseWindPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseEarthPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseLightPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	function increaseDarkPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
+	}
+	
 	//TODO: 요정을 장터에 등록합니다.
 	
 	//TODO: 요정을 장터에서 내립니다.
 	
 	//TODO: 요정을 구매합니다.
-	
-	//TODO: 스마트 계약 업그레이드를 고려해야합니다.
 }
