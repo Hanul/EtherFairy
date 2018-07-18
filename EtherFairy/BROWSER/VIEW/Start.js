@@ -6,8 +6,8 @@ EtherFairy.Start = CLASS({
 	
 	init : (inner, self) => {
 		
-		let ownerPannel;
-		let ownerDescription;
+		let masterPannel;
+		let masterDescription;
 		EtherFairy.Layout.setContent(DIV({
 			style : {
 				padding : 10
@@ -25,14 +25,14 @@ EtherFairy.Start = CLASS({
 			}),
 			
 			// 소유주로 시작하기
-			ownerPannel = DIV({
+			masterPannel = DIV({
 				style : {
 					flt : 'left',
 					width : '49%',
 					height : 300,
 					backgroundImage : EtherFairy.R('pattern/footer_lodyas.png')
 				},
-				c : [ownerDescription = DIV({
+				c : [masterDescription = DIV({
 					style : {
 						height : 300
 					},
@@ -43,12 +43,12 @@ EtherFairy.Start = CLASS({
 							fontWeight : 'bold',
 							color : '#FFEA4F'
 						},
-						c : MSG('START_OWNER')
+						c : MSG('START_MASTER')
 					}), P({
 						style : {
 							textAlign : 'center'
 						},
-						c : MSG('START_OWNER_DESCRIPTION')
+						c : MSG('START_MASTER_DESCRIPTION')
 					})]
 				})]
 			}),
@@ -98,14 +98,14 @@ EtherFairy.Start = CLASS({
 		// 메타마스크가 설치되어 있는 경우
 		if (EtherFairy.WalletManager.checkIsEnable() === true) {
 			
-			ownerDescription.append(P({
+			masterDescription.append(P({
 				style : {
 					marginTop : 20
 				},
 				c : MSG('START_DESCRIPTION')
 			}));
 			
-			ownerPannel.append(Yogurt.Button({
+			masterPannel.append(Yogurt.Button({
 				style : {
 					marginTop : 20,
 					border : 'none'
@@ -122,23 +122,23 @@ EtherFairy.Start = CLASS({
 						
 						else {
 							
-							EtherFairy.OwnerModel.checkExists(EtherFairy.WalletManager.getWalletAddress(), (exists) => {
+							EtherFairy.MasterModel.checkExists(EtherFairy.WalletManager.getWalletAddress(), (exists) => {
 								
 								if (exists === true) {
-									EtherFairy.REFRESH('owner');
+									EtherFairy.REFRESH('master');
 								}
 								
 								// 존재하지 않으면, 생성
 								else {
-									EtherFairy.GO('owner/join');
+									EtherFairy.GO('master/join');
 									/*
-									Yogurt.Prompt(MSG('PLEASE_ENTER_OWNER_NICKNAME'), (value) => {
+									Yogurt.Prompt(MSG('PLEASE_ENTER_MASTER_NICKNAME'), (value) => {
 										
-										EtherFairy.OwnerModel.create({
+										EtherFairy.MasterModel.create({
 											id : EtherFairy.WalletManager.getWalletAddress(),
 											nickname : value
 										}, () => {
-											EtherFairy.GO('owner');
+											EtherFairy.GO('master');
 										});
 									});
 									*/
@@ -152,14 +152,14 @@ EtherFairy.Start = CLASS({
 		
 		// 메타마스크가 없는 경우 설치 경로 안내
 		else {
-			ownerDescription.append(P({
+			masterDescription.append(P({
 				style : {
 					marginTop : 20
 				},
 				c : MSG('PLEASE_INSTALL_METAMASK')
 			}));
 			
-			ownerPannel.append(Yogurt.Button({
+			masterPannel.append(Yogurt.Button({
 				style : {
 					marginTop : 20,
 					border : 'none'

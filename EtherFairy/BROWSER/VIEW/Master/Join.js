@@ -1,4 +1,4 @@
-EtherFairy('Owner').Join = CLASS({
+EtherFairy('Master').Join = CLASS({
 	
 	preset : () => {
 		return VIEW;
@@ -19,7 +19,7 @@ EtherFairy('Owner').Join = CLASS({
 					color : '#FFEA4F',
 					marginBottom : 20
 				},
-				c : MSG('JOIN_OWNER')
+				c : MSG('JOIN_MASTER')
 			}),
 			
 			P({
@@ -102,10 +102,10 @@ EtherFairy('Owner').Join = CLASS({
 						
 						data.id = EtherFairy.WalletManager.getWalletAddress();
 						
-						EtherFairy.OwnerModel.create(data, {
+						EtherFairy.MasterModel.create(data, {
 							notValid : form.showErrors,
 							success : () => {
-								EtherFairy.REFRESH('owner');
+								EtherFairy.REFRESH('master');
 							}
 						});
 					}

@@ -12,7 +12,7 @@ EtherFairy.FairyOrigin = CLASS({
 			
 			EtherFairy.FairyOriginModel.get(fairyOriginId, (fairyOriginData) => {
 				
-				let ownerMenu;
+				let masterMenu;
 				EtherFairy.Layout.setContent(DIV({
 					style : {
 						padding : 10
@@ -40,18 +40,18 @@ EtherFairy.FairyOrigin = CLASS({
 						c : 'test'
 					}),
 					
-					ownerMenu = DIV()]
+					masterMenu = DIV()]
 				}));
 				
 				// 소유주가 접속해 있으면 소유주 메뉴 추가
 				if (EtherFairy.WalletManager.checkIsLocked() !== true) {
-					EtherFairy.OwnerModel.get(EtherFairy.WalletManager.getWalletAddress(), {
+					EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
 						notExists : () => {
 							// ignore.
 						},
 						success : () => {
 							
-							ownerMenu.append(Yogurt.Button({
+							masterMenu.append(Yogurt.Button({
 								c : MSG('BUY_FAIRY_BUTTON'),
 								on : {
 									tap : () => {

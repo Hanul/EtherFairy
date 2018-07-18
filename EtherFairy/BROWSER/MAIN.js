@@ -39,32 +39,32 @@ EtherFairy.MAIN = METHOD({
 			
 			// 소유주로 가입하기 화면
 			EtherFairy.MATCH_VIEW({
-				uri : 'owner/join',
-				target : EtherFairy.Owner.Join
+				uri : 'master/join',
+				target : EtherFairy.Master.Join
 			});
 			
 			// 소유주 홈
 			EtherFairy.MATCH_VIEW({
-				uri : 'owner',
-				target : EtherFairy.OwnerHome
+				uri : 'master',
+				target : EtherFairy.MasterHome
 			});
 			
 			// 요정 구매
 			EtherFairy.MATCH_VIEW({
-				uri : 'owner/buyfairy',
-				target : EtherFairy.Owner.BuyFairy
+				uri : 'master/buyfairy',
+				target : EtherFairy.Master.BuyFairy
 			});
 			
 			// 요정 관리
 			EtherFairy.MATCH_VIEW({
-				uri : 'owner/managefairy',
-				target : EtherFairy.Owner.ManageFairy
+				uri : 'master/managefairy',
+				target : EtherFairy.Master.ManageFairy
 			});
 			
 			// 요정 거래
 			EtherFairy.MATCH_VIEW({
-				uri : 'owner/tradefairy',
-				target : EtherFairy.Owner.TradeFairy
+				uri : 'master/tradefairy',
+				target : EtherFairy.Master.TradeFairy
 			});
 			
 			// 디자이너로 시작하기 화면

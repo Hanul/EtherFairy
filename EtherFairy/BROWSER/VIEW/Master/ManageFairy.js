@@ -1,4 +1,4 @@
-EtherFairy('Owner').ManageFairy = CLASS({
+EtherFairy('Master').ManageFairy = CLASS({
 	
 	preset : () => {
 		return VIEW;
@@ -19,7 +19,7 @@ EtherFairy('Owner').ManageFairy = CLASS({
 		
 		if (EtherFairy.WalletManager.checkIsLocked() !== true) {
 			
-			EtherFairy.OwnerModel.get(EtherFairy.WalletManager.getWalletAddress(), {
+			EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
 				notExists : () => {
 					//TODO:
 				},

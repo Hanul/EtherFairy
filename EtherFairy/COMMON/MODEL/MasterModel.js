@@ -1,4 +1,4 @@
-EtherFairy.OwnerModel = OBJECT({
+EtherFairy.MasterModel = OBJECT({
 	
 	preset : () => {
 		return EtherFairy.MODEL;
@@ -40,7 +40,7 @@ EtherFairy.OwnerModel = OBJECT({
 		};
 		
 		return {
-			name : 'Owner',
+			name : 'Master',
 			isNotUsingObjectId : true,
 			methodConfig : {
 				create : {

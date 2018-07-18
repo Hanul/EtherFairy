@@ -1,4 +1,4 @@
-EtherFairy.OwnerHome = CLASS({
+EtherFairy.MasterHome = CLASS({
 	
 	preset : () => {
 		return VIEW;
@@ -10,17 +10,17 @@ EtherFairy.OwnerHome = CLASS({
 		if (EtherFairy.WalletManager.checkIsEnable() === true) {
 			
 			// 소유주가 존재하는지 체크
-			EtherFairy.OwnerModel.checkExists(EtherFairy.WalletManager.getWalletAddress(), (exists) => {
+			EtherFairy.MasterModel.checkExists(EtherFairy.WalletManager.getWalletAddress(), (exists) => {
 				
 				// 존재하지 않으면, 생성
 				if (exists !== true) {
-					Yogurt.Prompt(MSG('PLEASE_ENTER_OWNER_NAME'), (value) => {
+					Yogurt.Prompt(MSG('PLEASE_ENTER_MASTER_NAME'), (value) => {
 						
-						EtherFairy.OwnerModel.create({
+						EtherFairy.MasterModel.create({
 							id : EtherFairy.WalletManager.getWalletAddress(),
 							name : value
 						}, () => {
-							EtherFairy.GO('owner');
+							EtherFairy.GO('master');
 						});
 					});
 				}

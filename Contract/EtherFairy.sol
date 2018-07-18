@@ -67,7 +67,7 @@ contract EtherFairy is Ownable {
 		uint darkPointPerLevel
 		) payable public {
 		
-		// 초기 요정의 가격은 0.01 이더입니다.
+		// 초기 요정의 가격과 비교합니다.
 		require(msg.value != fairyOriginPrice);
 		
 		// 초기0 속성 값들의 총합은 5가 되어야 합니다.
@@ -165,7 +165,7 @@ contract EtherFairy is Ownable {
 		);
 	}
 	
-	//TODO: 돈을 지불하고 레벨업 합니다.
+	/*//TODO: 돈을 지불하고 레벨업 합니다.
 	// 요정의 개수는 중간에 데이터가 변경되었는지에 대한 검증을 위해서 받습니다.
 	function levelUpFairy(uint fairyIndex, uint fairyCountForValidation) payable public {
 	}
@@ -192,7 +192,7 @@ contract EtherFairy is Ownable {
 	function increaseLightPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
 	}
 	function increaseDarkPointPerLevel(uint fairyIndex, uint fairyCountForValidation) payable public {
-	}
+	}*/
 	
 	//TODO: 요정을 장터에 등록합니다.
 	

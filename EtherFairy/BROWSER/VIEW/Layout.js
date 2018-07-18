@@ -212,7 +212,7 @@ EtherFairy.Layout = CLASS((cls) => {
 				
 				if (EtherFairy.WalletManager.checkIsLocked() !== true) {
 					
-					EtherFairy.OwnerModel.get(EtherFairy.WalletManager.getWalletAddress(), {
+					EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
 						
 						notExists : () => {
 							next();
@@ -231,7 +231,7 @@ EtherFairy.Layout = CLASS((cls) => {
 										padding : 10,
 										fontSize : 15
 									},
-									c : MSG('LAYOUT_OWNER_MENU')
+									c : MSG('LAYOUT_MASTER_MENU')
 								}), DIV({
 									style : {
 										padding : 10,
@@ -242,7 +242,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									c : MSG('BUY_FAIRY'),
 									on : {
 										tap : () => {
-											EtherFairy.GO('owner/buyfairy');
+											EtherFairy.GO('master/buyfairy');
 											menuLayout.hideLeftMenu();
 										}
 									}
@@ -257,7 +257,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									c : MSG('TRADE_FAIRY'),
 									on : {
 										tap : () => {
-											EtherFairy.GO('owner/tradefairy');
+											EtherFairy.GO('master/tradefairy');
 											menuLayout.hideLeftMenu();
 										}
 									}
@@ -272,7 +272,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									c : MSG('MANAGE_FAIRY'),
 									on : {
 										tap : () => {
-											EtherFairy.GO('owner/managefairy');
+											EtherFairy.GO('master/managefairy');
 											menuLayout.hideLeftMenu();
 										}
 									}
@@ -290,7 +290,7 @@ EtherFairy.Layout = CLASS((cls) => {
 			},
 			
 			() => {
-				return (isOwnerSigned) => {
+				return (isMasterSigned) => {
 					
 					EtherFairy.DesignerModel.checkSigned((signedDesignerData) => {
 						
@@ -351,7 +351,7 @@ EtherFairy.Layout = CLASS((cls) => {
 						}));
 						
 						// 두 종류 모두 로그인한 경우에는 시작하기 버튼 제거
-						if (isOwnerSigned === true) {
+						if (isMasterSigned === true) {
 							startButton.remove();
 						}
 					});

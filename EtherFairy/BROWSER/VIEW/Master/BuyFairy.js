@@ -1,4 +1,4 @@
-EtherFairy('Owner').BuyFairy = CLASS({
+EtherFairy('Master').BuyFairy = CLASS({
 	
 	preset : () => {
 		return VIEW;
@@ -6,7 +6,7 @@ EtherFairy('Owner').BuyFairy = CLASS({
 	
 	init : (inner, self) => {
 		
-		let fairyList;
+		let fairyOriginList;
 		
 		EtherFairy.Layout.setContent(DIV({
 			style : {
@@ -18,7 +18,7 @@ EtherFairy('Owner').BuyFairy = CLASS({
 				c : 'test'
 			}),
 			
-			fairyList = DIV()]
+			fairyOriginList = DIV()]
 		}));
 		
 		EtherFairy.FairyOriginModel.find({
@@ -29,7 +29,7 @@ EtherFairy('Owner').BuyFairy = CLASS({
 				
 				console.log(fairyOriginData);
 				
-				fairyList.append(DIV({
+				fairyOriginList.append(DIV({
 					style : {
 						cursor : 'pointer'
 					},
