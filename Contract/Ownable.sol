@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-// 소유자가 존재할 수 있는 계약
+// 소유자가 존재할 수 있도록
 contract Ownable {
 	
 	// 소유자 주소

@@ -1,9 +1,12 @@
 pragma solidity ^0.4.24;
 
+import "./SafeMath.sol";
+
 import "./Ownable.sol";
+import "./Pausable.sol";
 
 // Ether Fairy 스마트 계약
-contract EtherFairy is Ownable {
+contract EtherFairy is Ownable, Pausable {
 	
 	// 요정 원본의 가격
 	uint public fairyOriginPrice;
@@ -106,7 +109,7 @@ contract EtherFairy is Ownable {
 	}
 	
 	// 요정 소유 개수를 반환합니다.
-	function getFairyCount(address user) view public returns (uint count) {
+	function getFairyCount(address user) view public returns (uint) {
 		return fairyMap[user].length;
 	}
 	
