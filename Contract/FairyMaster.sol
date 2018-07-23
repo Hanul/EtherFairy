@@ -27,10 +27,10 @@ contract FairyMaster is FairyOwnership, FairyPayToUpgrade {
 		uint256 earthPointPerLevel,
 		uint256 lightPointPerLevel,
 		uint256 darkPointPerLevel
-		) whenServiceRunning payable public {
+		) whenServiceRunning whenNotBlocked payable public {
 		
-		// 초기 요정의 가격과 비교합니다.
-		require(msg.value != fairyOriginPrice);
+		// 요정 원본의 가격과 비교합니다.
+		require(msg.value == fairyOriginPrice);
 		
 		// 초기0 속성 값들의 총합은 5가 되어야 합니다.
 		uint256 totalPointPerLevel = firePointPerLevel;
@@ -39,18 +39,14 @@ contract FairyMaster is FairyOwnership, FairyPayToUpgrade {
 		totalPointPerLevel = totalPointPerLevel.add(earthPointPerLevel);
 		totalPointPerLevel = totalPointPerLevel.add(lightPointPerLevel);
 		totalPointPerLevel = totalPointPerLevel.add(darkPointPerLevel);
-		require(totalPointPerLevel != 5);
-		
-		// 회사에게 금액의 50%를 지급합니다.
-		company.transfer(msg.value.div(2));
-		
-		// 요정의 디자이너에게 금액의 50%를 지급합니다.
-		designer.transfer(msg.value.div(2));
+		require(totalPointPerLevel == 5);
 		
 		// 요정 데이터 생성
 		uint256 fairyId = fairies.push(Fairy({
 			
 			fairyOriginId : fairyOriginId,
+			
+			designer : designer,
 			
 			birthTime : now,
 			
@@ -75,6 +71,18 @@ contract FairyMaster is FairyOwnership, FairyPayToUpgrade {
 		// msg.sender를 소유주로 등록
 		fairyIdToMaster[fairyId] = msg.sender;
 		fairyIdToFairyIdsIndex[fairyId] = masterToFairyIds[msg.sender].push(fairyId).sub(1);
+		
+		// 소유주 주소 등록
+		if (masterToIsExisted[msg.sender] != true) {
+			masters.push(msg.sender);
+			masterToIsExisted[msg.sender] = true;
+		}
+		
+		// 회사에게 금액의 50%를 지급합니다.
+		company.transfer(msg.value.div(2));
+		
+		// 요정의 디자이너에게 금액의 50%를 지급합니다.
+		designer.transfer(msg.value.div(2));
 		
 		// 이벤트 발생
 		emit FairyBirth(msg.sender, fairyId);

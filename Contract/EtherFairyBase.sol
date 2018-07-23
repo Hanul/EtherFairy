@@ -14,11 +14,20 @@ contract EtherFairyBase is ERC721Metadata {
 	// 요정 원본의 가격 (초기 가격은 0.01 이더입니다.)
 	uint256 public fairyOriginPrice = 0.01 ether;
 	
+	// 임의 레벨업 가격
+	uint256 public customLevelUpPrice = 0.01 ether;
+	
+	// 임의로 포인트를 증가시키는데 드는 포인트당 가격
+	uint256 public increasePointPricePerPoint = 0.01 ether;
+	
 	// 요정 정보
 	struct Fairy {
 		
 		// 회사 서버에 저장된 요정 원본의 ID
 		string fairyOriginId;
+		
+		// 요정 디자이너의 지갑
+		address designer;
 		
 		// 탄생 시간
 		uint256 birthTime;
@@ -45,6 +54,18 @@ contract EtherFairyBase is ERC721Metadata {
 	// 요정들의 저장소
 	Fairy[] internal fairies;
 	
+	// 소유주들 주소
+	address[] public masters;
+	
+	// 소유주가 이미 존재하는지
+	mapping(address => bool) internal masterToIsExisted;
+	
+	// 소유주가 차단되었는지
+	mapping(address => bool) public masterToIsBlocked;
+	
+	// 요정이 차단되었는지
+	mapping(uint256 => bool) public fairyIdToIsBlocked;
+	
 	// 회사의 지갑 주소
 	address public company;
 	
@@ -65,6 +86,20 @@ contract EtherFairyBase is ERC721Metadata {
 	// 서비스가 일시정지 상태일때만
 	modifier whenServicePaused() {
 		require(servicePaused == true);
+		_;
+	}
+	
+	// 차단된 소유주가 아닐 경우에만
+	modifier whenNotBlocked() {
+		// 회사는 차단 불가
+		require(msg.sender == company || masterToIsBlocked[msg.sender] != true);
+		_;
+	}
+	
+	// 차단된 요정이 아닐 경우에만
+	modifier whenNotBlockedFairy(uint256 fairyId) {
+		// 회사는 차단 불가
+		require(msg.sender == company || fairyIdToIsBlocked[fairyId] != true);
 		_;
 	}
 	

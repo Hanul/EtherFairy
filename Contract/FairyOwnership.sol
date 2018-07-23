@@ -80,7 +80,7 @@ contract FairyOwnership is EtherFairyBase, ERC721 {
 	}
 	
 	//ERC721: 요정을 이전합니다.
-	function transferFrom(address from, address to, uint256 fairyId) whenServiceRunning onlyApprovedOf(fairyId) payable public {
+	function transferFrom(address from, address to, uint256 fairyId) whenServiceRunning whenNotBlocked whenNotBlockedFairy(fairyId) onlyApprovedOf(fairyId) payable public {
 		// 주소 오용 차단
 		require(checkAddressMisused(to) != true);
 		
@@ -111,7 +111,7 @@ contract FairyOwnership is EtherFairyBase, ERC721 {
 	}
 	
 	//ERC721: 특정 지갑에 거래 권한을 부여합니다.
-	function approve(address approved, uint256 fairyId) whenServiceRunning onlyMasterOf(fairyId) payable external {
+	function approve(address approved, uint256 fairyId) whenServiceRunning whenNotBlocked whenNotBlockedFairy(fairyId) onlyMasterOf(fairyId) payable external {
 		
 		address master = ownerOf(fairyId);
 		
@@ -124,7 +124,7 @@ contract FairyOwnership is EtherFairyBase, ERC721 {
 	}
 	
 	//ERC721: 오퍼레이터에게 거래 권한을 부여하거나 뺏습니다.
-	function setApprovalForAll(address operator, bool isApproved) whenServiceRunning external {
+	function setApprovalForAll(address operator, bool isApproved) whenServiceRunning whenNotBlocked external {
 		// 주소 오용 차단
 		require(operator != msg.sender);
 		require(checkAddressMisused(operator) != true);

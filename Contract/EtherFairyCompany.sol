@@ -42,8 +42,38 @@ contract EtherFairyCompany is EtherFairyBase {
 		fairyOriginPrice = newFairyOriginPrice;
 	}
 	
+	// 임의 레벨업 가격을 변경합니다.
+	function changeCustomLevelUpPrice(uint256 newCustomLevelUpPrice) onlyCompany public {
+		customLevelUpPrice = newCustomLevelUpPrice;
+	}
+	
+	// 임의로 포인트를 증가시키는데 드는 포인트당 가격을 변경합니다.
+	function changeIncreasePointPricePerPoint(uint256 newIncreasePointPricePerPoint) onlyCompany public {
+		increasePointPricePerPoint = newIncreasePointPricePerPoint;
+	}
+	
 	// tokenMetadataBaseURI을 변경합니다.
 	function changeTokenMetadataBaseURI(string newTokenMetadataBaseURI) onlyCompany public {
 		tokenMetadataBaseURI = newTokenMetadataBaseURI;
+	}
+	
+	// 특정 소유주를 차단합니다.
+	function blockMaster(address masterToBlock) onlyCompany public {
+		masterToIsBlocked[masterToBlock] = true;
+	}
+	
+	// 특정 요정을 차단합니다.
+	function blockFairy(uint256 fairyIdToBlock) onlyCompany public {
+		fairyIdToIsBlocked[fairyIdToBlock] = true;
+	}
+	
+	// 소유주 차단을 해제합니다.
+	function unblockMaster(address masterToBlock) onlyCompany public {
+		delete masterToIsBlocked[masterToBlock];
+	}
+	
+	// 요정 차단을 해제합니다.
+	function unblockFairy(uint256 fairyIdToBlock) onlyCompany public {
+		delete fairyIdToIsBlocked[fairyIdToBlock];
 	}
 }
