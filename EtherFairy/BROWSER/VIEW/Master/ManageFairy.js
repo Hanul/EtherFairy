@@ -17,6 +17,11 @@ EtherFairy('Master').ManageFairy = CLASS({
 			})]
 		}));
 		
+		let createFairyItem = (fairyOriginId, fairyName, birthTime, appendedLevel) => {
+			
+			console.log(fairyOriginId, fairyName, birthTime, appendedLevel);
+		};
+		
 		if (EtherFairy.WalletManager.checkIsLocked() !== true) {
 			
 			EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
@@ -28,7 +33,7 @@ EtherFairy('Master').ManageFairy = CLASS({
 					// 계약 생성
 					let contract = web3.eth.contract(EtherFairy.SmartContractABI).at(EtherFairy.SmartContractAddress);
 					
-					contract.getFairyCount(EtherFairy.WalletManager.getWalletAddress(), (error, result) => {
+					contract.balanceOf(EtherFairy.WalletManager.getWalletAddress(), (error, result) => {
 						
 						// 계약 실행 오류 발생
 						if (error !== TO_DELETE) {
@@ -37,9 +42,12 @@ EtherFairy('Master').ManageFairy = CLASS({
 						
 						// 정상 작동
 						else {
-							REPEAT(result.toNumber(), (fairyIndex) => {
+							
+							let fairyCount = result.toNumber();
+							
+							REPEAT(fairyCount, (i) => {
 								
-								contract.getFairyBasicInfo(EtherFairy.WalletManager.getWalletAddress(), fairyIndex, (error, result) => {
+								contract.masterToFairyIds(EtherFairy.WalletManager.getWalletAddress(), i, (error, result) => {
 									
 									// 계약 실행 오류 발생
 									if (error !== TO_DELETE) {
@@ -49,19 +57,31 @@ EtherFairy('Master').ManageFairy = CLASS({
 									// 정상 작동
 									else {
 										
-										EACH(result, (value, i) => {
-											if (value.toNumber !== undefined) {
-												result[i] = value.toNumber();
-											}
-										});
+										let fairyId = result.toNumber();
 										
-										EACH(result, (value) => {
-											console.log(value);
+										contract.getFairyBasicInfo(fairyId, (error, result) => {
+											
+											// 계약 실행 오류 발생
+											if (error !== TO_DELETE) {
+												alert(error.toString());
+											}
+											
+											// 정상 작동
+											else {
+												
+												EACH(result, (value, i) => {
+													if (value.toNumber !== undefined) {
+														result[i] = value.toNumber();
+													}
+												});
+												
+												createFairyItem.apply(undefined, result);
+											}
 										});
 									}
 								});
 							});
-						}
+						}	
 					});
 				}
 			});

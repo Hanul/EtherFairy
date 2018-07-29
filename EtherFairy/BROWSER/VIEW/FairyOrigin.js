@@ -12,6 +12,8 @@ EtherFairy.FairyOrigin = CLASS({
 			
 			EtherFairy.FairyOriginModel.get(fairyOriginId, (fairyOriginData) => {
 				
+				console.log(fairyOriginData);
+				
 				let masterMenu;
 				EtherFairy.Layout.setContent(DIV({
 					style : {
@@ -37,7 +39,14 @@ EtherFairy.FairyOrigin = CLASS({
 					}),
 					
 					P({
-						c : 'test'
+						c : [
+						fairyOriginData.firePointPerLevel,
+						fairyOriginData.waterPointPerLevel,
+						fairyOriginData.windPointPerLevel,
+						fairyOriginData.earthPointPerLevel,
+						fairyOriginData.lightPointPerLevel,
+						fairyOriginData.darkPointPerLevel
+						]
 					}),
 					
 					masterMenu = DIV()]
@@ -56,43 +65,57 @@ EtherFairy.FairyOrigin = CLASS({
 								on : {
 									tap : () => {
 										
-										// 계약 생성
-										let contract = web3.eth.contract(EtherFairy.SmartContractABI).at(EtherFairy.SmartContractAddress);
-										
-										// 요정 탄생시키기
-										contract.birthFairy(fairyOriginData.id, '0x38b4343b3BE52374D83398159F2FA06ef78bDA7D', 1, 2, 3, 4, 5, 6, {
-											value : web3.toWei(0.01, 'ether')
-										}, (error, result) => {
+										// 이름 입력받기
+										Yogurt.Prompt(MSG('PLEASE_ENTER_FAIRY_NAME'), (fairyName) => {
 											
-											// 계약 실행 오류 발생
-											if (error !== TO_DELETE) {
-												alert(error.toString());
-											}
+											// 계약 생성
+											let contract = web3.eth.contract(EtherFairy.SmartContractABI).at(EtherFairy.SmartContractAddress);
 											
-											// 정상 작동
-											else {
+											// 요정 탄생시키기
+											contract.birthFairy(
+												fairyOriginData.id,
+												'0x38b4343b3BE52374D83398159F2FA06ef78bDA7D',
+												fairyName,
+												fairyOriginData.firePointPerLevel,
+												fairyOriginData.waterPointPerLevel,
+												fairyOriginData.windPointPerLevel,
+												fairyOriginData.earthPointPerLevel,
+												fairyOriginData.lightPointPerLevel,
+												fairyOriginData.darkPointPerLevel, {
 												
-												let retry = RAR(() => {
+												value : web3.toWei(0.01, 'ether')
+											}, (error, result) => {
+												
+												// 계약 실행 오류 발생
+												if (error !== TO_DELETE) {
+													alert(error.toString());
+												}
+												
+												// 정상 작동
+												else {
 													
-													web3.eth.getTransactionReceipt(result, (error, result) => {
+													let retry = RAR(() => {
 														
-														// 트랜잭선 오류 발생
-														if (error !== TO_DELETE) {
-															alert(error.toString());
-														}
-														
-														// 아무런 값이 없으면 재시도
-														else if (result === TO_DELETE) {
-															retry();
-														}
-														
-														// 트랜잭션 완료
-														else {
-															alert('트랜잭션이 완료되었습니다.');
-														}
+														web3.eth.getTransactionReceipt(result, (error, result) => {
+															
+															// 트랜잭선 오류 발생
+															if (error !== TO_DELETE) {
+																alert(error.toString());
+															}
+															
+															// 아무런 값이 없으면 재시도
+															else if (result === TO_DELETE) {
+																retry();
+															}
+															
+															// 트랜잭션 완료
+															else {
+																alert('트랜잭션이 완료되었습니다.');
+															}
+														});
 													});
-												});
-											}
+												}
+											});	
 										});
 									}
 								}

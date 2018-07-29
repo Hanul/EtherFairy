@@ -26,36 +26,6 @@ EtherFairy.FairyOriginModel = OBJECT({
 				id : true
 			},
 			
-			fairyRootPercent : {
-				notEmpty : true,
-				integer : true
-			},
-			
-			hpPointPerLevel : {
-				notEmpty : true,
-				integer : true
-			},
-			
-			attackPointPerLevel : {
-				notEmpty : true,
-				integer : true
-			},
-			
-			defensePointPerLevel : {
-				notEmpty : true,
-				integer : true
-			},
-			
-			agilityPointPerLevel : {
-				notEmpty : true,
-				integer : true
-			},
-			
-			dexterityPointPerLevel : {
-				notEmpty : true,
-				integer : true
-			},
-			
 			firePointPerLevel : {
 				notEmpty : true,
 				integer : true

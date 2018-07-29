@@ -16,11 +16,6 @@ EtherFairy('Designer').DesignFairy = CLASS({
 				
 				let availablePoints = 5;
 				
-				let hpPointPerLevel = 0;
-				let attackPointPerLevel = 0;
-				let defensePointPerLevel = 0;
-				let agilityPointPerLevel = 0;
-				let dexterityPointPerLevel = 0;
 				let firePointPerLevel = 0;
 				let waterPointPerLevel = 0;
 				let windPointPerLevel = 0;
@@ -33,11 +28,6 @@ EtherFairy('Designer').DesignFairy = CLASS({
 				let availablePointsPanel;
 				let pointsFormWrapper;
 				
-				let hpPointPerLevelPanel;
-				let attackPointPerLevelPanel;
-				let defensePointPerLevelPanel;
-				let agilityPointPerLevelPanel;
-				let dexterityPointPerLevelPanel;
 				let firePointPerLevelPanel;
 				let waterPointPerLevelPanel;
 				let windPointPerLevelPanel;
@@ -117,39 +107,6 @@ EtherFairy('Designer').DesignFairy = CLASS({
 						
 						DIV({
 							style : {
-								marginTop : 30,
-							},
-							c : [H3({
-								c : MSG('FAIRY_ROOT_PERCENT')
-							}),
-							fairyRootPercentPanel = DIV({
-								c : '10%'
-							}),
-							Yogurt.Range({
-								name : 'fairyRootPercent',
-								min : 10,
-								max : 90,
-								step : 2,
-								on : {
-									change : (e, range) => {
-										fairyRootPercentPanel.empty();
-										fairyRootPercentPanel.append(range.getValue() + '%');
-										
-										availablePoints = range.getValue() / 2;
-										availablePointsPanel.empty();
-										availablePointsPanel.append(MSG('AVAILABLE_POINTS') + ' : ' + availablePoints);
-										
-										refreshPointsForm();
-									}
-								}
-							}),
-							P({
-								c : MSG('FAIRY_ROOT_PERCENT_DESCRIPTION')
-							})]
-						}),
-						
-						DIV({
-							style : {
 								marginTop : 30
 							},
 							c : [
@@ -209,7 +166,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 										}
 									},
 									success : (savedData) => {
-										FairyOrigin.GO('fairyorigin/' + savedData.id);
+										EtherFairy.GO('fairyorigin/' + savedData.id);
 									}
 								});
 							}
@@ -220,12 +177,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 				}));
 				
 				let getUsingPoints = (exceptPoint) => {
-					return hpPointPerLevel +
-						attackPointPerLevel +
-						defensePointPerLevel +
-						agilityPointPerLevel +
-						dexterityPointPerLevel +
-						firePointPerLevel +
+					return firePointPerLevel +
 						waterPointPerLevel +
 						windPointPerLevel +
 						earthPointPerLevel +
@@ -239,144 +191,6 @@ EtherFairy('Designer').DesignFairy = CLASS({
 					pointsFormWrapper.empty();
 					pointsFormWrapper.append(DIV({
 						c : [
-						
-						// HP
-						H3({
-							style : {
-								marginTop : 15
-							},
-							c : MSG('HP_POINT_PER_LEVEL')
-						}),
-						hpPointPerLevelPanel = DIV({
-							c : hpPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'hpPointPerLevel',
-							max : availablePoints - getUsingPoints(hpPointPerLevel),
-							value : hpPointPerLevel,
-							on : {
-								show : (e, range) => {
-									hpPointPerLevel = range.getValue();
-									
-									hpPointPerLevelPanel.empty();
-									hpPointPerLevelPanel.append(hpPointPerLevel);
-								},
-								change : (e, range) => {
-									hpPointPerLevel = range.getValue();
-									
-									hpPointPerLevelPanel.empty();
-									hpPointPerLevelPanel.append(hpPointPerLevel);
-								}
-							}
-						}),
-						
-						// ATTACK
-						H3({
-							c : MSG('ATTACK_POINT_PER_LEVEL')
-						}),
-						attackPointPerLevelPanel = DIV({
-							c : attackPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'attackPointPerLevel',
-							max : availablePoints - getUsingPoints(attackPointPerLevel),
-							value : attackPointPerLevel,
-							on : {
-								show : (e, range) => {
-									attackPointPerLevel = range.getValue();
-									
-									attackPointPerLevelPanel.empty();
-									attackPointPerLevelPanel.append(attackPointPerLevel);
-								},
-								change : (e, range) => {
-									attackPointPerLevel = range.getValue();
-									
-									attackPointPerLevelPanel.empty();
-									attackPointPerLevelPanel.append(attackPointPerLevel);
-								}
-							}
-						}),
-						
-						// DEFENCE
-						H3({
-							c : MSG('DEFENCE_POINT_PER_LEVEL')
-						}),
-						defensePointPerLevelPanel = DIV({
-							c : defensePointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'defensePointPerLevel',
-							max : availablePoints - getUsingPoints(defensePointPerLevel),
-							value : defensePointPerLevel,
-							on : {
-								show : (e, range) => {
-									defensePointPerLevel = range.getValue();
-									
-									defensePointPerLevelPanel.empty();
-									defensePointPerLevelPanel.append(defensePointPerLevel);
-								},
-								change : (e, range) => {
-									defensePointPerLevel = range.getValue();
-									
-									defensePointPerLevelPanel.empty();
-									defensePointPerLevelPanel.append(defensePointPerLevel);
-								}
-							}
-						}),
-						
-						// AGILITY
-						H3({
-							c : MSG('AGILITY_POINT_PER_LEVEL')
-						}),
-						agilityPointPerLevelPanel = DIV({
-							c : agilityPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'agilityPointPerLevel',
-							max : availablePoints - getUsingPoints(agilityPointPerLevel),
-							value : agilityPointPerLevel,
-							on : {
-								show : (e, range) => {
-									agilityPointPerLevel = range.getValue();
-									
-									agilityPointPerLevelPanel.empty();
-									agilityPointPerLevelPanel.append(agilityPointPerLevel);
-								},
-								change : (e, range) => {
-									agilityPointPerLevel = range.getValue();
-									
-									agilityPointPerLevelPanel.empty();
-									agilityPointPerLevelPanel.append(agilityPointPerLevel);
-								}
-							}
-						}),
-						
-						// DEXTERITY
-						H3({
-							c : MSG('DEXTERITY_POINT_PER_LEVEL')
-						}),
-						dexterityPointPerLevelPanel = DIV({
-							c : dexterityPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'dexterityPointPerLevel',
-							max : availablePoints - getUsingPoints(dexterityPointPerLevel),
-							value : dexterityPointPerLevel,
-							on : {
-								show : (e, range) => {
-									dexterityPointPerLevel = range.getValue();
-									
-									dexterityPointPerLevelPanel.empty();
-									dexterityPointPerLevelPanel.append(dexterityPointPerLevel);
-								},
-								change : (e, range) => {
-									dexterityPointPerLevel = range.getValue();
-									
-									dexterityPointPerLevelPanel.empty();
-									dexterityPointPerLevelPanel.append(dexterityPointPerLevel);
-								}
-							}
-						}),
 						
 						// FIRE
 						H3({
