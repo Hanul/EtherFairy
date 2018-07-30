@@ -7,6 +7,10 @@ EtherFairy.MAIN = METHOD({
 		style.innerHTML = '@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css); input[type="range"]::-webkit-slider-thumb { width:30px; height:30px; } * { font-family:\'Noto Sans KR\'; -webkit-tap-highlight-color:transparent; }';
 		document.getElementsByTagName('head')[0].appendChild(style);
 		
+		if (typeof global.web3 !== 'undefined') {
+			global.web3 = new Web3(global.web3.currentProvider);
+		}
+		
 		// 텍스트 번역을 위한 데이터
 		MSG.loadCSV(EtherFairy.R('text.csv'), () => {
 			
