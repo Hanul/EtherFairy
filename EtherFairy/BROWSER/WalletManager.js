@@ -4,10 +4,14 @@ EtherFairy.WalletManager = OBJECT({
 		
 		let isEnable;
 		
-		// 메타 마스크 체크
-		if (typeof web3 !== 'undefined') {
-			web3 = new Web3(web3.currentProvider);
+		// Web3 체크
+		if (typeof global.web3 !== 'undefined') {
+			global.web3 = new Web3(global.web3.currentProvider);
 			isEnable = true;
+			
+			// 계약 생성
+			EtherFairy.EtherFairyContractController.setContract(web3.eth.contract(EtherFairy.EtherFairyContractABI).at(EtherFairy.EtherFairyContractAddress));
+			EtherFairy.FairyMarketContractController.setContract(web3.eth.contract(EtherFairy.FairyMarketContractABI).at(EtherFairy.FairyMarketContractAddress));
 		}
 		
 		// 지갑을 사용할 수 있는지 확인
@@ -17,7 +21,7 @@ EtherFairy.WalletManager = OBJECT({
 		
 		// 지갑이 잠금 상태인지 확인
 		let checkIsLocked = self.checkIsLocked = () => {
-			return web3.eth.accounts.length === 0
+			return checkIsEnable() === true && web3.eth.accounts.length === 0;
 		};
 		
 		// 지갑 주소를 가져옵니다.

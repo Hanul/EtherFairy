@@ -1,4 +1,4 @@
-EtherFairy.MarketSmartContractAddress = CONFIG.isDevMode !== true ?
+EtherFairy.FairyMarketContractAddress = CONFIG.isDevMode !== true ?
 // 운영 모드
 '' :
 // 개발 모드

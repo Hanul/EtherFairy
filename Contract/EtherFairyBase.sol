@@ -61,6 +61,16 @@ contract EtherFairyBase is ERC721Metadata {
 		return fairies.length;
 	}
 	
+	function getFairyIdsByBirthTime() view public returns (uint256[]) {
+		uint256[] memory fairyIds;
+		
+		for (uint256 i = 0; i < fairies.length; i += 1) {
+			fairyIds[i] = i;
+		}
+		
+		return fairyIds;
+	}
+	
 	// 소유주들 주소
 	address[] public masters;
 	

@@ -6,6 +6,8 @@ EtherFairy.Ranking = CLASS({
 	
 	init : (inner, self) => {
 		
+		let etherFairyContractRoom = EtherFairy.ROOM('EtherFairyContract');
+		
 		let fairyList;
 		
 		EtherFairy.Layout.setContent(DIV({
@@ -26,43 +28,64 @@ EtherFairy.Ranking = CLASS({
 			console.log(fairyOriginId, fairyName, birthTime, appendedLevel);
 		};
 		
-		// 계약 생성
-		let contract = web3.eth.contract(EtherFairy.SmartContractABI).at(EtherFairy.SmartContractAddress);
-		
-		contract.getFairyCount((error, result) => {
+		// 지갑을 사용할 때는 스마트 계약을 사용한다.
+		if (EtherFairy.WalletManager.checkIsEnable() === true) {
 			
-			// 계약 실행 오류 발생
-			if (error !== TO_DELETE) {
-				alert(error.toString());
-			}
-			
-			// 정상 작동
-			else {
-				let fairyCount = result.toNumber();
-				
-				REPEAT(fairyCount, (fairyId) => {
-					
-					contract.getFairyBasicInfo(fairyId, (error, result) => {
+			// 모든 소유주의 ID를 가져옵니다.
+			EtherFairy.EtherFairyContractController.getMasterCount((masterCount) => {
+				REPEAT(masterCount, (i) => {
+					EtherFairy.EtherFairyContractController.getMasterAddress(i, (master) => {
 						
-						// 계약 실행 오류 발생
-						if (error !== TO_DELETE) {
-							alert(error.toString());
-						}
-						
-						// 정상 작동
-						else {
-							
-							EACH(result, (value, i) => {
-								if (value.toNumber !== undefined) {
-									result[i] = value.toNumber();
-								}
+						// 모든 요정을 가져옵니다.
+						EtherFairy.EtherFairyContractController.balanceOf(master, (fairyCount) => {
+							REPEAT(fairyCount, (j) => {
+								EtherFairy.EtherFairyContractController.getFairyId(master, j, (fairyId) => {
+									
+									console.log(fairyId);
+								});
 							});
-							
-							createFairyItem.apply(undefined, result);
-						}
+						});
 					});
 				});
-			}
+			});
+		}
+		
+		// 지갑을 사용할 수 없을때는 서버에서 가져온다.
+		else {
+			
+			// 모든 소유주의 ID를 가져옵니다.
+			etherFairyContractRoom.send('getMasterCount', (masterCount) => {
+				REPEAT(masterCount, (i) => {
+					etherFairyContractRoom.send({
+						methodName : 'getMasterAddress',
+						data : i
+					}, (master) => {
+						
+						// 모든 요정을 가져옵니다.
+						etherFairyContractRoom.send({
+							methodName : 'balanceOf',
+							data : master
+						}, (fairyCount) => {
+							REPEAT(fairyCount, (j) => {
+								etherFairyContractRoom.send({
+									methodName : 'getFairyId',
+									data : {
+										master : master,
+										index : j
+									}
+								}, (fairyId) => {
+									
+									console.log(fairyId);
+								});
+							});
+						});
+					});
+				});
+			});
+		}
+		
+		inner.on('remove', () => {
+			etherFairyContractRoom.exit();
 		});
 	}
 });
