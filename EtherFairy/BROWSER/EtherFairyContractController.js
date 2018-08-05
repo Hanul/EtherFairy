@@ -17,12 +17,27 @@ EtherFairy.EtherFairyContractController = OBJECT({
 			};
 		};
 		
-		let callbackWrapper = (callback) => {
+		let callbackWrapper = (callbackOrHandlers) => {
+			
+			let callback;
+			let errorHandler;
+			
+			if (CHECK_IS_DATA(callbackOrHandlers) !== true) {
+				callback = callbackOrHandlers;
+			} else {
+				callback = callbackOrHandlers.success;
+				errorHandler = callbackOrHandlers.error;
+			}
+			
 			return (error, result) => {
 				
 				// 계약 실행 오류 발생
 				if (error !== TO_DELETE) {
-					alert(error.toString());
+					if (errorHandler !== undefined) {
+						errorHandler(error.toString());
+					} else {
+						alert(error.toString());
+					}
 				}
 				
 				// 정상 작동
@@ -32,7 +47,7 @@ EtherFairy.EtherFairyContractController = OBJECT({
 							result[i] = value.toNumber();
 						}
 					});
-					callback.apply(undefined, result);
+					callback(result);
 				}
 				
 				else {
@@ -40,6 +55,60 @@ EtherFairy.EtherFairyContractController = OBJECT({
 						result = result.toNumber();
 					}
 					callback(result);
+				}
+			};
+		};
+		
+		let transactionCallbackWrapper = (callbackOrHandlers) => {
+			
+			let callback;
+			let errorHandler;
+			
+			if (CHECK_IS_DATA(callbackOrHandlers) !== true) {
+				callback = callbackOrHandlers;
+			} else {
+				callback = callbackOrHandlers.success;
+				errorHandler = callbackOrHandlers.error;
+			}
+			
+			return (error, result) => {
+				
+				// 계약 실행 오류 발생
+				if (error !== TO_DELETE) {
+					if (errorHandler !== undefined) {
+						errorHandler(error.toString());
+					} else {
+						alert(error.toString());
+					}
+				}
+				
+				// 정상 작동
+				else {
+					
+					let retry = RAR(() => {
+						
+						web3.eth.getTransactionReceipt(result, (error, result) => {
+							
+							// 트랜잭선 오류 발생
+							if (error !== TO_DELETE) {
+								if (errorHandler !== undefined) {
+									errorHandler(error.toString());
+								} else {
+									alert(error.toString());
+								}
+							}
+							
+							// 아무런 값이 없으면 재시도
+							else if (result === TO_DELETE) {
+								retry();
+							}
+							
+							// 트랜잭션 완료
+							else {
+								callback();
+							}
+						});
+					});
 				}
 			};
 		};
@@ -226,7 +295,9 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		
 		// 요정을 탄생시킵니다.
 		let birthFairy = self.birthFairy = func((fairyOriginId, designer, name, firePointPerLevel, waterPointPerLevel, windPointPerLevel, earthPointPerLevel, lightPointPerLevel, darkPointPerLevel, callback) => {
-			contract.birthFairy(fairyOriginId, designer, name, firePointPerLevel, waterPointPerLevel, windPointPerLevel, earthPointPerLevel, lightPointPerLevel, darkPointPerLevel, callbackWrapper(callback));
+			contract.birthFairy(fairyOriginId, designer, name, firePointPerLevel, waterPointPerLevel, windPointPerLevel, earthPointPerLevel, lightPointPerLevel, darkPointPerLevel, {
+				value : web3.toWei(0.01, 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정의 이름을 변경합니다.
@@ -267,6 +338,71 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		// 요정의 원소 속성에 대한 레벨 당 증가 포인트들을 반환합니다.
 		let getFairyElementPointsPerLevel = self.getFairyElementPointsPerLevel = func((fairyId, callback) => {
 			contract.getFairyElementPointsPerLevel(fairyId, callbackWrapper(callback));
+		});
+		
+		// 최근에 태어난 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByBirthTime = self.getFairyIdsByBirthTime = func((callback) => {
+			contract.getFairyIdsByBirthTime(callbackWrapper(callback));
+		});
+		
+		// 소유주에 의해 추가된 레벨이 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByAppendedLevel = self.getFairyIdsByAppendedLevel = func((callback) => {
+			contract.getFairyIdsByAppendedLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 HP 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByHPPointPerLevel = self.getFairyIdsByHPPointPerLevel = func((callback) => {
+			contract.getFairyIdsByHPPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 공격 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByAttackPointPerLevel = self.getFairyIdsByAttackPointPerLevel = func((callback) => {
+			contract.getFairyIdsByAttackPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 방어 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByDefensePointPerLevel = self.getFairyIdsByDefensePointPerLevel = func((callback) => {
+			contract.getFairyIdsByDefensePointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 민첩 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByAgilityPointPerLevel = self.getFairyIdsByAgilityPointPerLevel = func((callback) => {
+			contract.getFairyIdsByAgilityPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 재치 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByDexterityPointPerLevel = self.getFairyIdsByDexterityPointPerLevel = func((callback) => {
+			contract.getFairyIdsByDexterityPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 불 속성 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByFirePointPerLevel = self.getFairyIdsByFirePointPerLevel = func((callback) => {
+			contract.getFairyIdsByFirePointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 물 속성 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByWaterPointPerLevel = self.getFairyIdsByWaterPointPerLevel = func((callback) => {
+			contract.getFairyIdsByWaterPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 바람 속성 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByWindPointPerLevel = self.getFairyIdsByWindPointPerLevel = func((callback) => {
+			contract.getFairyIdsByWindPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 대지 속성 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByEarthPointPerLevel = self.getFairyIdsByEarthPointPerLevel = func((callback) => {
+			contract.getFairyIdsByEarthPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 빛 속성 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByLightPointPerLevel = self.getFairyIdsByLightPointPerLevel = func((callback) => {
+			contract.getFairyIdsByLightPointPerLevel(callbackWrapper(callback));
+		});
+		
+		// 레벨 당 어둠 속성 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
+		let getFairyIdsByDarkPointPerLevel = self.getFairyIdsByDarkPointPerLevel = func((callback) => {
+			contract.getFairyIdsByDarkPointPerLevel(callbackWrapper(callback));
 		});
 		
 		// 주어진 인터페이스가 구현되어 있는지 확인합니다.

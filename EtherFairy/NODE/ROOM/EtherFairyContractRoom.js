@@ -4,20 +4,74 @@ EtherFairy.EtherFairyContractRoom = OBJECT({
 		
 		EtherFairy.ROOM('EtherFairyContract', (clientInfo, on, off) => {
 			
-			on('getMasterCount', (notUsing, ret) => {
-				EtherFairy.EtherFairyContractController.getMasterCount(ret);
+			on('getFairyBasicInfo', (fairyId, ret) => {
+				if (fairyId !== undefined) {
+					EtherFairy.EtherFairyContractController.getFairyBasicInfo(fairyId, ret);
+				}
 			});
 			
-			on('getMasterAddress', (index, ret) => {
-				EtherFairy.EtherFairyContractController.getMasterAddress(index, ret);
+			on('getFairyBasicPointsPerLevel', (fairyId, ret) => {
+				if (fairyId !== undefined) {
+					EtherFairy.EtherFairyContractController.getFairyBasicPointsPerLevel(fairyId, ret);
+				}
 			});
 			
-			on('balanceOf', (master, ret) => {
-				EtherFairy.EtherFairyContractController.balanceOf(master, ret);
+			on('getFairyElementPointsPerLevel', (fairyId, ret) => {
+				if (fairyId !== undefined) {
+					EtherFairy.EtherFairyContractController.getFairyElementPointsPerLevel(fairyId, ret);
+				}
 			});
 			
-			on('getFairyId', (params, ret) => {
-				EtherFairy.EtherFairyContractController.getFairyId(params.master, params.index, ret);
+			on('getFairyIdsByBirthTime', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByBirthTime(ret);
+			});
+			
+			on('getFairyIdsByAppendedLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByAppendedLevel(ret);
+			});
+			
+			on('getFairyIdsByHPPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByHPPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByAttackPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByAttackPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByDefensePointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByDefensePointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByAgilityPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByAgilityPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByDexterityPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByDexterityPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByFirePointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByFirePointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByWaterPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByWaterPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByWindPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByWindPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByEarthPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByEarthPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByLightPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByLightPointPerLevel(ret);
+			});
+			
+			on('getFairyIdsByDarkPointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByDarkPointPerLevel(ret);
 			});
 		});
 	}

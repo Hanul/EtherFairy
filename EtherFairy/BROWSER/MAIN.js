@@ -7,6 +7,17 @@ EtherFairy.MAIN = METHOD({
 		style.innerHTML = '@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css); input[type="range"]::-webkit-slider-thumb { width:30px; height:30px; } * { font-family:\'Noto Sans KR\'; -webkit-tap-highlight-color:transparent; }';
 		document.getElementsByTagName('head')[0].appendChild(style);
 		
+		// 페이스북 SDK 로드
+		DIV().getEl().id = 'fb-root';
+		
+		(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.1&appId=1614859782072527&autoLogAppEvents=1';
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		
 		// 텍스트 번역을 위한 데이터
 		MSG.loadCSV(EtherFairy.R('text.csv'), () => {
 			

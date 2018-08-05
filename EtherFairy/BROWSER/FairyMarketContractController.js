@@ -17,12 +17,27 @@ EtherFairy.FairyMarketContractController = OBJECT({
 			};
 		};
 		
-		let callbackWrapper = (callback) => {
+		let callbackWrapper = (callbackOrHandlers) => {
+			
+			let callback;
+			let errorHandler;
+			
+			if (CHECK_IS_DATA(callbackOrHandlers) !== true) {
+				callback = callbackOrHandlers;
+			} else {
+				callback = callbackOrHandlers.success;
+				errorHandler = callbackOrHandlers.error;
+			}
+			
 			return (error, result) => {
 				
 				// 계약 실행 오류 발생
 				if (error !== TO_DELETE) {
-					EtherFairy.CreateContractErrorPopup(error.toString());
+					if (errorHandler !== undefined) {
+						errorHandler(error.toString());
+					} else {
+						alert(error.toString());
+					}
 				}
 				
 				// 정상 작동
@@ -32,7 +47,7 @@ EtherFairy.FairyMarketContractController = OBJECT({
 							result[i] = value.toNumber();
 						}
 					});
-					callback.apply(undefined, result);
+					callback(result);
 				}
 				
 				else {
@@ -40,6 +55,60 @@ EtherFairy.FairyMarketContractController = OBJECT({
 						result = result.toNumber();
 					}
 					callback(result);
+				}
+			};
+		};
+		
+		let transactionCallbackWrapper = (callbackOrHandlers) => {
+			
+			let callback;
+			let errorHandler;
+			
+			if (CHECK_IS_DATA(callbackOrHandlers) !== true) {
+				callback = callbackOrHandlers;
+			} else {
+				callback = callbackOrHandlers.success;
+				errorHandler = callbackOrHandlers.error;
+			}
+			
+			return (error, result) => {
+				
+				// 계약 실행 오류 발생
+				if (error !== TO_DELETE) {
+					if (errorHandler !== undefined) {
+						errorHandler(error.toString());
+					} else {
+						alert(error.toString());
+					}
+				}
+				
+				// 정상 작동
+				else {
+					
+					let retry = RAR(() => {
+						
+						web3.eth.getTransactionReceipt(result, (error, result) => {
+							
+							// 트랜잭선 오류 발생
+							if (error !== TO_DELETE) {
+								if (errorHandler !== undefined) {
+									errorHandler(error.toString());
+								} else {
+									alert(error.toString());
+								}
+							}
+							
+							// 아무런 값이 없으면 재시도
+							else if (result === TO_DELETE) {
+								retry();
+							}
+							
+							// 트랜잭션 완료
+							else {
+								callback();
+							}
+						});
+					});
 				}
 			};
 		};

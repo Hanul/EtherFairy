@@ -25,27 +25,17 @@ EtherFairy.Ranking = CLASS({
 		
 		let createFairyItem = (fairyOriginId, fairyName, birthTime, appendedLevel) => {
 			
-			console.log(fairyOriginId, fairyName, birthTime, appendedLevel);
+			//console.log(fairyOriginId, fairyName, birthTime, appendedLevel);
 		};
 		
 		// 지갑을 사용할 때는 스마트 계약을 사용한다.
 		if (EtherFairy.WalletManager.checkIsEnable() === true) {
 			
-			// 모든 소유주의 ID를 가져옵니다.
-			EtherFairy.EtherFairyContractController.getMasterCount((masterCount) => {
-				REPEAT(masterCount, (i) => {
-					EtherFairy.EtherFairyContractController.getMasterAddress(i, (master) => {
-						
-						// 모든 요정을 가져옵니다.
-						EtherFairy.EtherFairyContractController.balanceOf(master, (fairyCount) => {
-							REPEAT(fairyCount, (j) => {
-								EtherFairy.EtherFairyContractController.getFairyId(master, j, (fairyId) => {
-									
-									console.log(fairyId);
-								});
-							});
-						});
-					});
+			EtherFairy.EtherFairyContractController.getFairyIdsByBirthTime((fairyIds) => {
+				EACH(fairyIds, (fairyId) => {
+					EtherFairy.EtherFairyContractController.getFairyBasicInfo(fairyId, console.log);
+					EtherFairy.EtherFairyContractController.getFairyBasicPointsPerLevel(fairyId, console.log);
+					EtherFairy.EtherFairyContractController.getFairyElementPointsPerLevel(fairyId, console.log);
 				});
 			});
 		}
@@ -54,32 +44,20 @@ EtherFairy.Ranking = CLASS({
 		else {
 			
 			// 모든 소유주의 ID를 가져옵니다.
-			etherFairyContractRoom.send('getMasterCount', (masterCount) => {
-				REPEAT(masterCount, (i) => {
+			etherFairyContractRoom.send('getFairyIdsByBirthTime', (fairyIds) => {
+				EACH(fairyIds, (fairyId) => {
 					etherFairyContractRoom.send({
-						methodName : 'getMasterAddress',
-						data : i
-					}, (master) => {
-						
-						// 모든 요정을 가져옵니다.
-						etherFairyContractRoom.send({
-							methodName : 'balanceOf',
-							data : master
-						}, (fairyCount) => {
-							REPEAT(fairyCount, (j) => {
-								etherFairyContractRoom.send({
-									methodName : 'getFairyId',
-									data : {
-										master : master,
-										index : j
-									}
-								}, (fairyId) => {
-									
-									console.log(fairyId);
-								});
-							});
-						});
-					});
+						methodName : 'getFairyIdsByBirthTime',
+						data : fairyId
+					}, console.log);
+					etherFairyContractRoom.send({
+						methodName : 'getFairyBasicPointsPerLevel',
+						data : fairyId
+					}, console.log);
+					etherFairyContractRoom.send({
+						methodName : 'getFairyElementPointsPerLevel',
+						data : fairyId
+					}, console.log);
 				});
 			});
 		}
