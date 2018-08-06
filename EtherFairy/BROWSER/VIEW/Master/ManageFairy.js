@@ -6,20 +6,103 @@ EtherFairy('Master').ManageFairy = CLASS({
 	
 	init : (inner, self) => {
 		
+		let fairyList;
+		
 		EtherFairy.Layout.setContent(DIV({
 			style : {
 				padding : 10
 			},
 			c : [
-			
-			P({
-				c : 'test'
+			fairyList = DIV({
+				style : {
+					margin : 'auto',
+					width : 930,
+					paddingLeft : 10
+				},
+				c : IMG({
+					style : {
+						width : 100
+					},
+					src : EtherFairy.R('loading.gif')
+				})
 			})]
 		}));
 		
-		let createFairyItem = (fairyOriginId, fairyName, birthTime, appendedLevel) => {
+		let createFairyPanel = () => {
+			return DIV({
+				style : {
+					flt : 'left',
+					marginTop : 10,
+					marginRight : 10,
+					width : 300,
+					backgroundColor : '#fff',
+					borderRadius : 6,
+					boxShadow : '0 0 5px rgba(0,0,0,0.5)',
+					cursor : 'pointer'
+				},
+				c : IMG({
+					src : EtherFairy.R('loadingwhite.gif')
+				})
+			}).appendTo(fairyList);
+		};
+		
+		let addFairyInfoToPanel = (fairyPanel, fairyId, fairyInfo) => {
 			
-			console.log(fairyOriginId, fairyName, birthTime, appendedLevel);
+			EtherFairy.FairyOriginModel.get(fairyInfo.fairyOriginId, (fairyOriginData) => {
+				fairyPanel.empty();
+				
+				fairyPanel.append(DIV({
+					style : {
+						height : 400,
+						borderRadius : '6px 6px 0 0',
+						backgroundImage : EtherFairy.RF(fairyOriginData.imageFileId),
+						backgroundSize : 'cover',
+						backgroundRepeat : 'no-repeat',
+						backgroundPosition : 'center center'
+					}
+				}));
+				
+				fairyPanel.append(DIV({
+					style : {
+						backgroundColor : '#222'
+					},
+					c : [P({
+						c : MSG('FAIRY_ORIGIN_NAME') + ' : ' + fairyOriginData.name
+					}), P({
+						c : MSG('FAIRY_NAME') + ' : ' + fairyInfo.name
+					}), P({
+						c : MSG('BIRTHDAY') + ' : ' + fairyInfo.birthTime
+					}), P({
+						c : MSG('APPENDED_LEVEL') + ' : ' + fairyInfo.appendedLevel
+					}), P({
+						c : MSG('HP_POINT_PER_LEVEL') + ' : ' + fairyInfo.hpPointPerLevel
+					}), P({
+						c : MSG('ATTACK_POINT_PER_LEVEL') + ' : ' + fairyInfo.attackPointPerLevel
+					}), P({
+						c : MSG('DEFENCE_POINT_PER_LEVEL') + ' : ' + fairyInfo.defensePointPerLevel
+					}), P({
+						c : MSG('AGILITY_POINT_PER_LEVEL') + ' : ' + fairyInfo.agilityPointPerLevel
+					}), P({
+						c : MSG('DEXTERITY_POINT_PER_LEVEL') + ' : ' + fairyInfo.dexterityPointPerLevel
+					}), P({
+						c : MSG('FIRE_POINT_PER_LEVEL') + ' : ' + fairyInfo.firePointPerLevel
+					}), P({
+						c : MSG('WATER_POINT_PER_LEVEL') + ' : ' + fairyInfo.waterPointPerLevel
+					}), P({
+						c : MSG('WIND_POINT_PER_LEVEL') + ' : ' + fairyInfo.windPointPerLevel
+					}), P({
+						c : MSG('EARTH_POINT_PER_LEVEL') + ' : ' + fairyInfo.earthPointPerLevel
+					}), P({
+						c : MSG('LIGHT_POINT_PER_LEVEL') + ' : ' + fairyInfo.lightPointPerLevel
+					}), P({
+						c : MSG('DARK_POINT_PER_LEVEL') + ' : ' + fairyInfo.darkPointPerLevel
+					})]
+				}));
+				
+				fairyPanel.on('tap', () => {
+					EtherFairy.GO('fairy/' + fairyId);
+				});
+			});
 		};
 		
 		if (EtherFairy.WalletManager.checkIsLocked() !== true) {
@@ -30,58 +113,59 @@ EtherFairy('Master').ManageFairy = CLASS({
 				},
 				success : () => {
 					
-					// 계약 생성
-					let contract = web3.eth.contract(EtherFairy.SmartContractABI).at(EtherFairy.SmartContractAddress);
-					
-					contract.balanceOf(EtherFairy.WalletManager.getWalletAddress(), (error, result) => {
+					EtherFairy.EtherFairyContractController.balanceOf(EtherFairy.WalletManager.getWalletAddress(), (fairyCount) => {
 						
-						// 계약 실행 오류 발생
-						if (error !== TO_DELETE) {
-							alert(error.toString());
-						}
+						fairyList.empty();
 						
-						// 정상 작동
-						else {
+						REPEAT(fairyCount, (i) => {
 							
-							let fairyCount = result.toNumber();
+							let fairyPanel = createFairyPanel();
 							
-							REPEAT(fairyCount, (i) => {
+							EtherFairy.EtherFairyContractController.getFairyId(EtherFairy.WalletManager.getWalletAddress(), i, (fairyId) => {
 								
-								contract.masterToFairyIds(EtherFairy.WalletManager.getWalletAddress(), i, (error, result) => {
+								let fairyInfo = {};
+								PARALLEL([
+								(done) => {
+									EtherFairy.EtherFairyContractController.getFairyBasicInfo(fairyId, (basicInfo) => {
+										fairyInfo.fairyOriginId = basicInfo[0];
+										fairyInfo.name = basicInfo[1];
+										fairyInfo.birthTime = basicInfo[2];
+										fairyInfo.appendedLevel = basicInfo[3];
+										done();
+									});
+								},
+								
+								(done) => {
+									EtherFairy.EtherFairyContractController.getFairyBasicPointsPerLevel(fairyId, (pointsPerLevel) => {
+										fairyInfo.hpPointPerLevel = pointsPerLevel[0];
+										fairyInfo.attackPointPerLevel = pointsPerLevel[1];
+										fairyInfo.defensePointPerLevel = pointsPerLevel[2];
+										fairyInfo.agilityPointPerLevel = pointsPerLevel[3];
+										fairyInfo.dexterityPointPerLevel = pointsPerLevel[4];
+										done();
+									});
+								},
+								
+								(done) => {
 									
-									// 계약 실행 오류 발생
-									if (error !== TO_DELETE) {
-										alert(error.toString());
-									}
-									
-									// 정상 작동
-									else {
-										
-										let fairyId = result.toNumber();
-										
-										contract.getFairyBasicInfo(fairyId, (error, result) => {
-											
-											// 계약 실행 오류 발생
-											if (error !== TO_DELETE) {
-												alert(error.toString());
-											}
-											
-											// 정상 작동
-											else {
-												
-												EACH(result, (value, i) => {
-													if (value.toNumber !== undefined) {
-														result[i] = value.toNumber();
-													}
-												});
-												
-												createFairyItem.apply(undefined, result);
-											}
-										});
-									}
-								});
+									EtherFairy.EtherFairyContractController.getFairyElementPointsPerLevel(fairyId, (pointsPerLevel) => {
+										fairyInfo.firePointPerLevel = pointsPerLevel[0];
+										fairyInfo.waterPointPerLevel = pointsPerLevel[1];
+										fairyInfo.windPointPerLevel = pointsPerLevel[2];
+										fairyInfo.earthPointPerLevel = pointsPerLevel[3];
+										fairyInfo.lightPointPerLevel = pointsPerLevel[4];
+										fairyInfo.darkPointPerLevel = pointsPerLevel[5];
+										done();
+									});
+								},
+								
+								() => {
+									addFairyInfoToPanel(fairyPanel, fairyId, fairyInfo);
+								}]);
 							});
-						}	
+						});
+						
+						fairyList.append(CLEAR_BOTH());
 					});
 				}
 			});

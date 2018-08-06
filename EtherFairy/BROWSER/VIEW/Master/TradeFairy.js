@@ -12,6 +12,15 @@ EtherFairy('Master').TradeFairy = CLASS({
 			},
 			c : [
 			
+			A({
+				c : MSG('START_TRADE_FAIRY'),
+				on : {
+					tap : () => {
+						EtherFairy.GO('master/starttradefairy');
+					}
+				}
+			}),
+			
 			P({
 				c : 'test'
 			})]

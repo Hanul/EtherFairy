@@ -48,6 +48,12 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Ranking
 			});
 			
+			// 요정 정보 보기
+			EtherFairy.MATCH_VIEW({
+				uri : 'fairy/{fairyId}',
+				target : EtherFairy.Fairy
+			});
+			
 			// 소유주로 가입하기 화면
 			EtherFairy.MATCH_VIEW({
 				uri : 'master/join',
