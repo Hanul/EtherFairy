@@ -128,59 +128,64 @@ EtherFairy.EtherFairyContractController = OBJECT({
 			contract.tokenURI(fairyId, callbackWrapper(callback));
 		});
 		
+		// 회사의 지갑 주소를 반환합니다.
+		let getCompanyAddress = self.getCompanyAddress = func((callback) => {
+			contract.company(callbackWrapper(callback));
+		});
+		
 		// 소유권을 이전합니다.
 		let transferOwnership = self.transferOwnership = func((newCompany, callback) => {
-			contract.transferOwnership(newCompany, callbackWrapper(callback));
+			contract.transferOwnership(newCompany, transactionCallbackWrapper(callback));
 		});
 		
 		// 서비스의 작동을 중지합니다.
 		let pauseService = self.pauseService = func((callback) => {
-			contract.pauseService(callbackWrapper(callback));
+			contract.pauseService(transactionCallbackWrapper(callback));
 		});
 		
 		// 서비스를 재개합니다.
 		let resumeService = self.resumeService = func((callback) => {
-			contract.resumeService(callbackWrapper(callback));
+			contract.resumeService(transactionCallbackWrapper(callback));
 		});
 		
 		// 요정 원본의 가격을 변경합니다.
 		let changeFairyOriginPrice = self.changeFairyOriginPrice = func((newFairyOriginPrice, callback) => {
-			contract.changeFairyOriginPrice(newFairyOriginPrice, callbackWrapper(callback));
+			contract.changeFairyOriginPrice(web3.toWei(newFairyOriginPrice, 'ether'), transactionCallbackWrapper(callback));
 		});
 		
 		// 임의 레벨업 가격을 변경합니다.
 		let changeCustomLevelUpPrice = self.changeCustomLevelUpPrice = func((newCustomLevelUpPrice, callback) => {
-			contract.changeCustomLevelUpPrice(newCustomLevelUpPrice, callbackWrapper(callback));
+			contract.changeCustomLevelUpPrice(web3.toWei(newCustomLevelUpPrice, 'ether'), callbackWrapper(callback));
 		});
 		
 		// 임의로 포인트를 증가시키는데 드는 포인트당 가격을 변경합니다.
 		let changeIncreasePointPricePerPoint = self.changeIncreasePointPricePerPoint = func((newIncreasePointPricePerPoint, callback) => {
-			contract.changeIncreasePointPricePerPoint(newIncreasePointPricePerPoint, callbackWrapper(callback));
+			contract.changeIncreasePointPricePerPoint(web3.toWei(newIncreasePointPricePerPoint, 'ether'), callbackWrapper(callback));
 		});
 		
 		// tokenMetadataBaseURI을 변경합니다.
 		let changeTokenMetadataBaseURI = self.changeTokenMetadataBaseURI = func((newTokenMetadataBaseURI, callback) => {
-			contract.changeTokenMetadataBaseURI(newTokenMetadataBaseURI, callbackWrapper(callback));
+			contract.changeTokenMetadataBaseURI(newTokenMetadataBaseURI, transactionCallbackWrapper(callback));
 		});
 		
 		// 특정 소유주를 차단합니다.
 		let blockMaster = self.blockMaster = func((masterToBlock, callback) => {
-			contract.blockMaster(masterToBlock, callbackWrapper(callback));
+			contract.blockMaster(masterToBlock, transactionCallbackWrapper(callback));
 		});
 		
 		// 특정 요정을 차단합니다.
 		let blockFairy = self.blockFairy = func((fairyIdToBlock, callback) => {
-			contract.blockFairy(fairyIdToBlock, callbackWrapper(callback));
+			contract.blockFairy(fairyIdToBlock, transactionCallbackWrapper(callback));
 		});
 		
 		// 소유주 차단을 해제합니다.
 		let unblockMaster = self.unblockMaster = func((masterToBlock, callback) => {
-			contract.unblockMaster(masterToBlock, callbackWrapper(callback));
+			contract.unblockMaster(masterToBlock, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정 차단을 해제합니다.
 		let unblockFairy = self.unblockFairy = func((fairyIdToBlock, callback) => {
-			contract.unblockFairy(fairyIdToBlock, callbackWrapper(callback));
+			contract.unblockFairy(fairyIdToBlock, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정의 개수를 가져옵니다.
@@ -235,62 +240,86 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		
 		// 돈을 지불하고 레벨업 합니다.
 		let levelUpFairy = self.levelUpFairy = func((fairyId, callback) => {
-			contract.levelUpFairy(fairyId, callbackWrapper(callback));
+			contract.levelUpFairy(fairyId, {
+				value : web3.toWei(0.01, 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 HP 증가 포인트를 올립니다.
-		let increaseHPPointPerLevel = self.increaseHPPointPerLevel = func((fairyId, callback) => {
-			contract.increaseHPPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseHPPointPerLevel = self.increaseHPPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseHPPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * now, 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 공격 증가 포인트를 올립니다.
-		let increaseAttackPointPerLevel = self.increaseAttackPointPerLevel = func((fairyId, callback) => {
-			contract.increaseAttackPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseAttackPointPerLevel = self.increaseAttackPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseAttackPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * now, 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 방어 증가 포인트를 올립니다.
-		let increaseDefensePointPerLevel = self.increaseDefensePointPerLevel = func((fairyId, callback) => {
-			contract.increaseDefensePointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseDefensePointPerLevel = self.increaseDefensePointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseDefensePointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * now, 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 민첩 증가 포인트를 올립니다.
-		let increaseAgilityPointPerLevel = self.increaseAgilityPointPerLevel = func((fairyId, callback) => {
-			contract.increaseAgilityPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseAgilityPointPerLevel = self.increaseAgilityPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseAgilityPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * now, 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 재치 증가 포인트를 올립니다.
-		let increaseDexterityPointPerLevel = self.increaseDexterityPointPerLevel = func((fairyId, callback) => {
-			contract.increaseDexterityPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseDexterityPointPerLevel = self.increaseDexterityPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseDexterityPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * now, 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 불 속성 증가 포인트를 올립니다.
-		let increaseFirePointPerLevel = self.increaseFirePointPerLevel = func((fairyId, callback) => {
-			contract.increaseFirePointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseFirePointPerLevel = self.increaseFirePointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseFirePointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * (now + 1), 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 물 속성 증가 포인트를 올립니다.
-		let increaseWaterPointPerLevel = self.increaseWaterPointPerLevel = func((fairyId, callback) => {
-			contract.increaseWaterPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseWaterPointPerLevel = self.increaseWaterPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseWaterPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * (now + 1), 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 바람 속성 증가 포인트를 올립니다.
-		let increaseWindPointPerLevel = self.increaseWindPointPerLevel = func((fairyId, callback) => {
-			contract.increaseWindPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseWindPointPerLevel = self.increaseWindPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseWindPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * (now + 1), 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 대지 속성 증가 포인트를 올립니다.
-		let increaseEarthPointPerLevel = self.increaseEarthPointPerLevel = func((fairyId, callback) => {
-			contract.increaseEarthPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseEarthPointPerLevel = self.increaseEarthPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseEarthPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * (now + 1), 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 빛 속성 증가 포인트를 올립니다.
-		let increaseLightPointPerLevel = self.increaseLightPointPerLevel = func((fairyId, callback) => {
-			contract.increaseLightPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseLightPointPerLevel = self.increaseLightPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseLightPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * (now + 1), 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 돈을 지불하고 레벨 당 어둠 속성 증가 포인트를 올립니다.
-		let increaseDarkPointPerLevel = self.increaseDarkPointPerLevel = func((fairyId, callback) => {
-			contract.increaseDarkPointPerLevel(fairyId, callbackWrapper(callback));
+		let increaseDarkPointPerLevel = self.increaseDarkPointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseDarkPointPerLevel(fairyId, {
+				value : web3.toWei(0.01 * (now + 1), 'ether')
+			}, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정을 탄생시킵니다.
@@ -302,7 +331,7 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		
 		// 요정의 이름을 변경합니다.
 		let changeFairyName = self.changeFairyName = func((fairyId, newName, callback) => {
-			contract.changeFairyName(fairyId, newName, callbackWrapper(callback));
+			contract.changeFairyName(fairyId, newName, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정의 개수를 반환합니다.

@@ -122,7 +122,11 @@ EtherFairy.Start = CLASS({
 						
 						else {
 							
-							EtherFairy.MasterModel.checkExists(EtherFairy.WalletManager.getWalletAddress(), (exists) => {
+							EtherFairy.MasterModel.checkExists({
+								filter : {
+									id : EtherFairy.WalletManager.getWalletAddress()
+								}
+							}, (exists) => {
 								
 								if (exists === true) {
 									EtherFairy.REFRESH('master');

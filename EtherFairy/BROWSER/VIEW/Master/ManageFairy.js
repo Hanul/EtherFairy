@@ -79,7 +79,7 @@ EtherFairy('Master').ManageFairy = CLASS({
 					}), P({
 						c : MSG('ATTACK_POINT_PER_LEVEL') + ' : ' + fairyInfo.attackPointPerLevel
 					}), P({
-						c : MSG('DEFENCE_POINT_PER_LEVEL') + ' : ' + fairyInfo.defensePointPerLevel
+						c : MSG('DEFENSE_POINT_PER_LEVEL') + ' : ' + fairyInfo.defensePointPerLevel
 					}), P({
 						c : MSG('AGILITY_POINT_PER_LEVEL') + ' : ' + fairyInfo.agilityPointPerLevel
 					}), P({

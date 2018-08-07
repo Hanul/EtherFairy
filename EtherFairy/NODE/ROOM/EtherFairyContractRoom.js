@@ -73,6 +73,10 @@ EtherFairy.EtherFairyContractRoom = OBJECT({
 			on('getFairyIdsByDarkPointPerLevel', (notUsing, ret) => {
 				EtherFairy.EtherFairyContractController.getFairyIdsByDarkPointPerLevel(ret);
 			});
+			
+			on('getFairyCount', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyCount(ret);
+			});
 		});
 	}
 });

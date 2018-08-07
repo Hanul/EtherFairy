@@ -6,6 +6,8 @@ EtherFairy.Home = CLASS({
 	
 	init : (inner, self) => {
 		
+		TITLE(MSG('TITLE'));
+		
 		let tokenInfoPanel;
 		let newsPanel;
 		let contactPanel;

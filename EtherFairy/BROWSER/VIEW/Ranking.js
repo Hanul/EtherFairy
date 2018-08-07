@@ -8,6 +8,7 @@ EtherFairy.Ranking = CLASS({
 		
 		let etherFairyContractRoom = EtherFairy.ROOM('EtherFairyContract');
 		
+		let totalFairyInfoPanel;
 		let fairyList;
 		
 		EtherFairy.Layout.setContent(DIV({
@@ -15,6 +16,7 @@ EtherFairy.Ranking = CLASS({
 				padding : 10
 			},
 			c : [
+			totalFairyInfoPanel = DIV(),
 			fairyList = DIV({
 				style : {
 					margin : 'auto',
@@ -81,7 +83,7 @@ EtherFairy.Ranking = CLASS({
 					}), P({
 						c : MSG('ATTACK_POINT_PER_LEVEL') + ' : ' + fairyInfo.attackPointPerLevel
 					}), P({
-						c : MSG('DEFENCE_POINT_PER_LEVEL') + ' : ' + fairyInfo.defensePointPerLevel
+						c : MSG('DEFENSE_POINT_PER_LEVEL') + ' : ' + fairyInfo.defensePointPerLevel
 					}), P({
 						c : MSG('AGILITY_POINT_PER_LEVEL') + ' : ' + fairyInfo.agilityPointPerLevel
 					}), P({
@@ -109,6 +111,10 @@ EtherFairy.Ranking = CLASS({
 		
 		// 지갑을 사용할 때는 스마트 계약을 사용한다.
 		if (EtherFairy.WalletManager.checkIsEnable() === true) {
+			
+			EtherFairy.EtherFairyContractController.getFairyCount((fairyCount) => {
+				totalFairyInfoPanel.append(MSG('TOTAL_FAIRY_COUNT') + ' : ' + fairyCount);
+			});
 			
 			EtherFairy.EtherFairyContractController.getFairyIdsByBirthTime((fairyIds) => {
 				
@@ -165,6 +171,10 @@ EtherFairy.Ranking = CLASS({
 		
 		// 지갑을 사용할 수 없을때는 서버에서 가져온다.
 		else {
+			
+			etherFairyContractRoom.send('getFairyCount', (fairyCount) => {
+				totalFairyInfoPanel.append(MSG('TOTAL_FAIRY_COUNT') + ' : ' + fairyCount);
+			});
 			
 			// 모든 소유주의 ID를 가져옵니다.
 			etherFairyContractRoom.send('getFairyIdsByBirthTime', (fairyIds) => {

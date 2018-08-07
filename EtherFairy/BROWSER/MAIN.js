@@ -21,8 +21,6 @@ EtherFairy.MAIN = METHOD({
 		// 텍스트 번역을 위한 데이터
 		MSG.loadCSV(EtherFairy.R('text.csv'), () => {
 			
-			TITLE(MSG('TITLE'));
-			
 			EtherFairy.MATCH_VIEW({
 				uri : '**',
 				target : EtherFairy.Layout
@@ -118,6 +116,12 @@ EtherFairy.MAIN = METHOD({
 			EtherFairy.MATCH_VIEW({
 				uri : 'fairyorigin/{fairyOriginId}',
 				target : EtherFairy.FairyOrigin
+			});
+			
+			// 서비스 관리 페이지
+			EtherFairy.MATCH_VIEW({
+				uri : 'company/manageservice',
+				target : EtherFairy.Company.ManageService
 			});
 		});
 	}
