@@ -113,34 +113,61 @@ EtherFairy.FairyMarketContractController = OBJECT({
 			};
 		};
 		
+		// 회사의 지갑 주소를 반환합니다.
+		let getCompanyAddress = self.getCompanyAddress = func((callback) => {
+			contract.company(callbackWrapper(callback));
+		});
+		
 		// 소유권을 이전합니다.
 		let transferOwnership = self.transferOwnership = func((newCompany, callback) => {
-			contract.transferOwnership(newCompany, callbackWrapper(callback));
+			contract.transferOwnership(newCompany, transactionCallbackWrapper(callback));
 		});
 		
 		// 마켓의 작동을 중지합니다.
 		let pauseMarket = self.pauseMarket = func((callback) => {
-			contract.pauseMarket(callbackWrapper(callback));
+			contract.pauseMarket(transactionCallbackWrapper(callback));
 		});
 		
 		// 마켓을 재개합니다.
 		let resumeMarket = self.resumeMarket = func((callback) => {
-			contract.resumeMarket(callbackWrapper(callback));
+			contract.resumeMarket(transactionCallbackWrapper(callback));
+		});
+		
+		// 요정 판매 개수를 가져옵니다.
+		let getSaleCount = self.getSaleCount = func((callback) => {
+			contract.getSaleCount(callbackWrapper(callback));
+		});
+		
+		// 요정 판매 정보를 가져옵니다.
+		let getSaleInfo = self.getSaleInfo = func((saleId, callback) => {
+			contract.sales(saleId, callbackWrapper(callback));
 		});
 		
 		// 요정 판매를 시작합니다.
 		let startSale = self.startSale = func((fairyId, price, callback) => {
-			contract.startSale(fairyId, price, callbackWrapper(callback));
+			contract.startSale(fairyId, web3.toWei(price, 'ether'), transactionCallbackWrapper(callback));
+		});
+		
+		// 요정이 판매되고 있는지 확인합니다.
+		let checkFairyForSale = self.checkFairyForSale = func((fairyId, callback) => {
+			contract.checkFairyForSale(fairyId, callbackWrapper(callback));
+		});
+		
+		// 요정 ID로 판매 정보 ID를 가져옵니다.
+		let findSaleIdByFairyId = self.findSaleIdByFairyId = func((fairyId, callback) => {
+			contract.findSaleIdByFairyId(fairyId, callbackWrapper(callback));
 		});
 		
 		// 요정 판매를 취소합니다.
 		let cancelSale = self.cancelSale = func((fairyId, callback) => {
-			contract.cancelSale(fairyId, callbackWrapper(callback));
+			contract.cancelSale(fairyId, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정을 구매합니다.
-		let buy = self.buy = func((fairyId, callback) => {
-			contract.buy(fairyId, callbackWrapper(callback));
+		let buy = self.buy = func((fairyId, price, callback) => {
+			contract.buy(fairyId, {
+				value : price
+			}, transactionCallbackWrapper(callback));
 		});
 	}
 });

@@ -13,7 +13,7 @@ EtherFairy.Fairy = CLASS({
 			let fairyId = params.fairyId;
 			
 			let fairyPanel;
-			let ownerMenu;
+			let menu;
 			EtherFairy.Layout.setContent(DIV({
 				style : {
 					padding : 10
@@ -32,7 +32,7 @@ EtherFairy.Fairy = CLASS({
 					})
 				}),
 				
-				ownerMenu = DIV({
+				menu = DIV({
 					style : {
 						marginLeft : 10,
 						flt : 'left'
@@ -144,12 +144,71 @@ EtherFairy.Fairy = CLASS({
 					console.log(tokenURI);
 				});
 				
+				// 판매중인지 확인하고 판매자면 판매 취소가 가능하도록 합니다.
+				EtherFairy.FairyMarketContractController.checkFairyForSale(fairyId, (forSale) => {
+					if (forSale === true) {
+						
+						EtherFairy.FairyMarketContractController.findSaleIdByFairyId(fairyId, (saleId) => {
+							EtherFairy.FairyMarketContractController.getSaleInfo(saleId, (saleInfo) => {
+								
+								let seller = saleInfo[0];
+								let fairyId = saleInfo[1];
+								let price = saleInfo[2];
+								
+								if (EtherFairy.WalletManager.getWalletAddress() === seller) {
+									
+									menu.append(DIV({
+										c : A({
+											c : MSG('CANCEL_TRADE'),
+											on : {
+												tap : () => {
+													
+													Yogurt.Confirm({
+														msg : MSG('REALLY_CANCEL_PROMPT')
+													}, () => {
+														
+														EtherFairy.FairyMarketContractController.cancelSale(fairyId, () => {
+															EtherFairy.REFRESH('fairy/' + fairyId);
+														});
+													});
+												}
+											}
+										})
+									}));
+								}
+								
+								else {
+									
+									menu.append(DIV({
+										c : A({
+											c : MSG('BUY_TRADE_FAIRY'),
+											on : {
+												tap : () => {
+													
+													Yogurt.Confirm({
+														msg : MSG('REALLY_BUY_TRADE_FAIRY_PROMPT')
+													}, () => {
+														
+														EtherFairy.FairyMarketContractController.buy(fairyId, price, () => {
+															EtherFairy.REFRESH('fairy/' + fairyId);
+														});
+													});
+												}
+											}
+										})
+									}));
+								}
+							});
+						});
+					}
+				});
+				
 				// 만약 소유주면 소유주 메뉴를 추가합니다.
 				EtherFairy.EtherFairyContractController.ownerOf(fairyId, (ownerAddress) => {
 					
 					if (EtherFairy.WalletManager.getWalletAddress() === ownerAddress) {
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('CHANGE_NAME'),
 								on : {
@@ -166,7 +225,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('CUSTOM_LEVEL_UP') + ' (0.01 Ether)',
 								on : {
@@ -179,7 +238,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_HP_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -192,7 +251,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_ATTACK_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -205,7 +264,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_DEFENSE_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -218,7 +277,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_AGILITY_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -231,7 +290,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_DEXTERITY_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -244,7 +303,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_FIRE_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -257,7 +316,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_WATER_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -270,7 +329,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_WIND_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -283,7 +342,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_EARTH_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -296,7 +355,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_LIGHT_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -309,7 +368,7 @@ EtherFairy.Fairy = CLASS({
 							})
 						}));
 						
-						ownerMenu.append(DIV({
+						menu.append(DIV({
 							c : A({
 								c : MSG('INCREASE_DARK_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
@@ -332,7 +391,7 @@ EtherFairy.Fairy = CLASS({
 				PARALLEL([
 				(done) => {
 					etherFairyContractRoom.send({
-						methodName : 'getFairyIdsByBirthTime',
+						methodName : 'getFairyBasicInfo',
 						data : fairyId
 					}, (basicInfo) => {
 						fairyInfo.fairyOriginId = basicInfo[0];

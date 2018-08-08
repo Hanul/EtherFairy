@@ -82,6 +82,11 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Master.TradeFairy
 			});
 			
+			EtherFairy.MATCH_VIEW({
+				uri : 'master/starttradefairy',
+				target : EtherFairy.Master.StartTradeFairy
+			});
+			
 			// 디자이너로 시작하기 화면
 			EtherFairy.MATCH_VIEW({
 				uri : 'designer/start',

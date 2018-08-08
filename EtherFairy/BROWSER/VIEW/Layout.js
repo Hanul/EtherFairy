@@ -101,7 +101,7 @@ EtherFairy.Layout = CLASS((cls) => {
 					title : A({
 						c : IMG({
 							style : {
-								marginTop : -30,
+								marginTop : -10,
 								width : 192
 							},
 							src : EtherFairy.R('logo.png')

@@ -9,6 +9,7 @@ EtherFairy('Company').ManageService = CLASS({
 		TITLE('Ether Fairy 관리자 페이지');
 		
 		let menu;
+		let marketMenu;
 		EtherFairy.Layout.setContent(DIV({
 			style : {
 				padding : 10
@@ -25,7 +26,9 @@ EtherFairy('Company').ManageService = CLASS({
 				c : '서비스 관리 페이지'
 			}),
 			
-			menu = DIV()
+			menu = DIV(),
+			
+			marketMenu = DIV()
 			]
 		}));
 		
@@ -121,7 +124,7 @@ EtherFairy('Company').ManageService = CLASS({
 				
 				menu.append(DIV({
 					c : A({
-						c : ' tokenMetadataBaseURI 변경',
+						c : 'tokenMetadataBaseURI 변경',
 						on : {
 							tap : () => {
 								EtherFairy.EtherFairyContractController.changeTokenMetadataBaseURI('test', () => {
@@ -130,11 +133,24 @@ EtherFairy('Company').ManageService = CLASS({
 							}
 						}
 					})
-				}));
+				}));*/
 				
 				menu.append(DIV({
 					c : A({
-						c : ' 특정 소유주 차단',
+						c : '공식 마켓 변경',
+						on : {
+							tap : () => {
+								EtherFairy.EtherFairyContractController.changeOfficialMarket('0xf24b105b734e0c3b68f8a0bbd85cccdafb919f2f', () => {
+									console.log('Done');
+								});
+							}
+						}
+					})
+				}));
+				
+				/*menu.append(DIV({
+					c : A({
+						c : '특정 소유주 차단',
 						on : {
 							tap : () => {
 								EtherFairy.EtherFairyContractController.blockMaster('0x17a4823037b71aDFE8F5bE1246404B1b14Ae1195', () => {
@@ -147,7 +163,7 @@ EtherFairy('Company').ManageService = CLASS({
 				
 				menu.append(DIV({
 					c : A({
-						c : ' 특정 소유주 차단 해제',
+						c : '특정 소유주 차단 해제',
 						on : {
 							tap : () => {
 								EtherFairy.EtherFairyContractController.unblockMaster('0x17a4823037b71aDFE8F5bE1246404B1b14Ae1195', () => {
@@ -160,7 +176,7 @@ EtherFairy('Company').ManageService = CLASS({
 				
 				menu.append(DIV({
 					c : A({
-						c : ' 특정 요정 차단',
+						c : '특정 요정 차단',
 						on : {
 							tap : () => {
 								EtherFairy.EtherFairyContractController.blockFairy(1, () => {
@@ -173,7 +189,7 @@ EtherFairy('Company').ManageService = CLASS({
 				
 				menu.append(DIV({
 					c : A({
-						c : ' 특정 요정 차단 해제',
+						c : '특정 요정 차단 해제',
 						on : {
 							tap : () => {
 								EtherFairy.EtherFairyContractController.unblockFairy(1, () => {
@@ -183,6 +199,52 @@ EtherFairy('Company').ManageService = CLASS({
 						}
 					})
 				}));*/
+			}
+		});
+		
+		
+		EtherFairy.FairyMarketContractController.getCompanyAddress((companyAddress) => {
+			
+			if (EtherFairy.WalletManager.getWalletAddress() === companyAddress) {
+				
+				marketMenu.append(DIV({
+					c : A({
+						c : '마켓 소유권 이전',
+						on : {
+							tap : () => {
+								EtherFairy.FairyMarketContractController.transferOwnership('0xEcCFaA737a5A80bE37e4E70130628E692413cB36', () => {
+									console.log('Done');
+								});
+							}
+						}
+					})
+				}));
+				
+				marketMenu.append(DIV({
+					c : A({
+						c : '마켓 일시정지',
+						on : {
+							tap : () => {
+								EtherFairy.FairyMarketContractController.pauseMarket(() => {
+									console.log('Done');
+								});
+							}
+						}
+					})
+				}));
+				
+				marketMenu.append(DIV({
+					c : A({
+						c : '마켓 재개',
+						on : {
+							tap : () => {
+								EtherFairy.FairyMarketContractController.resumeMarket(() => {
+									console.log('Done');
+								});
+							}
+						}
+					})
+				}));
 			}
 		});
 	}

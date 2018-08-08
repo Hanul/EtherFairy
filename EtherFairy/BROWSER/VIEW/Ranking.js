@@ -189,7 +189,7 @@ EtherFairy.Ranking = CLASS({
 					PARALLEL([
 					(done) => {
 						etherFairyContractRoom.send({
-							methodName : 'getFairyIdsByBirthTime',
+							methodName : 'getFairyBasicInfo',
 							data : fairyId
 						}, (basicInfo) => {
 							fairyInfo.fairyOriginId = basicInfo[0];

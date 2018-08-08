@@ -168,6 +168,11 @@ EtherFairy.EtherFairyContractController = OBJECT({
 			contract.changeTokenMetadataBaseURI(newTokenMetadataBaseURI, transactionCallbackWrapper(callback));
 		});
 		
+		// 공식 마켓 계약을 변경합니다.
+		let changeOfficialMarket = self.changeOfficialMarket = func((officialMarket, callback) => {
+			contract.changeOfficialMarket(officialMarket, transactionCallbackWrapper(callback));
+		});
+		
 		// 특정 소유주를 차단합니다.
 		let blockMaster = self.blockMaster = func((masterToBlock, callback) => {
 			contract.blockMaster(masterToBlock, transactionCallbackWrapper(callback));
@@ -205,27 +210,27 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		
 		// 요정을 받는 대상이 스마트 계약인 경우, onERC721Received 함수를 실행합니다.
 		let safeTransferFromData = self.safeTransferFromData = func((from, to, fairyId, data, callback) => {
-			contract.safeTransferFrom(from, to, fairyId, data, callbackWrapper(callback));
+			contract.safeTransferFrom(from, to, fairyId, data, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정을 받는 대상이 스마트 계약인 경우, onERC721Received 함수를 실행합니다.
 		let safeTransferFrom = self.safeTransferFrom = func((from, to, fairyId, callback) => {
-			contract.safeTransferFrom(from, to, fairyId, callbackWrapper(callback));
+			contract.safeTransferFrom(from, to, fairyId, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정을 이전합니다.
 		let transferFrom = self.transferFrom = func((from, to, fairyId, callback) => {
-			contract.transferFrom(from, to, fairyId, callbackWrapper(callback));
+			contract.transferFrom(from, to, fairyId, transactionCallbackWrapper(callback));
 		});
 		
 		// 특정 지갑에 거래 권한을 부여합니다.
 		let approve = self.approve = func((approved, fairyId, callback) => {
-			contract.approve(approved, fairyId, callbackWrapper(callback));
+			contract.approve(approved, fairyId, transactionCallbackWrapper(callback));
 		});
 		
 		// 오퍼레이터에게 거래 권한을 부여하거나 뺏습니다.
 		let setApprovalForAll = self.setApprovalForAll = func((operator, isApproved, callback) => {
-			contract.setApprovalForAll(operator, isApproved, callbackWrapper(callback));
+			contract.setApprovalForAll(operator, isApproved, transactionCallbackWrapper(callback));
 		});
 		
 		// 요정 거래 권한이 승인된 지갑 주소를 가져옵니다.

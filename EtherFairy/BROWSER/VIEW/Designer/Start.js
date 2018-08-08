@@ -72,9 +72,11 @@ EtherFairy('Designer').Start = CLASS({
 					style : {
 						marginTop : 10
 					},
-					value : MSG('JOIN_DESIGNER'),
-					on : () => {
-						EtherFairy.GO('designer/join');
+					title : MSG('JOIN_DESIGNER'),
+					on : {
+						tap : () => {
+							EtherFairy.GO('designer/join');
+						}
 					}
 				})
 				],

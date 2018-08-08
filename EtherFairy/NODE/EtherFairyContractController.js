@@ -55,6 +55,11 @@ EtherFairy.EtherFairyContractController = OBJECT({
 			};
 		};
 		
+		// 요정의 개수를 반환합니다.
+		let getFairyCount = self.getFairyCount = func((callback) => {
+			contract.methods.getFairyCount().call(callbackWrapper(callback));
+		});
+		
 		// 요정의 기본 정보를 반환합니다.
 		let getFairyBasicInfo = self.getFairyBasicInfo = func((fairyId, callback) => {
 			contract.methods.getFairyBasicInfo(fairyId).call(callbackWrapper(callback));
