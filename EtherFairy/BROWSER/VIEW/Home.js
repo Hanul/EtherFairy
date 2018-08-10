@@ -66,7 +66,7 @@ EtherFairy.Home = CLASS({
 		
 		newsPanel.getEl().innerHTML = '<div class="fb-page" data-href="https://www.facebook.com/etherfairy/" data-tabs="timeline" data-width="' + newsPanel.getWidth() + '" data-height="' + newsPanel.getHeight() + '" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/etherfairy/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/etherfairy/">Ether Fairy</a></blockquote></div>';
 		
-		if (EtherFairy.WalletManager.checkIsEnable() === true) {
+		/*if (EtherFairy.WalletManager.checkIsEnable() === true) {
 			
 			// 토큰 정보 표시
 			EtherFairy.EtherFairyContractController.name((name) => {
@@ -80,6 +80,6 @@ EtherFairy.Home = CLASS({
 					}));
 				});
 			});
-		}
+		}*/
 	}
 });

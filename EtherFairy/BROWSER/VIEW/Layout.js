@@ -1,10 +1,15 @@
 EtherFairy.Layout = CLASS((cls) => {
 	
 	let menuLayoutContent;
+	let processList;
 	
 	let setContent = cls.setContent = (content) => {
 		menuLayoutContent.empty();
 		menuLayoutContent.append(content);
+	};
+	
+	let addRunningProcess = cls.addRunningProcess = (title) => {
+		return EtherFairy.RunningProcessItem(title).appendTo(processList);
 	};
 	
 	return {
@@ -17,6 +22,7 @@ EtherFairy.Layout = CLASS((cls) => {
 			
 			let leftMenu;
 			let startButton;
+			let bgmList;
 			
 			let menuLayout = Yogurt.MenuLayout({
 				
@@ -26,7 +32,7 @@ EtherFairy.Layout = CLASS((cls) => {
 				
 				toolbar : Yogurt.Toolbar({
 					
-					height : 60,
+					height : 70,
 	
 					contentStyle : {
 						onDisplayResize : (width, height) => {
@@ -101,7 +107,7 @@ EtherFairy.Layout = CLASS((cls) => {
 					title : A({
 						c : IMG({
 							style : {
-								marginTop : -10,
+								marginTop : -5,
 								width : 192
 							},
 							src : EtherFairy.R('logo.png')
@@ -178,7 +184,36 @@ EtherFairy.Layout = CLASS((cls) => {
 				rightMenu : DIV({
 					style : {
 						paddingBottom : 20
-					}
+					},
+					c : DIV({
+						c : [DIV({
+							style : {
+								width : '100%',
+								borderBottom : '1px solid #444',
+								cursor : 'pointer'
+							},
+							c : [DIV({
+								style : {
+									padding : 10,
+									fontSize : 15
+								},
+								c : MSG('BGM_TITLE')
+							}), bgmList = DIV()]
+						}), DIV({
+							style : {
+								width : '100%',
+								borderBottom : '1px solid #444',
+								cursor : 'pointer'
+							},
+							c : [DIV({
+								style : {
+									padding : 10,
+									fontSize : 15
+								},
+								c : MSG('RUNNING_PROCESS_TITLE')
+							}), processList = DIV()]
+						})]
+					})
 				}),
 	
 				c : [Yogurt.Wrapper({
