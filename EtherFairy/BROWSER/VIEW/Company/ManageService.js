@@ -140,7 +140,7 @@ EtherFairy('Company').ManageService = CLASS({
 						c : '공식 마켓 변경',
 						on : {
 							tap : () => {
-								EtherFairy.EtherFairyContractController.changeOfficialMarket('0xf24b105b734e0c3b68f8a0bbd85cccdafb919f2f', () => {
+								EtherFairy.EtherFairyContractController.changeOfficialMarket('0x5aa92c9a75e33864ffc49355095b483e607089ae', () => {
 									console.log('Done');
 								});
 							}
