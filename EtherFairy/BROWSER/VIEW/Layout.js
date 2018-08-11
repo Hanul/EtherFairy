@@ -127,12 +127,19 @@ EtherFairy.Layout = CLASS((cls) => {
 							borderBottom : '1px solid #333',
 							cursor : 'pointer'
 						},
-						c : [DIV({
+						c : [UUI.BUTTON_H({
 							style : {
 								padding : 10,
 								fontSize : 15
 							},
-							c : MSG('LAYOUT_HOME_BUTTON')
+							icon : SPAN({
+								style : {
+									width : 12
+								},
+								c : FontAwesome.GetIcon('home')
+							}),
+							spacing : 10,
+							title : MSG('LAYOUT_HOME_BUTTON')
 						})],
 						on : {
 							tap : () => {
@@ -146,12 +153,19 @@ EtherFairy.Layout = CLASS((cls) => {
 							borderBottom : '1px solid #333',
 							cursor : 'pointer'
 						},
-						c : [DIV({
+						c : [UUI.BUTTON_H({
 							style : {
 								padding : 10,
 								fontSize : 15
 							},
-							c : MSG('LAYOUT_START_BUTTON')
+							icon : SPAN({
+								style : {
+									width : 12
+								},
+								c : FontAwesome.GetIcon('sign-in-alt')
+							}),
+							spacing : 10,
+							title : MSG('LAYOUT_START_BUTTON')
 						})],
 						on : {
 							tap : () => {
@@ -165,12 +179,19 @@ EtherFairy.Layout = CLASS((cls) => {
 							borderBottom : '1px solid #333',
 							cursor : 'pointer'
 						},
-						c : [DIV({
+						c : [UUI.BUTTON_H({
 							style : {
 								padding : 10,
 								fontSize : 15
 							},
-							c : MSG('LAYOUT_RANKING_BUTTON')
+							icon : SPAN({
+								style : {
+									width : 12
+								},
+								c : FontAwesome.GetIcon('list-ol')
+							}),
+							spacing : 10,
+							title : MSG('LAYOUT_RANKING_BUTTON')
 						})],
 						on : {
 							tap : () => {
@@ -192,12 +213,19 @@ EtherFairy.Layout = CLASS((cls) => {
 								borderBottom : '1px solid #444',
 								cursor : 'pointer'
 							},
-							c : [DIV({
+							c : [UUI.BUTTON_H({
 								style : {
 									padding : 10,
 									fontSize : 15
 								},
-								c : MSG('BGM_TITLE')
+								icon : SPAN({
+									style : {
+										width : 12
+									},
+									c : FontAwesome.GetIcon('music')
+								}),
+								spacing : 10,
+								title : MSG('BGM_TITLE')
 							}), bgmList = DIV()]
 						}), DIV({
 							style : {
@@ -205,12 +233,19 @@ EtherFairy.Layout = CLASS((cls) => {
 								borderBottom : '1px solid #444',
 								cursor : 'pointer'
 							},
-							c : [DIV({
+							c : [UUI.BUTTON_H({
 								style : {
 									padding : 10,
 									fontSize : 15
 								},
-								c : MSG('RUNNING_PROCESS_TITLE')
+								icon : SPAN({
+									style : {
+										width : 12
+									},
+									c : FontAwesome.GetIcon('tasks')
+								}),
+								spacing : 10,
+								title : MSG('RUNNING_PROCESS_TITLE')
 							}), processList = DIV()]
 						})]
 					})
@@ -224,20 +259,60 @@ EtherFairy.Layout = CLASS((cls) => {
 					c : [
 	
 					// content
-					menuLayoutContent = DIV({
-						style : {
-							padding : 20
-						}
-					}),
+					menuLayoutContent = DIV(),
 					
 					// footer
 					DIV({
 						style : {
 							backgroundColor : '#222',
 							color : '#999',
-							padding : '20px'
+							padding : '20px',
+							boxShadow : '0 -2px 4px rgba(0, 0, 0, .5)'
 						},
-						c : '© BTNcafe'
+						c : [DIV({
+							style : {
+								flt : 'left',
+								marginTop : 2
+							},
+							c : [A({
+								target : '_blank',
+								href : 'https://btncafe.com',
+								c : '© BTNcafe Co.'
+							}), A({
+								style : {
+									marginLeft : 20
+								},
+								target : '_blank',
+								href : 'https://btncafe.com',
+								c : MSG('TERMS')
+							}), A({
+								style : {
+									marginLeft : 20
+								},
+								target : '_blank',
+								href : INFO.getLang() === 'ko' ? 'https://btncafe.com/R/privacy-kr.html' : (INFO.getLang().substring(0, 2) === 'zh' ? 'https://btncafe.com/R/privacy-zh.html' : 'https://btncafe.com/R/privacy.html'),
+								c : MSG('PRIVACY')
+							})]
+						}), DIV({
+							style : {
+								flt : 'right'
+							},
+							c : [A({
+								style : {
+									fontSize : 20
+								},
+								c : FontAwesome.GetBrandIcon('facebook'),
+								target : '_blank',
+								href : 'https://www.facebook.com/etherfairy'
+							}), A({
+								style : {
+									marginLeft : 20,
+									fontSize : 20
+								},
+								c : FontAwesome.GetIcon('envelope'),
+								href : 'contact@btncafe.com'
+							})]
+						}), CLEAR_BOTH()]
 					})]
 				})]
 			}).appendTo(BODY);
@@ -267,44 +342,92 @@ EtherFairy.Layout = CLASS((cls) => {
 										fontSize : 15
 									},
 									c : MSG('LAYOUT_MASTER_MENU')
-								}), DIV({
+								}),
+								
+								// 요정 구매 버튼
+								DIV({
 									style : {
-										padding : 10,
-										paddingLeft : 15,
-										fontSize : 15,
+										width : '100%',
+										cursor : 'pointer',
 										backgroundColor : '#333'
 									},
-									c : MSG('BUY_FAIRY'),
+									c : UUI.BUTTON_H({
+										style : {
+											padding : 10,
+											paddingLeft : 15,
+											fontSize : 15
+										},
+										icon : SPAN({
+											style : {
+												width : 12
+											},
+											c : FontAwesome.GetIcon('shopping-cart')
+										}),
+										spacing : 10,
+										title : MSG('BUY_FAIRY')
+									}),
 									on : {
 										tap : () => {
 											EtherFairy.GO('master/buyfairy');
 											menuLayout.hideLeftMenu();
 										}
 									}
-								}), DIV({
+								}),
+								
+								// 요정 거래 버튼
+								DIV({
 									style : {
 										borderTop : '1px solid #222',
-										padding : 10,
-										paddingLeft : 15,
-										fontSize : 15,
+										width : '100%',
+										cursor : 'pointer',
 										backgroundColor : '#333'
 									},
-									c : MSG('TRADE_FAIRY'),
+									c : UUI.BUTTON_H({
+										style : {
+											padding : 10,
+											paddingLeft : 15,
+											fontSize : 15
+										},
+										icon : SPAN({
+											style : {
+												width : 12
+											},
+											c : FontAwesome.GetIcon('arrows-alt-h')
+										}),
+										spacing : 10,
+										title : MSG('TRADE_FAIRY')
+									}),
 									on : {
 										tap : () => {
 											EtherFairy.GO('master/tradefairy');
 											menuLayout.hideLeftMenu();
 										}
 									}
-								}), DIV({
+								}),
+								
+								// 요정 관리 버튼
+								DIV({
 									style : {
 										borderTop : '1px solid #222',
-										padding : 10,
-										paddingLeft : 15,
-										fontSize : 15,
+										width : '100%',
+										cursor : 'pointer',
 										backgroundColor : '#333'
 									},
-									c : MSG('MANAGE_FAIRY'),
+									c : UUI.BUTTON_H({
+										style : {
+											padding : 10,
+											paddingLeft : 15,
+											fontSize : 15
+										},
+										icon : SPAN({
+											style : {
+												width : 12
+											},
+											c : FontAwesome.GetIcon('cog')
+										}),
+										spacing : 10,
+										title : MSG('MANAGE_FAIRY')
+									}),
 									on : {
 										tap : () => {
 											EtherFairy.GO('master/managefairy');
@@ -341,45 +464,96 @@ EtherFairy.Layout = CLASS((cls) => {
 									fontSize : 15
 								},
 								c : MSG('LAYOUT_DESIGNER_MENU')
-							}), DIV({
+							}),
+							
+							// 요정 원본 관리 버튼
+							DIV({
 								style : {
-									padding : 10,
-									paddingLeft : 15,
-									fontSize : 15,
+									width : '100%',
+									cursor : 'pointer',
 									backgroundColor : '#333'
 								},
-								c : MSG('MANAGE_FAIRY_ORIGIN'),
+								c : UUI.BUTTON_H({
+									style : {
+										padding : 10,
+										paddingLeft : 15,
+										fontSize : 15
+									},
+									icon : SPAN({
+										style : {
+											width : 12
+										},
+										c : FontAwesome.GetIcon('cog')
+									}),
+									spacing : 10,
+									title : MSG('MANAGE_FAIRY_ORIGIN')
+								}),
 								on : {
 									tap : () => {
 										EtherFairy.GO('designer/managefairyorigin');
+										menuLayout.hideLeftMenu();
 									}
 								}
-							}), DIV({
+							}),
+							
+							// 매출 관리 버튼
+							DIV({
 								style : {
 									borderTop : '1px solid #222',
-									padding : 10,
-									paddingLeft : 15,
-									fontSize : 15,
+									width : '100%',
+									cursor : 'pointer',
 									backgroundColor : '#333'
 								},
-								c : MSG('MANAGE_SALES'),
+								c : UUI.BUTTON_H({
+									style : {
+										padding : 10,
+										paddingLeft : 15,
+										fontSize : 15
+									},
+									icon : SPAN({
+										style : {
+											width : 12
+										},
+										c : FontAwesome.GetIcon('dollar-sign')
+									}),
+									spacing : 10,
+									title : MSG('MANAGE_SALES')
+								}),
 								on : {
 									tap : () => {
 										EtherFairy.GO('designer/managesales');
+										menuLayout.hideLeftMenu();
 									}
 								}
-							}), DIV({
+							}),
+							
+							// 로그아웃 버튼
+							DIV({
 								style : {
 									borderTop : '1px solid #222',
-									padding : 10,
-									paddingLeft : 15,
-									fontSize : 15,
+									width : '100%',
+									cursor : 'pointer',
 									backgroundColor : '#333'
 								},
-								c : MSG('LOGOUT'),
+								c : UUI.BUTTON_H({
+									style : {
+										padding : 10,
+										paddingLeft : 15,
+										fontSize : 15
+									},
+									icon : SPAN({
+										style : {
+											width : 12
+										},
+										c : FontAwesome.GetIcon('sign-out-alt')
+									}),
+									spacing : 10,
+									title : MSG('LOGOUT')
+								}),
 								on : {
 									tap : () => {
 										EtherFairy.DesignerModel.logout();
+										menuLayout.hideLeftMenu();
 									}
 								}
 							})]

@@ -12,74 +12,184 @@ EtherFairy.Home = CLASS({
 		let newsPanel;
 		let contactPanel;
 		EtherFairy.Layout.setContent(DIV({
-			style : {
-				width : 1010,
-				padding : 10,
-				margin : 'auto'
-			},
 			c : [
-			
-			P({
-				c : MSG('INTRODUCE')
-			}),
-			
+				
 			DIV({
 				style : {
-					width : 500,
-					flt : 'left'
+					height : 425,
+					backgroundImage : EtherFairy.R('fairies.jpg'),
+					backgroundSize : 'cover',
+					backgroundPosition : '50% 30%'
 				},
-				c : [H3({
-					c : MSG('THEME_SONG')
-				}), IFRAME({
+				c : DIV({
 					style : {
-						width : '100%',
-						height : 300
+						width : 1010,
+						padding : 10,
+						margin : 'auto',
+						paddingTop : 250,
+						color : '#000',
+						fontSize : 50,
+						fontWeight : 'bold'
 					},
-					src : 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/307043740&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true'
-				})]
+					c : [MSG('HOME_TITLE'), Yogurt.Button({
+						style : {
+							marginTop : 10,
+							width : 200
+						},
+						title : MSG('START_BUTTON'),
+						on : {
+							tap : () => {
+								EtherFairy.GO('start')
+							}
+						}
+					})]
+				})
 			}),
 			
 			DIV({
 				style : {
-					marginLeft : 10,
-					width : 500,
-					flt : 'left'
+					width : 1010,
+					padding : 10,
+					margin : 'auto',
+					paddingBottom : 50
 				},
-				c : [H3({
-					c : MSG('NEWS')
-				}), newsPanel = DIV({
+				c : [
+				
+				DIV({
 					style : {
-						width : '100%',
-						height : 300
+						marginTop : 0,
+					},
+					c : [IMG({
+						style : {
+							width : 300,
+							flt : 'left'
+						},
+						src : EtherFairy.R('fairysample.png')
+					}), DIV({
+						style : {
+							width : 600,
+							flt : 'right',
+							fontSize : 20
+						},
+						c : [H2({
+							style : {
+								marginTop : 80,
+								fontSize : 30,
+								fontWeight : 'bold',
+								color : '#ccc'
+							},
+							c : 'Ether Fairy란 무엇입니까?'
+						}), P({
+							style : {
+								marginTop : 20
+							},
+							c : 'Ether Fairy는 이더리움을 기반으로 한 요정 거래 플랫폼입니다. 당신은 요정의 소유주가 되어 요정을 성장시키고, 당신의 요정은 다른 소유주의 요정들과 전투를 벌이게 됩니다.'
+						}), P({
+							style : {
+								marginTop : 20
+							},
+							c : '최고의 요정을 육성시켜 Ether Fairy 세계관에서 가장 영향력 있는 소유주가 되시기 바랍니다!'
+						})]
+					}), CLEAR_BOTH()]
+				}),
+				
+				DIV({
+					style : {
+						marginTop : 0,
+					},
+					c : [DIV({
+						style : {
+							width : 600,
+							flt : 'left',
+							fontSize : 20
+						},
+						c : [H2({
+							style : {
+								marginTop : 80,
+								fontSize : 30,
+								fontWeight : 'bold',
+								color : '#ccc'
+							},
+							c : 'Ether Fairy란 무엇입니까?'
+						}), P({
+							style : {
+								marginTop : 20
+							},
+							c : 'Ether Fairy는 이더리움을 기반으로 한 요정 거래 플랫폼입니다. 당신은 요정의 소유주가 되어 요정을 성장시키고, 당신의 요정은 다른 소유주의 요정들과 전투를 벌이게 됩니다.'
+						}), P({
+							style : {
+								marginTop : 20
+							},
+							c : '최고의 요정을 육성시켜 Ether Fairy 세계관에서 가장 영향력 있는 소유주가 되시기 바랍니다!'
+						})]
+					}), IMG({
+						style : {
+							width : 300,
+							flt : 'right'
+						},
+						src : EtherFairy.R('fairysample.png')
+					}), CLEAR_BOTH()]
+				}),
+				
+				DIV({
+					style : {
+						marginTop : 0,
+					},
+					c : [IMG({
+						style : {
+							width : 300,
+							flt : 'left'
+						},
+						src : EtherFairy.R('fairysample.png')
+					}), DIV({
+						style : {
+							width : 600,
+							flt : 'right',
+							fontSize : 20
+						},
+						c : [H2({
+							style : {
+								marginTop : 80,
+								fontSize : 30,
+								fontWeight : 'bold',
+								color : '#ccc'
+							},
+							c : 'Ether Fairy란 무엇입니까?'
+						}), P({
+							style : {
+								marginTop : 20
+							},
+							c : 'Ether Fairy는 이더리움을 기반으로 한 요정 거래 플랫폼입니다. 당신은 요정의 소유주가 되어 요정을 성장시키고, 당신의 요정은 다른 소유주의 요정들과 전투를 벌이게 됩니다.'
+						}), P({
+							style : {
+								marginTop : 20
+							},
+							c : '최고의 요정을 육성시켜 Ether Fairy 세계관에서 가장 영향력 있는 소유주가 되시기 바랍니다!'
+						})]
+					}), CLEAR_BOTH()]
+				}),
+				
+				P({
+					style : {
+						marginTop : 20,
+						textAlign : 'center'
+					},
+					c : '최고의 순간이 당신 앞에 있습니다!\n지금 바로 시작해보세요!'
+				}),
+				
+				Yogurt.Button({
+					style : {
+						marginTop : 20,
+						fontSize : 30
+					},
+					title : MSG('START_BUTTON'),
+					on : {
+						tap : () => {
+							EtherFairy.GO('start')
+						}
 					}
 				})]
-			}),
-			
-			CLEAR_BOTH(),
-			
-			tokenInfoPanel = DIV(),
-			
-			contactPanel = DIV({
-				c : MSG('CONTACT')
 			})]
 		}));
-		
-		newsPanel.getEl().innerHTML = '<div class="fb-page" data-href="https://www.facebook.com/etherfairy/" data-tabs="timeline" data-width="' + newsPanel.getWidth() + '" data-height="' + newsPanel.getHeight() + '" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/etherfairy/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/etherfairy/">Ether Fairy</a></blockquote></div>';
-		
-		/*if (EtherFairy.WalletManager.checkIsEnable() === true) {
-			
-			// 토큰 정보 표시
-			EtherFairy.EtherFairyContractController.name((name) => {
-				tokenInfoPanel.append(P({
-					c : MSG('TOKEN_NAME') + ' : ' + name
-				}));
-				
-				EtherFairy.EtherFairyContractController.symbol((symbol) => {
-					tokenInfoPanel.append(P({
-						c : MSG('TOKEN_SYMBOL') + ' : ' + symbol
-					}));
-				});
-			});
-		}*/
 	}
 });
