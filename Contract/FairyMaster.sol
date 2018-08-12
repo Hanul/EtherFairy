@@ -94,4 +94,26 @@ contract FairyMaster is FairyOwnership, FairyPayToUpgrade {
 	function changeFairyName(uint256 fairyId, string newName) whenServiceRunning whenNotBlocked whenNotBlockedFairy(fairyId) onlyMasterOf(fairyId) public {
 		fairies[fairyId].name = newName;
 	}
+	
+	// 요정을 많이 가진 순서대로 소유주의 ID 목록을 가져옵니다.
+	function getMasterIdsByFairyCount() view public returns (uint256[]) {
+		uint256[] memory masterIds = new uint256[](masters.length);
+		
+		for (uint256 i = 0; i < masters.length; i += 1) {
+			
+			uint256 fairyCount = balanceOf(masters[i]);
+			
+			for (uint256 j = i; j > 0; j -= 1) {
+				if (balanceOf(masters[masterIds[j - 1]]) < fairyCount) {
+					masterIds[j] = masterIds[j - 1];
+				} else {
+					break;
+				}
+			}
+			
+			masterIds[j] = i;
+		}
+		
+		return masterIds;
+	}
 }

@@ -95,46 +95,47 @@ EtherFairy.FairyCard = CLASS({
 				
 				self.append(DIV({
 					style : {
-						backgroundColor : '#111'
+						backgroundColor : '#111',
+						padding : 5
 					},
 					c : [P({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						c : 'Lv : ' + fairyInfo.appendedLevel
 					}), P({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						c : 'HP : ' + fairyInfo.hpPointPerLevel
 					}), P({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						c : '공격 : ' + fairyInfo.attackPointPerLevel
 					}), P({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						c : '방어 : ' + fairyInfo.defensePointPerLevel
 					}), P({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						c : '민첩 : ' + fairyInfo.agilityPointPerLevel
 					}), P({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
@@ -144,71 +145,90 @@ EtherFairy.FairyCard = CLASS({
 				
 				self.append(DIV({
 					style : {
-						backgroundColor : '#222'
+						backgroundColor : '#222',
+						padding : 5
 					},
 					c : [UUI.BUTTON_H({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						icon : IMG({
-							src : EtherFairy.R('fire.png')
+							style : {
+								width : 20
+							},
+							src : EtherFairy.R('element/fire.png')
 						}),
 						spacing : 10,
 						title : fairyInfo.firePointPerLevel
 					}), UUI.BUTTON_H({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						icon : IMG({
-							src : EtherFairy.R('water.png')
+							style : {
+								width : 20
+							},
+							src : EtherFairy.R('element/water.png')
 						}),
 						spacing : 10,
 						title : fairyInfo.waterPointPerLevel
 					}), UUI.BUTTON_H({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						icon : IMG({
-							src : EtherFairy.R('wind.png')
+							style : {
+								width : 20
+							},
+							src : EtherFairy.R('element/wind.png')
 						}),
 						spacing : 10,
 						title : fairyInfo.windPointPerLevel
 					}), UUI.BUTTON_H({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						icon : IMG({
-							src : EtherFairy.R('earth.png')
+							style : {
+								width : 20
+							},
+							src : EtherFairy.R('element/earth.png')
 						}),
 						spacing : 10,
 						title : fairyInfo.earthPointPerLevel
 					}), UUI.BUTTON_H({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						icon : IMG({
-							src : EtherFairy.R('light.png')
+							style : {
+								width : 20
+							},
+							src : EtherFairy.R('element/light.png')
 						}),
 						spacing : 10,
 						title : fairyInfo.lightPointPerLevel
 					}), UUI.BUTTON_H({
 						style : {
-							width : 140,
+							width : 130,
 							padding : 5,
 							flt : 'left'
 						},
 						icon : IMG({
-							src : EtherFairy.R('dark.png')
+							style : {
+								width : 20
+							},
+							src : EtherFairy.R('element/dark.png')
 						}),
 						spacing : 10,
 						title : fairyInfo.darkPointPerLevel
