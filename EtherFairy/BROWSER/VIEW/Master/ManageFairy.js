@@ -10,10 +10,7 @@ EtherFairy('Master').ManageFairy = CLASS({
 		
 		EtherFairy.Layout.setContent(DIV({
 			style : {
-				padding : 10,
-				backgroundImage : EtherFairy.R('managefairybg.jpg'),
-				backgroundSize : 'cover',
-				backgroundPosition : 'center center'
+				padding : 10
 			},
 			c : [
 			fairyList = DIV({

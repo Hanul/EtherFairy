@@ -3,8 +3,24 @@ EtherFairy.EtherFairyContractController = OBJECT({
 	init : (inner, self) => {
 		
 		let contract;
+		let eventMap = {};
+		
 		let setContract = self.setContract = (_contract) => {
 			contract = _contract;
+			
+			contract.allEvents((error, info) => {
+				
+				if (error === TO_DELETE) {
+					
+					let eventHandlers = eventMap[info.event];
+		
+					if (eventHandlers !== undefined) {
+						EACH(eventHandlers, (eventHandler) => {
+							eventHandler(info.args);
+						});
+					}
+				}
+			});
 		};
 		
 		let func = (f) => {
@@ -59,6 +75,48 @@ EtherFairy.EtherFairyContractController = OBJECT({
 			};
 		};
 		
+		let toStringCallbackWrapper = (callbackOrHandlers) => {
+			
+			let callback;
+			let errorHandler;
+			
+			if (CHECK_IS_DATA(callbackOrHandlers) !== true) {
+				callback = callbackOrHandlers;
+			} else {
+				callback = callbackOrHandlers.success;
+				errorHandler = callbackOrHandlers.error;
+			}
+			
+			return (error, result) => {
+				
+				// 계약 실행 오류 발생
+				if (error !== TO_DELETE) {
+					if (errorHandler !== undefined) {
+						errorHandler(error.toString());
+					} else {
+						alert(error.toString());
+					}
+				}
+				
+				// 정상 작동
+				else if (CHECK_IS_ARRAY(result) === true) {
+					EACH(result, (value, i) => {
+						if (value.toNumber !== undefined) {
+							result[i] = value.toString(10);
+						}
+					});
+					callback(result);
+				}
+				
+				else {
+					if (result.toNumber !== undefined) {
+						result = result.toString(10);
+					}
+					callback(result);
+				}
+			};
+		};
+		
 		let transactionCallbackWrapper = (callbackOrHandlers) => {
 			
 			let callback;
@@ -83,7 +141,7 @@ EtherFairy.EtherFairyContractController = OBJECT({
 				}
 				
 				// 정상 작동
-				else {
+				else if (callback !== undefined) {
 					
 					let retry = RAR(() => {
 						
@@ -111,6 +169,37 @@ EtherFairy.EtherFairyContractController = OBJECT({
 					});
 				}
 			};
+		};
+		
+		let on = self.on = (eventName, eventHandler) => {
+			//REQUIRED: eventName
+			//REQUIRED: eventHandler
+			
+			if (eventMap[eventName] === undefined) {
+				eventMap[eventName] = [];
+			}
+
+			eventMap[eventName].push(eventHandler);
+		};
+
+		let off = self.off = (eventName, eventHandler) => {
+			//REQUIRED: eventName
+			//OPTIONAL: eventHandler
+
+			if (eventMap[eventName] !== undefined) {
+
+				if (eventHandler !== undefined) {
+
+					REMOVE({
+						array: eventMap[eventName],
+						value: eventHandler
+					});
+				}
+
+				if (eventHandler === undefined || eventMap[eventName].length === 0) {
+					delete eventMap[eventName];
+				}
+			}
 		};
 		
 		// 토큰의 이름 반환

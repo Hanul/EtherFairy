@@ -13,10 +13,7 @@ EtherFairy.Ranking = CLASS({
 		
 		EtherFairy.Layout.setContent(DIV({
 			style : {
-				padding : 10,
-				backgroundImage : EtherFairy.R('rankbg.jpg'),
-				backgroundSize : 'cover',
-				backgroundPosition : 'center center'
+				padding : 10
 			},
 			c : [
 			totalFairyInfoPanel = DIV(),

@@ -14,31 +14,43 @@ EtherFairy('Master').BuyFairy = CLASS({
 			},
 			c : [
 			
-			P({
-				c : 'test'
+			H1({
+				c : MSG('FAIRY_ORIGIN_LIST')
 			}),
 			
-			fairyOriginList = DIV()]
+			fairyOriginList = DIV({
+				style : {
+					margin : 'auto',
+					width : 930,
+					paddingLeft : 10
+				},
+				c : IMG({
+					style : {
+						width : 100
+					},
+					src : EtherFairy.R('loading.gif')
+				})
+			})]
 		}));
 		
 		EtherFairy.FairyOriginModel.find({
 			count : 20
 		}, (fairyOriginDataSet) => {
 			
+			fairyOriginList.empty();
+			
 			EACH(fairyOriginDataSet, (fairyOriginData) => {
 				
 				console.log(fairyOriginData);
 				
-				fairyOriginList.append(DIV({
+				fairyOriginList.append(EtherFairy.FairyOriginCard({
 					style : {
+						marginTop : 10,
+						marginRight : 10,
+						flt : 'left',
 						cursor : 'pointer'
 					},
-					c : [IMG({
-						style : {
-							width : 250
-						},
-						src : EtherFairy.RF(fairyOriginData.imageFileId)
-					})],
+					fairyOriginData : fairyOriginData,
 					on : {
 						tap : () => {
 							EtherFairy.GO('fairyorigin/' + fairyOriginData.id);
@@ -46,6 +58,8 @@ EtherFairy('Master').BuyFairy = CLASS({
 					}
 				}));
 			});
+			
+			fairyOriginList.append(CLEAR_BOTH());
 		});
 	}
 });

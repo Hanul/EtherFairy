@@ -35,206 +35,222 @@ EtherFairy.FairyCard = CLASS({
 		
 		let addFairyInfoToCard = (fairyInfo) => {
 			
-			EtherFairy.FairyOriginModel.get(fairyInfo.fairyOriginId, (fairyOriginData) => {
-				self.empty();
+			NEXT([
+			(next) => {
 				
-				let birthCal = CALENDAR(new Date(fairyInfo.birthTime * 1000));
-				
-				self.append(DIV({
-					style : {
-						position : 'relative',
-						height : 400,
-						borderRadius : '6px 6px 0 0',
-						backgroundImage : EtherFairy.RF(fairyOriginData.imageFileId),
-						backgroundSize : 'cover',
-						backgroundPosition : 'center center'
+				EtherFairy.FairyOriginModel.get(fairyInfo.fairyOriginId, {
+					notExists : () => {
+						self.empty();
+						next();
 					},
-					c : DIV({
+					success : (fairyOriginData) => {
+						self.empty();
+						next(fairyOriginData);
+					}
+				});	
+			},
+			
+			() => {
+				return (fairyOriginData) => {
+					
+					let birthCal = CALENDAR(new Date(fairyInfo.birthTime * 1000));
+					
+					self.append(DIV({
 						style : {
-							position : 'absolute',
-							left : 10,
-							bottom : 10,
-							width : 280
+							position : 'relative',
+							height : 400,
+							borderRadius : '6px 6px 0 0',
+							backgroundImage : fairyOriginData === undefined ? EtherFairy.R('notfound.png') : EtherFairy.RF(fairyOriginData.imageFileId),
+							backgroundSize : 'cover',
+							backgroundPosition : 'center center'
 						},
-						c : [DIV({
+						c : DIV({
 							style : {
-								flt : 'left',
-								backgroundColor : 'rgba(0, 0, 0, 0.5)',
-								padding : '3px 6px',
-								borderRadius : 3
+								position : 'absolute',
+								left : 10,
+								bottom : 10,
+								width : 280
 							},
-							c : fairyOriginData.name
-						}), CLEAR_BOTH(), DIV({
-							style : {
-								marginTop : 5,
-								flt : 'left',
-								backgroundColor : 'rgba(0, 0, 0, 0.5)',
-								padding : '5px 10px',
-								borderRadius : 3,
-								fontSize : 20
-							},
-							c : fairyInfo.name
-						}), DIV({
-							style : {
-								marginTop : 20,
-								flt : 'right',
-								backgroundColor : 'rgba(0, 0, 0, 0.5)',
-								padding : '3px 6px',
-								borderRadius : 3,
-								fontSize : 12
-							},
-							c : [SPAN({
+							c : [DIV({
 								style : {
-									color : '#FF9900'
+									flt : 'left',
+									backgroundColor : 'rgba(0, 0, 0, 0.5)',
+									padding : '3px 6px',
+									borderRadius : 3
 								},
-								c : FontAwesome.GetIcon('birthday-cake')
-							}), ' ' + birthCal.getYear() + '-' + birthCal.getMonth(true) + '-' + birthCal.getDate(true) + ' ' + birthCal.getHour(true) + ':' + birthCal.getMinute(true)]
+								c : fairyOriginData === undefined ? MSG('FAIRY_ORIGIN_NOT_FOUND') : fairyOriginData.name
+							}), CLEAR_BOTH(), DIV({
+								style : {
+									marginTop : 5,
+									flt : 'left',
+									backgroundColor : 'rgba(0, 0, 0, 0.5)',
+									padding : '5px 10px',
+									borderRadius : 3,
+									fontSize : 20
+								},
+								c : fairyInfo.name
+							}), DIV({
+								style : {
+									marginTop : 20,
+									flt : 'right',
+									backgroundColor : 'rgba(0, 0, 0, 0.5)',
+									padding : '3px 6px',
+									borderRadius : 3,
+									fontSize : 12
+								},
+								c : [SPAN({
+									style : {
+										color : '#FF9900'
+									},
+									c : FontAwesome.GetIcon('birthday-cake')
+								}), ' ' + birthCal.getYear() + '-' + birthCal.getMonth(true) + '-' + birthCal.getDate(true) + ' ' + birthCal.getHour(true) + ':' + birthCal.getMinute(true)]
+							}), CLEAR_BOTH()]
+						})
+					}));
+					
+					self.append(DIV({
+						style : {
+							backgroundColor : '#111',
+							padding : 5
+						},
+						c : [P({
+							style : {
+								width : 130,
+								padding : 5,
+								flt : 'left'
+							},
+							c : 'Lv : ' + fairyInfo.appendedLevel
+						}), P({
+							style : {
+								width : 130,
+								padding : 5,
+								flt : 'left'
+							},
+							c : 'HP : ' + fairyInfo.hpPointPerLevel
+						}), P({
+							style : {
+								width : 130,
+								padding : 5,
+								flt : 'left'
+							},
+							c : '공격 : ' + fairyInfo.attackPointPerLevel
+						}), P({
+							style : {
+								width : 130,
+								padding : 5,
+								flt : 'left'
+							},
+							c : '방어 : ' + fairyInfo.defensePointPerLevel
+						}), P({
+							style : {
+								width : 130,
+								padding : 5,
+								flt : 'left'
+							},
+							c : '민첩 : ' + fairyInfo.agilityPointPerLevel
+						}), P({
+							style : {
+								width : 130,
+								padding : 5,
+								flt : 'left'
+							},
+							c : '재치 : ' + fairyInfo.dexterityPointPerLevel
 						}), CLEAR_BOTH()]
-					})
-				}));
-				
-				self.append(DIV({
-					style : {
-						backgroundColor : '#111',
-						padding : 5
-					},
-					c : [P({
+					}));
+					
+					self.append(DIV({
 						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
+							backgroundColor : '#222',
+							padding : 5
 						},
-						c : 'Lv : ' + fairyInfo.appendedLevel
-					}), P({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						c : 'HP : ' + fairyInfo.hpPointPerLevel
-					}), P({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						c : '공격 : ' + fairyInfo.attackPointPerLevel
-					}), P({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						c : '방어 : ' + fairyInfo.defensePointPerLevel
-					}), P({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						c : '민첩 : ' + fairyInfo.agilityPointPerLevel
-					}), P({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						c : '재치 : ' + fairyInfo.dexterityPointPerLevel
-					}), CLEAR_BOTH()]
-				}));
-				
-				self.append(DIV({
-					style : {
-						backgroundColor : '#222',
-						padding : 5
-					},
-					c : [UUI.BUTTON_H({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						icon : IMG({
+						c : [UUI.BUTTON_H({
 							style : {
-								width : 20
+								width : 130,
+								padding : 5,
+								flt : 'left'
 							},
-							src : EtherFairy.R('element/fire.png')
-						}),
-						spacing : 10,
-						title : fairyInfo.firePointPerLevel
-					}), UUI.BUTTON_H({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						icon : IMG({
+							icon : IMG({
+								style : {
+									width : 20
+								},
+								src : EtherFairy.R('element/fire.png')
+							}),
+							spacing : 10,
+							title : fairyInfo.firePointPerLevel
+						}), UUI.BUTTON_H({
 							style : {
-								width : 20
+								width : 130,
+								padding : 5,
+								flt : 'left'
 							},
-							src : EtherFairy.R('element/water.png')
-						}),
-						spacing : 10,
-						title : fairyInfo.waterPointPerLevel
-					}), UUI.BUTTON_H({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						icon : IMG({
+							icon : IMG({
+								style : {
+									width : 20
+								},
+								src : EtherFairy.R('element/water.png')
+							}),
+							spacing : 10,
+							title : fairyInfo.waterPointPerLevel
+						}), UUI.BUTTON_H({
 							style : {
-								width : 20
+								width : 130,
+								padding : 5,
+								flt : 'left'
 							},
-							src : EtherFairy.R('element/wind.png')
-						}),
-						spacing : 10,
-						title : fairyInfo.windPointPerLevel
-					}), UUI.BUTTON_H({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						icon : IMG({
+							icon : IMG({
+								style : {
+									width : 20
+								},
+								src : EtherFairy.R('element/wind.png')
+							}),
+							spacing : 10,
+							title : fairyInfo.windPointPerLevel
+						}), UUI.BUTTON_H({
 							style : {
-								width : 20
+								width : 130,
+								padding : 5,
+								flt : 'left'
 							},
-							src : EtherFairy.R('element/earth.png')
-						}),
-						spacing : 10,
-						title : fairyInfo.earthPointPerLevel
-					}), UUI.BUTTON_H({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						icon : IMG({
+							icon : IMG({
+								style : {
+									width : 20
+								},
+								src : EtherFairy.R('element/earth.png')
+							}),
+							spacing : 10,
+							title : fairyInfo.earthPointPerLevel
+						}), UUI.BUTTON_H({
 							style : {
-								width : 20
+								width : 130,
+								padding : 5,
+								flt : 'left'
 							},
-							src : EtherFairy.R('element/light.png')
-						}),
-						spacing : 10,
-						title : fairyInfo.lightPointPerLevel
-					}), UUI.BUTTON_H({
-						style : {
-							width : 130,
-							padding : 5,
-							flt : 'left'
-						},
-						icon : IMG({
+							icon : IMG({
+								style : {
+									width : 20
+								},
+								src : EtherFairy.R('element/light.png')
+							}),
+							spacing : 10,
+							title : fairyInfo.lightPointPerLevel
+						}), UUI.BUTTON_H({
 							style : {
-								width : 20
+								width : 130,
+								padding : 5,
+								flt : 'left'
 							},
-							src : EtherFairy.R('element/dark.png')
-						}),
-						spacing : 10,
-						title : fairyInfo.darkPointPerLevel
-					}), CLEAR_BOTH()]
-				}));
-			});
+							icon : IMG({
+								style : {
+									width : 20
+								},
+								src : EtherFairy.R('element/dark.png')
+							}),
+							spacing : 10,
+							title : fairyInfo.darkPointPerLevel
+						}), CLEAR_BOTH()]
+					}));
+				};
+			}]);
 		};
 		
 		// 지갑을 사용할 때는 스마트 계약을 사용합니다.
