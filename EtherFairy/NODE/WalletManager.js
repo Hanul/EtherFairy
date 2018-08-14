@@ -7,7 +7,7 @@ EtherFairy.WalletManager = OBJECT({
 		if (typeof global.web3 !== 'undefined') {
 			global.web3 = new Web3(global.web3.currentProvider);
 		} else {
-			global.web3 = new Web3(new Web3.providers.HttpProvider(CONFIG.isDevMode !== true ? 'https://mainnet.infura.io/v3/4e4b35a4604844b2b9e1fc6ef4905129' : 'https://ropsten.infura.io/v3/4e4b35a4604844b2b9e1fc6ef4905129'));
+			global.web3 = new Web3(new Web3.providers.WebsocketProvider(CONFIG.isDevMode !== true ? 'wss://mainnet.infura.io/ws' : 'wss://kovan.infura.io/ws'));
 		}
 		
 		// 계약 생성

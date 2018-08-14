@@ -35,6 +35,8 @@ EtherFairy.FairyCard = CLASS({
 		
 		let addFairyInfoToCard = (fairyInfo) => {
 			
+			console.log(EtherFairy.CalculateManager.calculateLevel(EtherFairy.CalculateManager.calculateEXP(fairyInfo.birthTime)));
+			
 			NEXT([
 			(next) => {
 				
@@ -261,9 +263,10 @@ EtherFairy.FairyCard = CLASS({
 			(done) => {
 				EtherFairy.EtherFairyContractController.getFairyBasicInfo(fairyId, (basicInfo) => {
 					fairyInfo.fairyOriginId = basicInfo[0];
-					fairyInfo.name = basicInfo[1];
-					fairyInfo.birthTime = basicInfo[2];
-					fairyInfo.appendedLevel = basicInfo[3];
+					fairyInfo.designer = basicInfo[1];
+					fairyInfo.name = basicInfo[2];
+					fairyInfo.birthTime = basicInfo[3];
+					fairyInfo.appendedLevel = basicInfo[4];
 					done();
 				});
 			},
@@ -308,9 +311,10 @@ EtherFairy.FairyCard = CLASS({
 					data : fairyId
 				}, (basicInfo) => {
 					fairyInfo.fairyOriginId = basicInfo[0];
-					fairyInfo.name = basicInfo[1];
-					fairyInfo.birthTime = basicInfo[2];
-					fairyInfo.appendedLevel = basicInfo[3];
+					fairyInfo.designer = basicInfo[1];
+					fairyInfo.name = basicInfo[2];
+					fairyInfo.birthTime = basicInfo[3];
+					fairyInfo.appendedLevel = basicInfo[4];
 					done();
 				});
 			},

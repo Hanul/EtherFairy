@@ -1,4 +1,4 @@
-EtherFairy.FairyOriginModel = OBJECT({
+EtherFairy.FairyModel = OBJECT({
 	
 	preset : () => {
 		return EtherFairy.MODEL;
@@ -8,25 +8,93 @@ EtherFairy.FairyOriginModel = OBJECT({
 
 		let validDataSet = {
 			
-			point : {
+			id : {
 				notEmpty : true,
 				integer : true
 			},
 			
-			name : {
+			fairyOriginId : {
 				notEmpty : true,
-				size : {
-					min : 1,
-					max : 20
-				}
+				id : true
+			},
+			
+			designer : {
+				notEmpty : true
+			},
+			
+			name : {
+				notEmpty : true
+			},
+			
+			birthTime : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			appendedLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			hpPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			attackPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			defensePointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			agilityPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			dexterityPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			firePointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			waterPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			windPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			earthPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			lightPointPerLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			darkPointPerLevel : {
+				notEmpty : true,
+				integer : true
 			}
 		};
 		
 		return {
 			name : 'Fairy',
-			initData : {
-				point : 0
-			},
+			isNotUsingObjectId : true,
 			methodConfig : {
 				create : {
 					valid : VALID(validDataSet)
