@@ -253,7 +253,7 @@ EtherFairy.Layout = CLASS((cls) => {
 	
 				c : [Yogurt.Wrapper({
 					style : {
-						backgroundColor : '#333',
+						backgroundColor : '#1f2328',
 						color : '#fff'
 					},
 					c : [
@@ -264,7 +264,7 @@ EtherFairy.Layout = CLASS((cls) => {
 					// footer
 					DIV({
 						style : {
-							backgroundColor : '#222',
+							backgroundColor : '#171a1d',
 							color : '#999',
 							padding : '20px',
 							boxShadow : '0 -2px 4px rgba(0, 0, 0, .5)'
@@ -349,7 +349,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									style : {
 										width : '100%',
 										cursor : 'pointer',
-										backgroundColor : '#333'
+										backgroundColor : '#33393e'
 									},
 									c : UUI.BUTTON_H({
 										style : {
@@ -380,7 +380,7 @@ EtherFairy.Layout = CLASS((cls) => {
 										borderTop : '1px solid #222',
 										width : '100%',
 										cursor : 'pointer',
-										backgroundColor : '#333'
+										backgroundColor : '#33393e'
 									},
 									c : UUI.BUTTON_H({
 										style : {
@@ -411,7 +411,7 @@ EtherFairy.Layout = CLASS((cls) => {
 										borderTop : '1px solid #222',
 										width : '100%',
 										cursor : 'pointer',
-										backgroundColor : '#333'
+										backgroundColor : '#33393e'
 									},
 									c : UUI.BUTTON_H({
 										style : {
@@ -471,7 +471,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								style : {
 									width : '100%',
 									cursor : 'pointer',
-									backgroundColor : '#333'
+									backgroundColor : '#33393e'
 								},
 								c : UUI.BUTTON_H({
 									style : {
@@ -502,7 +502,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									borderTop : '1px solid #222',
 									width : '100%',
 									cursor : 'pointer',
-									backgroundColor : '#333'
+									backgroundColor : '#33393e'
 								},
 								c : UUI.BUTTON_H({
 									style : {
@@ -533,7 +533,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									borderTop : '1px solid #222',
 									width : '100%',
 									cursor : 'pointer',
-									backgroundColor : '#333'
+									backgroundColor : '#33393e'
 								},
 								c : UUI.BUTTON_H({
 									style : {

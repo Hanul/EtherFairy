@@ -2,9 +2,23 @@ EtherFairy.MAIN = METHOD({
 
 	run : (params) => {
 		
+		// 나눔 명조 폰트 추가
+		ADD_FONT({
+			name : 'Nanum Myeongjo',
+			style : 'normal',
+			weight : 400,
+			woff2 : EtherFairy.R('font/NanumMyeongjo-Regular.woff2'),
+			woff : EtherFairy.R('font/NanumMyeongjo-Regular.woff'),
+			ttf : EtherFairy.R('font/NanumMyeongjo-Regular.ttf')
+		});
+		
+		BODY.addStyle({
+			cursor : 'url(' + EtherFairy.R('cursor.png') + ') 1 2, auto'
+		});
+		
 		let style = document.createElement('style');
 		style.type = 'text/css';
-		style.innerHTML = '@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css); input[type="range"]::-webkit-slider-thumb { width:30px; height:30px; } * { font-family:\'Noto Sans KR\'; -webkit-tap-highlight-color:transparent; }';
+		style.innerHTML = 'input[type="range"]::-webkit-slider-thumb { width:30px; height:30px; } * { font-family:\'Nanum Myeongjo\'; -webkit-tap-highlight-color:transparent; } input, textarea { user-select:auto; -webkit-user-select:auto; }';
 		document.getElementsByTagName('head')[0].appendChild(style);
 		
 		// 페이스북 SDK 로드

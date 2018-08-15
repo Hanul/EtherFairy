@@ -7,9 +7,10 @@ EtherFairy.FairyCard = CLASS({
 	params : () => {
 		return {
 			style : {
-				width : 300,
-				backgroundColor : '#fff',
-				borderRadius : 6,
+				position : 'relative',
+				width : 360,
+				height : 600,
+				backgroundImage : EtherFairy.R('card.png'),
 				boxShadow : '0 0 8px rgba(0, 0, 0, 0.8)'
 			}
 		};
@@ -23,19 +24,24 @@ EtherFairy.FairyCard = CLASS({
 		
 		let etherFairyContractRoom = EtherFairy.ROOM('EtherFairyContract');
 		
-		self.append(DIV({
+		self.append(UUI.V_CENTER({
 			style : {
-				textAlign : 'center',
-				padding : 30
+				position : 'absolute',
+				left : 10,
+				top : 43,
+				width : 339,
+				height : 399,
+				textAlign : 'center'
 			},
 			c : IMG({
-				src : EtherFairy.R('loadingwhite.gif')
+				src : EtherFairy.R('cardloading.gif')
 			})
 		}));
 		
 		let addFairyInfoToCard = (fairyInfo) => {
 			
-			console.log(EtherFairy.CalculateManager.calculateLevel(EtherFairy.CalculateManager.calculateEXP(fairyInfo.birthTime)));
+			let exp = EtherFairy.CalculateManager.calculateEXP(fairyInfo.birthTime);
+			let level = EtherFairy.CalculateManager.calculateLevel(exp) + fairyInfo.appendedLevel;
 			
 			NEXT([
 			(next) => {
@@ -59,198 +65,250 @@ EtherFairy.FairyCard = CLASS({
 					
 					self.append(DIV({
 						style : {
-							position : 'relative',
-							height : 400,
-							borderRadius : '6px 6px 0 0',
+							position : 'absolute',
+							left : 10,
+							top : 43,
+							width : 339,
+							height : 399,
+							borderRadius : 6,
 							backgroundImage : fairyOriginData === undefined ? EtherFairy.R('notfound.png') : EtherFairy.RF(fairyOriginData.imageFileId),
 							backgroundSize : 'cover',
 							backgroundPosition : 'center center'
+						}
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							left : 0,
+							top : 10,
+							width : 360,
+							textAlign : 'center',
+							color : '#fff5ef',
+							textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+							fontSize : 20
 						},
-						c : DIV({
+						c : fairyInfo.name
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							left : 0,
+							bottom : 8,
+							width : 360,
+							textAlign : 'center',
+							color : '#fff5ef',
+							textShadow : EtherFairy.TextBorderShadow('#1d0e08')
+						},
+						c : '[' + (fairyOriginData === undefined ? MSG('FAIRY_ORIGIN_NOT_FOUND') : fairyOriginData.name) + ']'
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							left : 10,
+							bottom : 135,
+							color : '#fff5ef',
+							textShadow : EtherFairy.TextBorderShadow('#1d0e08')
+						},
+						c : 'Lv. ' + level
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							right : 10,
+							bottom : 135,
+							color : '#fff5ef',
+							textShadow : EtherFairy.TextBorderShadow('#1d0e08')
+						},
+						c : 'HP. ' + EtherFairy.CalculateManager.calculateHP(fairyInfo.hpPointPerLevel * level)
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							left : 10,
+							bottom : 98,
+							width : 170,
+							color : '#66400a',
+							textShadow : EtherFairy.TextBorderShadow('#fff'),
+							textAlign : 'center',
+							fontWeight : 'bold'
+						},
+						c : fairyInfo.attackPointPerLevel * level
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							right : 10,
+							bottom : 98,
+							width : 170,
+							color : '#66400a',
+							textShadow : EtherFairy.TextBorderShadow('#fff'),
+							textAlign : 'center',
+							fontWeight : 'bold'
+						},
+						c : fairyInfo.defensePointPerLevel * level
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							left : 10,
+							bottom : 50,
+							width : 170,
+							color : '#66400a',
+							textShadow : EtherFairy.TextBorderShadow('#fff'),
+							textAlign : 'center',
+							fontWeight : 'bold'
+						},
+						c : fairyInfo.agilityPointPerLevel * level
+					}));
+					
+					self.append(DIV({
+						style : {
+							position : 'absolute',
+							right : 10,
+							bottom : 50,
+							width : 170,
+							color : '#66400a',
+							textShadow : EtherFairy.TextBorderShadow('#fff'),
+							textAlign : 'center',
+							fontWeight : 'bold'
+						},
+						c : fairyInfo.dexterityPointPerLevel * level
+					}));
+					
+					let dy = 5;
+					
+					if (fairyInfo.firePointPerLevel > 0) {
+						
+						self.append(UUI.V_CENTER({
 							style : {
 								position : 'absolute',
-								left : 10,
-								bottom : 10,
-								width : 280
+								right : 5,
+								top : dy,
+								width : 52,
+								height : 52,
+								backgroundImage : EtherFairy.R('element/fire.png'),
+								color : '#fff5ef',
+								textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+								textAlign : 'center',
+								fontSize : 20
 							},
-							c : [DIV({
-								style : {
-									flt : 'left',
-									backgroundColor : 'rgba(0, 0, 0, 0.5)',
-									padding : '3px 6px',
-									borderRadius : 3
-								},
-								c : fairyOriginData === undefined ? MSG('FAIRY_ORIGIN_NOT_FOUND') : fairyOriginData.name
-							}), CLEAR_BOTH(), DIV({
-								style : {
-									marginTop : 5,
-									flt : 'left',
-									backgroundColor : 'rgba(0, 0, 0, 0.5)',
-									padding : '5px 10px',
-									borderRadius : 3,
-									fontSize : 20
-								},
-								c : fairyInfo.name
-							}), DIV({
-								style : {
-									marginTop : 20,
-									flt : 'right',
-									backgroundColor : 'rgba(0, 0, 0, 0.5)',
-									padding : '3px 6px',
-									borderRadius : 3,
-									fontSize : 12
-								},
-								c : [SPAN({
-									style : {
-										color : '#FF9900'
-									},
-									c : FontAwesome.GetIcon('birthday-cake')
-								}), ' ' + birthCal.getYear() + '-' + birthCal.getMonth(true) + '-' + birthCal.getDate(true) + ' ' + birthCal.getHour(true) + ':' + birthCal.getMinute(true)]
-							}), CLEAR_BOTH()]
-						})
-					}));
+							c : fairyInfo.firePointPerLevel * level
+						}));
+						
+						dy += 53;
+					}
 					
-					self.append(DIV({
-						style : {
-							backgroundColor : '#111',
-							padding : 5
-						},
-						c : [P({
+					if (fairyInfo.waterPointPerLevel > 0) {
+						
+						self.append(UUI.V_CENTER({
 							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
+								position : 'absolute',
+								right : 5,
+								top : dy,
+								width : 52,
+								height : 52,
+								backgroundImage : EtherFairy.R('element/water.png'),
+								color : '#fff5ef',
+								textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+								textAlign : 'center',
+								fontSize : 20
 							},
-							c : 'Lv : ' + fairyInfo.appendedLevel
-						}), P({
-							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
-							},
-							c : 'HP : ' + fairyInfo.hpPointPerLevel
-						}), P({
-							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
-							},
-							c : '공격 : ' + fairyInfo.attackPointPerLevel
-						}), P({
-							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
-							},
-							c : '방어 : ' + fairyInfo.defensePointPerLevel
-						}), P({
-							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
-							},
-							c : '민첩 : ' + fairyInfo.agilityPointPerLevel
-						}), P({
-							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
-							},
-							c : '재치 : ' + fairyInfo.dexterityPointPerLevel
-						}), CLEAR_BOTH()]
-					}));
+							c : fairyInfo.waterPointPerLevel * level
+						}));
+						
+						dy += 53;
+					}
 					
-					self.append(DIV({
-						style : {
-							backgroundColor : '#222',
-							padding : 5
-						},
-						c : [UUI.BUTTON_H({
+					if (fairyInfo.windPointPerLevel > 0) {
+						
+						self.append(UUI.V_CENTER({
 							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
+								position : 'absolute',
+								right : 5,
+								top : dy,
+								width : 52,
+								height : 52,
+								backgroundImage : EtherFairy.R('element/wind.png'),
+								color : '#fff5ef',
+								textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+								textAlign : 'center',
+								fontSize : 20
 							},
-							icon : IMG({
-								style : {
-									width : 20
-								},
-								src : EtherFairy.R('element/fire.png')
-							}),
-							spacing : 10,
-							title : fairyInfo.firePointPerLevel
-						}), UUI.BUTTON_H({
+							c : fairyInfo.windPointPerLevel * level
+						}));
+						
+						dy += 53;
+					}
+					
+					if (fairyInfo.earthPointPerLevel > 0) {
+						
+						self.append(UUI.V_CENTER({
 							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
+								position : 'absolute',
+								right : 5,
+								top : dy,
+								width : 52,
+								height : 52,
+								backgroundImage : EtherFairy.R('element/earth.png'),
+								color : '#fff5ef',
+								textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+								textAlign : 'center',
+								fontSize : 20
 							},
-							icon : IMG({
-								style : {
-									width : 20
-								},
-								src : EtherFairy.R('element/water.png')
-							}),
-							spacing : 10,
-							title : fairyInfo.waterPointPerLevel
-						}), UUI.BUTTON_H({
+							c : fairyInfo.earthPointPerLevel * level
+						}));
+						
+						dy += 53;
+					}
+					
+					if (fairyInfo.lightPointPerLevel > 0) {
+						
+						self.append(UUI.V_CENTER({
 							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
+								position : 'absolute',
+								right : 5,
+								top : dy,
+								width : 52,
+								height : 52,
+								backgroundImage : EtherFairy.R('element/light.png'),
+								color : '#fff5ef',
+								textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+								textAlign : 'center',
+								fontSize : 20
 							},
-							icon : IMG({
-								style : {
-									width : 20
-								},
-								src : EtherFairy.R('element/wind.png')
-							}),
-							spacing : 10,
-							title : fairyInfo.windPointPerLevel
-						}), UUI.BUTTON_H({
+							c : fairyInfo.lightPointPerLevel * level
+						}));
+						
+						dy += 53;
+					}
+					
+					if (fairyInfo.darkPointPerLevel > 0) {
+						
+						self.append(UUI.V_CENTER({
 							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
+								position : 'absolute',
+								right : 5,
+								top : dy,
+								width : 52,
+								height : 52,
+								backgroundImage : EtherFairy.R('element/dark.png'),
+								color : '#fff5ef',
+								textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+								textAlign : 'center',
+								fontSize : 20
 							},
-							icon : IMG({
-								style : {
-									width : 20
-								},
-								src : EtherFairy.R('element/earth.png')
-							}),
-							spacing : 10,
-							title : fairyInfo.earthPointPerLevel
-						}), UUI.BUTTON_H({
-							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
-							},
-							icon : IMG({
-								style : {
-									width : 20
-								},
-								src : EtherFairy.R('element/light.png')
-							}),
-							spacing : 10,
-							title : fairyInfo.lightPointPerLevel
-						}), UUI.BUTTON_H({
-							style : {
-								width : 130,
-								padding : 5,
-								flt : 'left'
-							},
-							icon : IMG({
-								style : {
-									width : 20
-								},
-								src : EtherFairy.R('element/dark.png')
-							}),
-							spacing : 10,
-							title : fairyInfo.darkPointPerLevel
-						}), CLEAR_BOTH()]
-					}));
+							c : fairyInfo.darkPointPerLevel * level
+						}));
+						
+						dy += 53;
+					}
 				};
 			}]);
 		};

@@ -20,7 +20,7 @@ EtherFairy.Ranking = CLASS({
 			fairyList = DIV({
 				style : {
 					margin : 'auto',
-					width : 930,
+					width : 1110,
 					paddingLeft : 10
 				},
 				c : IMG({

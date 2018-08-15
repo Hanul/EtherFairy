@@ -17,24 +17,32 @@ EtherFairy.Home = CLASS({
 			DIV({
 				style : {
 					height : 425,
-					backgroundImage : EtherFairy.R('fairies.jpg'),
+					backgroundImage : EtherFairy.R('main.png'),
 					backgroundSize : 'cover',
-					backgroundPosition : '50% 30%'
+					backgroundPosition : 'center center'
 				},
 				c : DIV({
 					style : {
 						width : 1010,
 						padding : 10,
 						margin : 'auto',
-						paddingTop : 250,
-						color : '#000',
-						fontSize : 50,
-						fontWeight : 'bold'
+						paddingTop : 230,
+						textAlign : 'center'
 					},
-					c : [MSG('HOME_TITLE'), Yogurt.Button({
+					c : [P({
 						style : {
+							color : '#fff',
+							fontSize : 50,
+							fontWeight : 'bold',
+							textShadow : '0 0 40px #000000, 0 0 40px #000000, 0 0 40px #000000'
+						},
+						c : MSG('HOME_TITLE')
+					}), Yogurt.Button({
+						style : {
+							margin : 'auto',
 							marginTop : 10,
-							width : 200
+							width : 200,
+							boxShadow : '0 0 40px #000000'
 						},
 						title : MSG('START_BUTTON'),
 						on : {
@@ -76,7 +84,7 @@ EtherFairy.Home = CLASS({
 								marginTop : 80,
 								fontSize : 30,
 								fontWeight : 'bold',
-								color : '#ccc'
+								color : '#fff5cb'
 							},
 							c : 'Ether Fairy란 무엇입니까?'
 						}), P({
@@ -108,7 +116,7 @@ EtherFairy.Home = CLASS({
 								marginTop : 80,
 								fontSize : 30,
 								fontWeight : 'bold',
-								color : '#ccc'
+								color : '#fff5cb'
 							},
 							c : 'Ether Fairy란 무엇입니까?'
 						}), P({
@@ -152,7 +160,7 @@ EtherFairy.Home = CLASS({
 								marginTop : 80,
 								fontSize : 30,
 								fontWeight : 'bold',
-								color : '#ccc'
+								color : '#fff5cb'
 							},
 							c : 'Ether Fairy란 무엇입니까?'
 						}), P({
