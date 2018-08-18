@@ -83,6 +83,8 @@ contract FairyMaster is FairyOwnership, FairyPayToUpgrade {
 			masterToIsExisted[msg.sender] = true;
 		}
 		
+		require(msg.value.div(2).mul(2) == msg.value);
+		
 		// 회사에게 금액의 50%를 지급합니다.
 		company.transfer(msg.value.div(2));
 		
