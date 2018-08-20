@@ -38,8 +38,8 @@ EtherFairy.EtherFairyContractRoom = OBJECT({
 				EtherFairy.EtherFairyContractController.getFairyIdsByAttackPointPerLevel(ret);
 			});
 			
-			on('getFairyIdsByDefensePointPerLevel', (notUsing, ret) => {
-				EtherFairy.EtherFairyContractController.getFairyIdsByDefensePointPerLevel(ret);
+			on('getFairyIdsByDefencePointPerLevel', (notUsing, ret) => {
+				EtherFairy.EtherFairyContractController.getFairyIdsByDefencePointPerLevel(ret);
 			});
 			
 			on('getFairyIdsByAgilityPointPerLevel', (notUsing, ret) => {

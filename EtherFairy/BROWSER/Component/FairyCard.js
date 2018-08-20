@@ -151,7 +151,7 @@ EtherFairy.FairyCard = CLASS({
 							textAlign : 'center',
 							fontWeight : 'bold'
 						},
-						c : fairyInfo.defensePointPerLevel * level
+						c : fairyInfo.defencePointPerLevel * level
 					}));
 					
 					self.append(DIV({
@@ -333,7 +333,7 @@ EtherFairy.FairyCard = CLASS({
 				EtherFairy.EtherFairyContractController.getFairyBasicPointsPerLevel(fairyId, (pointsPerLevel) => {
 					fairyInfo.hpPointPerLevel = pointsPerLevel[0];
 					fairyInfo.attackPointPerLevel = pointsPerLevel[1];
-					fairyInfo.defensePointPerLevel = pointsPerLevel[2];
+					fairyInfo.defencePointPerLevel = pointsPerLevel[2];
 					fairyInfo.agilityPointPerLevel = pointsPerLevel[3];
 					fairyInfo.dexterityPointPerLevel = pointsPerLevel[4];
 					done();
@@ -384,7 +384,7 @@ EtherFairy.FairyCard = CLASS({
 				}, (pointsPerLevel) => {
 					fairyInfo.hpPointPerLevel = pointsPerLevel[0];
 					fairyInfo.attackPointPerLevel = pointsPerLevel[1];
-					fairyInfo.defensePointPerLevel = pointsPerLevel[2];
+					fairyInfo.defencePointPerLevel = pointsPerLevel[2];
 					fairyInfo.agilityPointPerLevel = pointsPerLevel[3];
 					fairyInfo.dexterityPointPerLevel = pointsPerLevel[4];
 					done();

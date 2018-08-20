@@ -23,7 +23,7 @@ EtherFairy.MAIN = METHOD({
 					EtherFairy.EtherFairyContractController.getFairyBasicPointsPerLevel(fairyId, (pointsPerLevel) => {
 						fairyInfo.hpPointPerLevel = pointsPerLevel[0];
 						fairyInfo.attackPointPerLevel = pointsPerLevel[1];
-						fairyInfo.defensePointPerLevel = pointsPerLevel[2];
+						fairyInfo.defencePointPerLevel = pointsPerLevel[2];
 						fairyInfo.agilityPointPerLevel = pointsPerLevel[3];
 						fairyInfo.dexterityPointPerLevel = pointsPerLevel[4];
 						done();
@@ -95,7 +95,7 @@ EtherFairy.MAIN = METHOD({
 								fairy1Info : {
 									hp : EtherFairy.CalculateManager.calculateHP(fairyInfo.hpPointPerLevel * fairyLevel),
 									damage : EtherFairy.CalculateManager.calculateDamage(fairyInfo.attackPointPerLevel * fairyLevel),
-									defensePercent : EtherFairy.CalculateManager.calculateDefensePercent(fairyInfo.defensePointPerLevel * fairyLevel),
+									defencePercent : EtherFairy.CalculateManager.calculateDefencePercent(fairyInfo.defencePointPerLevel * fairyLevel),
 									attackSpeed : EtherFairy.CalculateManager.calculateAttackSpeed(fairyInfo.agilityPointPerLevel * fairyLevel),
 									avoidability : EtherFairy.CalculateManager.calculateAvoidability(fairyInfo.dexterityPointPerLevel * fairyLevel),
 									criticalPercent : EtherFairy.CalculateManager.calculateCriticalPercent(fairyInfo.dexterityPointPerLevel * fairyLevel),
@@ -109,7 +109,7 @@ EtherFairy.MAIN = METHOD({
 								fairy2Info : {
 									hp : EtherFairy.CalculateManager.calculateHP(enemyFairyInfo.hpPointPerLevel * enemyFairyLevel),
 									damage : EtherFairy.CalculateManager.calculateDamage(enemyFairyInfo.attackPointPerLevel * enemyFairyLevel),
-									defensePercent : EtherFairy.CalculateManager.calculateDefensePercent(enemyFairyInfo.defensePointPerLevel * enemyFairyLevel),
+									defencePercent : EtherFairy.CalculateManager.calculateDefencePercent(enemyFairyInfo.defencePointPerLevel * enemyFairyLevel),
 									attackSpeed : EtherFairy.CalculateManager.calculateAttackSpeed(enemyFairyInfo.agilityPointPerLevel * enemyFairyLevel),
 									avoidability : EtherFairy.CalculateManager.calculateAvoidability(enemyFairyInfo.dexterityPointPerLevel * enemyFairyLevel),
 									criticalPercent : EtherFairy.CalculateManager.calculateCriticalPercent(enemyFairyInfo.dexterityPointPerLevel * enemyFairyLevel),

@@ -354,8 +354,8 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		});
 		
 		// 돈을 지불하고 레벨 당 방어 증가 포인트를 올립니다.
-		let increaseDefensePointPerLevel = self.increaseDefensePointPerLevel = func((fairyId, now, callback) => {
-			contract.increaseDefensePointPerLevel(fairyId, {
+		let increaseDefencePointPerLevel = self.increaseDefencePointPerLevel = func((fairyId, now, callback) => {
+			contract.increaseDefencePointPerLevel(fairyId, {
 				value : web3.toWei(0.01 * now, 'ether')
 			}, transactionCallbackWrapper(callback));
 		});
@@ -484,8 +484,8 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		});
 		
 		// 레벨 당 방어 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
-		let getFairyIdsByDefensePointPerLevel = self.getFairyIdsByDefensePointPerLevel = func((callback) => {
-			contract.getFairyIdsByDefensePointPerLevel(callbackWrapper(callback));
+		let getFairyIdsByDefencePointPerLevel = self.getFairyIdsByDefencePointPerLevel = func((callback) => {
+			contract.getFairyIdsByDefencePointPerLevel(callbackWrapper(callback));
 		});
 		
 		// 레벨 당 민첩 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.

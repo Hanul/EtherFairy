@@ -46,7 +46,7 @@ EtherFairy.FairyModel = OBJECT({
 				integer : true
 			},
 			
-			defensePointPerLevel : {
+			defencePointPerLevel : {
 				notEmpty : true,
 				integer : true
 			},

@@ -164,10 +164,10 @@ EtherFairy.Fairy = CLASS({
 						
 						menu.append(DIV({
 							c : A({
-								c : MSG('INCREASE_DEFENSE_POINT_PER_LEVEL') + ' (0.01 Ether)',
+								c : MSG('INCREASE_DEFENCE_POINT_PER_LEVEL') + ' (0.01 Ether)',
 								on : {
 									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseDefensePointPerLevel(fairyId, fairyInfo.defensePointPerLevel, () => {
+										EtherFairy.EtherFairyContractController.increaseDefencePointPerLevel(fairyId, fairyInfo.defencePointPerLevel, () => {
 											EtherFairy.REFRESH('fairy/' + fairyId);
 										});
 									}

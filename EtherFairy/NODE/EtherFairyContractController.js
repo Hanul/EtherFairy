@@ -239,8 +239,8 @@ EtherFairy.EtherFairyContractController = OBJECT({
 		});
 		
 		// 레벨 당 방어 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.
-		let getFairyIdsByDefensePointPerLevel = self.getFairyIdsByDefensePointPerLevel = func((callback) => {
-			contract.methods.getFairyIdsByDefensePointPerLevel().call(callbackWrapper(callback));
+		let getFairyIdsByDefencePointPerLevel = self.getFairyIdsByDefencePointPerLevel = func((callback) => {
+			contract.methods.getFairyIdsByDefencePointPerLevel().call(callbackWrapper(callback));
 		});
 		
 		// 레벨 당 민첩 증가 포인트가 높은 순서대로 요정의 ID 목록을 가져옵니다.

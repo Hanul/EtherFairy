@@ -8,7 +8,7 @@ contract FairyPayToUpgrade is FairyOwnership {
     event CustomLevelUp(uint256 indexed fairyId);
     event IncreaseHPPointPerLevel(uint256 indexed fairyId);
     event IncreaseAttackPointPerLevel(uint256 indexed fairyId);
-    event IncreaseDefensePointPerLevel(uint256 indexed fairyId);
+    event IncreaseDefencePointPerLevel(uint256 indexed fairyId);
     event IncreaseAgilityPointPerLevel(uint256 indexed fairyId);
     event IncreaseDexterityPointPerLevel(uint256 indexed fairyId);
     event IncreaseFirePointPerLevel(uint256 indexed fairyId);
@@ -93,15 +93,15 @@ contract FairyPayToUpgrade is FairyOwnership {
 	}
 	
 	// 돈을 지불하고 레벨 당 방어 증가 포인트를 올립니다.
-	function increaseDefensePointPerLevel(uint256 fairyId) whenServiceRunning whenNotBlocked whenNotBlockedFairy(fairyId) onlyMasterOf(fairyId) payable public {
+	function increaseDefencePointPerLevel(uint256 fairyId) whenServiceRunning whenNotBlocked whenNotBlockedFairy(fairyId) onlyMasterOf(fairyId) payable public {
 		
 		Fairy storage fairy = fairies[fairyId];
 		
 		// 임의로 포인트를 증가시키는데 드는 포인트당 가격과 비교합니다.
-		require(msg.value == increasePointPricePerPoint * fairy.defensePointPerLevel);
+		require(msg.value == increasePointPricePerPoint * fairy.defencePointPerLevel);
 		
 		// 레벨 당 방어 증가 포인트를 올립니다.
-		fairy.defensePointPerLevel = fairy.defensePointPerLevel.add(1);
+		fairy.defencePointPerLevel = fairy.defencePointPerLevel.add(1);
 		
         uint256 companyRevenue = msg.value.div(2);
         uint256 designerRevenue = msg.value.div(2);
@@ -114,7 +114,7 @@ contract FairyPayToUpgrade is FairyOwnership {
 		// 요정의 디자이너에게 금액의 50%를 지급합니다.
 		fairy.designer.transfer(designerRevenue);
 		
-		emit IncreaseDefensePointPerLevel(fairyId);
+		emit IncreaseDefencePointPerLevel(fairyId);
 	}
 	
 	// 돈을 지불하고 레벨 당 민첩 증가 포인트를 올립니다.

@@ -61,7 +61,7 @@ contract FairyMaster is FairyOwnership, FairyPayToUpgrade {
 			// 기본 속성은 1로 통일하여 지정합니다.
 			hpPointPerLevel : 1,
 			attackPointPerLevel : 1,
-			defensePointPerLevel : 1,
+			defencePointPerLevel : 1,
 			agilityPointPerLevel : 1,
 			dexterityPointPerLevel : 1,
 			
