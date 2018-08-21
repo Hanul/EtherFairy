@@ -310,7 +310,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									fontSize : 20
 								},
 								c : FontAwesome.GetIcon('envelope'),
-								href : 'contact@btncafe.com'
+								href : 'mailto:contact@btncafe.com'
 							})]
 						}), CLEAR_BOTH()]
 					})]
