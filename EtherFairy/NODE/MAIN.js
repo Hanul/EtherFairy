@@ -71,60 +71,35 @@ EtherFairy.MAIN = METHOD({
 			});
 			
 			// 1분에 한번씩 요정들끼리 자동으로 서로 싸우게 합니다.
-			//INTERVAL(60, () => {
+			INTERVAL(60, () => {
 				EtherFairy.FairyModel.find({
 					isFindAll : true
-				}, (fairyInfos) => {
+				}, (fairyDataSet) => {
 					
-					EACH(fairyInfos, (fairyInfo) => {
+					EACH(fairyDataSet, (fairyData) => {
 						
 						EtherFairy.FairyModel.get({
 							filter : {
 								id : {
-									$ne : fairyInfo.id
+									$ne : fairyData.id
 								}
 							},
 							isRandom : true
-						}, (enemyFairyInfo) => {
-							console.log(fairyInfo.id, enemyFairyInfo.id);
+						}, (enemyFairyData) => {
 							
-							let fairyLevel = EtherFairy.CalculateManager.calculateLevel(EtherFairy.CalculateManager.calculateEXP(fairyInfo.birthTime));
-							let enemyFairyLevel = EtherFairy.CalculateManager.calculateLevel(EtherFairy.CalculateManager.calculateEXP(enemyFairyInfo.birthTime));
-							
-							console.log(EtherFairy.CalculateManager.battle({
-								fairy1Info : {
-									hp : EtherFairy.CalculateManager.calculateHP(fairyInfo.hpPointPerLevel * fairyLevel),
-									damage : EtherFairy.CalculateManager.calculateDamage(fairyInfo.attackPointPerLevel * fairyLevel),
-									defencePercent : EtherFairy.CalculateManager.calculateDefencePercent(fairyInfo.defencePointPerLevel * fairyLevel),
-									attackSpeed : EtherFairy.CalculateManager.calculateAttackSpeed(fairyInfo.agilityPointPerLevel * fairyLevel),
-									avoidability : EtherFairy.CalculateManager.calculateAvoidability(fairyInfo.dexterityPointPerLevel * fairyLevel),
-									criticalPercent : EtherFairy.CalculateManager.calculateCriticalPercent(fairyInfo.dexterityPointPerLevel * fairyLevel),
-									firePoint : fairyInfo.firePointPerLevel * fairyLevel,
-									waterPoint : fairyInfo.waterPointPerLevel * fairyLevel,
-									windPoint : fairyInfo.windPointPerLevel * fairyLevel,
-									earthPoint : fairyInfo.earthPointPerLevel * fairyLevel,
-									lightPoint : fairyInfo.lightPointPerLevel * fairyLevel,
-									darkPoint : fairyInfo.darkPointPerLevel * fairyLevel
-								},
-								fairy2Info : {
-									hp : EtherFairy.CalculateManager.calculateHP(enemyFairyInfo.hpPointPerLevel * enemyFairyLevel),
-									damage : EtherFairy.CalculateManager.calculateDamage(enemyFairyInfo.attackPointPerLevel * enemyFairyLevel),
-									defencePercent : EtherFairy.CalculateManager.calculateDefencePercent(enemyFairyInfo.defencePointPerLevel * enemyFairyLevel),
-									attackSpeed : EtherFairy.CalculateManager.calculateAttackSpeed(enemyFairyInfo.agilityPointPerLevel * enemyFairyLevel),
-									avoidability : EtherFairy.CalculateManager.calculateAvoidability(enemyFairyInfo.dexterityPointPerLevel * enemyFairyLevel),
-									criticalPercent : EtherFairy.CalculateManager.calculateCriticalPercent(enemyFairyInfo.dexterityPointPerLevel * enemyFairyLevel),
-									firePoint : enemyFairyInfo.firePointPerLevel * enemyFairyLevel,
-									waterPoint : enemyFairyInfo.waterPointPerLevel * enemyFairyLevel,
-									windPoint : enemyFairyInfo.windPointPerLevel * enemyFairyLevel,
-									earthPoint : enemyFairyInfo.earthPointPerLevel * enemyFairyLevel,
-									lightPoint : enemyFairyInfo.lightPointPerLevel * enemyFairyLevel,
-									darkPoint : enemyFairyInfo.darkPointPerLevel * enemyFairyLevel
-								}
-							}));
+							// 전투 결과 기록
+							EtherFairy.BattleRecordModel.create({
+								fairyId : fairyData.id,
+								enemyId : enemyFairyData.id,
+								isWin : EtherFairy.CalculateManager.battle({
+									fairyData : fairyData,
+									enemyData : enemyFairyData
+								})
+							});
 						});
 					});
 				});
-			//});
+			});
 		}
 	}
 });

@@ -35,53 +35,53 @@ EtherFairy.CalculateManager = OBJECT({
 			return resultLevel;
 		};
 		
-		// HP Level로부터 HP를 계산합니다.
-		let calculateHP = self.calculateHP = (hpLevel) => {
-			//REQUIRED: hpLevel
+		// HP Point로부터 HP를 계산합니다.
+		let calculateHP = self.calculateHP = (hpPoint) => {
+			//REQUIRED: hpPoint
 			
-			return hpLevel * 100;
+			return hpPoint * 100;
 		};
 		
-		// Attack Level로부터 공격력을 계산합니다.
-		let calculateDamage = self.calculateDamage = (attackLevel) => {
-			//REQUIRED: attackLevel
+		// Attack Point로부터 공격력을 계산합니다.
+		let calculateDamage = self.calculateDamage = (attackPoint) => {
+			//REQUIRED: attackPoint
 			
-			return attackLevel * 5;
+			return attackPoint * 5;
 		};
 		
-		// Defence Level로부터 방어력을 계산합니다.
-		let calculateDefencePercent = self.calculateDefencePercent = (defenceLevel) => {
-			//REQUIRED: defenceLevel
+		// Defence Point로부터 방어력을 계산합니다.
+		let calculateDefencePercent = self.calculateDefencePercent = (defencePoint) => {
+			//REQUIRED: defencePoint
 			
-			return parseFloat((Math.log10(defenceLevel * defenceLevel) * Math.log10(defenceLevel * defenceLevel)).toFixed(2));
+			return parseFloat((Math.log10(defencePoint * defencePoint) * Math.log10(defencePoint * defencePoint)).toFixed(2));
 		};
 		
-		// Agility Level로부터 공격 속도를 계산합니다.
-		let calculateAttackSpeed = self.calculateAttackSpeed = (agilityLevel) => {
-			//REQUIRED: agilityLevel
+		// Agility Point로부터 공격 속도를 계산합니다.
+		let calculateAttackSpeed = self.calculateAttackSpeed = (agilityPoint) => {
+			//REQUIRED: agilityPoint
 			
-			return 100 + agilityLevel / 2;
+			return 100 + agilityPoint / 2;
 		};
 		
-		// Dexterity Level로부터 회피율를 계산합니다.
-		let calculateAvoidability = self.calculateAvoidability = (dexterityLevel) => {
-			//REQUIRED: dexterityLevel
+		// Dexterity Point로부터 회피율를 계산합니다.
+		let calculateAvoidability = self.calculateAvoidability = (dexterityPoint) => {
+			//REQUIRED: dexterityPoint
 			
-			dexterityLevel += 1;
+			dexterityPoint += 1;
 			
-			return parseFloat((Math.log10(dexterityLevel * dexterityLevel) * Math.log10(dexterityLevel * dexterityLevel) / 2).toFixed(2));
+			return parseFloat((Math.log10(dexterityPoint * dexterityPoint) * Math.log10(dexterityPoint * dexterityPoint) / 2).toFixed(2));
 		};
 		
-		// Dexterity Level로부터 치명타 확률을 계산합니다.
-		let calculateCriticalPercent = self.calculateCriticalPercent = (dexterityLevel) => {
-			//REQUIRED: dexterityLevel
+		// Dexterity Point로부터 치명타 확률을 계산합니다.
+		let calculateCriticalPercent = self.calculateCriticalPercent = (dexterityPoint) => {
+			//REQUIRED: dexterityPoint
 			
-			dexterityLevel += 1;
+			dexterityPoint += 1;
 			
-			return parseFloat((Math.log10(dexterityLevel * dexterityLevel) * Math.log10(dexterityLevel * dexterityLevel) / 2).toFixed(2));
+			return parseFloat((Math.log10(dexterityPoint * dexterityPoint) * Math.log10(dexterityPoint * dexterityPoint) / 2).toFixed(2));
 		};
 		
-		let calculateRuneDamagePercent = (type, targetType) => {
+		let calculateElementDamagePercent = (type, targetType) => {
 			
 			if (type === 'fire') {
 				if (targetType === 'wind') {
@@ -143,235 +143,244 @@ EtherFairy.CalculateManager = OBJECT({
 			return 0;
 		};
 		
-		let calculateRuneAppendDamagePercent = (fairyData, enemyData) => {
-			//REQUIRED: fairyData
-			//REQUIRED: fairyData.firePoint
-			//REQUIRED: fairyData.waterPoint
-			//REQUIRED: fairyData.windPoint
-			//REQUIRED: fairyData.earthPoint
-			//REQUIRED: fairyData.lightPoint
-			//REQUIRED: fairyData.darkPoint
-			//REQUIRED: enemyData
-			//REQUIRED: enemyData.firePoint
-			//REQUIRED: enemyData.waterPoint
-			//REQUIRED: enemyData.windPoint
-			//REQUIRED: enemyData.earthPoint
-			//REQUIRED: enemyData.lightPoint
-			//REQUIRED: enemyData.darkPoint
+		let calculateElementAppendDamagePercent = (fairyInfo, enemyInfo) => {
+			//REQUIRED: fairyInfo
+			//REQUIRED: fairyInfo.firePoint
+			//REQUIRED: fairyInfo.waterPoint
+			//REQUIRED: fairyInfo.windPoint
+			//REQUIRED: fairyInfo.earthPoint
+			//REQUIRED: fairyInfo.lightPoint
+			//REQUIRED: fairyInfo.darkPoint
+			//REQUIRED: enemyInfo
+			//REQUIRED: enemyInfo.firePoint
+			//REQUIRED: enemyInfo.waterPoint
+			//REQUIRED: enemyInfo.windPoint
+			//REQUIRED: enemyInfo.earthPoint
+			//REQUIRED: enemyInfo.lightPoint
+			//REQUIRED: enemyInfo.darkPoint
 			
 			let appendDamagePercent = 0;
 			
-			if (fairyData.firePoint > 0) {
-				if (enemyData.firePoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('fire', 'fire');
+			if (fairyInfo.firePoint > 0) {
+				if (enemyInfo.firePoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('fire', 'fire');
 				}
-				if (enemyData.waterPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('fire', 'water');
+				if (enemyInfo.waterPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('fire', 'water');
 				}
-				if (enemyData.windPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('fire', 'wind');
+				if (enemyInfo.windPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('fire', 'wind');
 				}
-				if (enemyData.earthPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('fire', 'earth');
+				if (enemyInfo.earthPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('fire', 'earth');
 				}
-				if (enemyData.lightPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('fire', 'light');
+				if (enemyInfo.lightPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('fire', 'light');
 				}
-				if (enemyData.darkPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('fire', 'dark');
-				}
-			}
-			
-			if (fairyData.waterPoint > 0) {
-				if (enemyData.firePoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('water', 'fire');
-				}
-				if (enemyData.waterPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('water', 'water');
-				}
-				if (enemyData.windPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('water', 'wind');
-				}
-				if (enemyData.earthPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('water', 'earth');
-				}
-				if (enemyData.lightPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('water', 'light');
-				}
-				if (enemyData.darkPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('water', 'dark');
+				if (enemyInfo.darkPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('fire', 'dark');
 				}
 			}
 			
-			if (fairyData.windPoint > 0) {
-				if (enemyData.firePoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('wind', 'fire');
+			if (fairyInfo.waterPoint > 0) {
+				if (enemyInfo.firePoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('water', 'fire');
 				}
-				if (enemyData.waterPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('wind', 'water');
+				if (enemyInfo.waterPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('water', 'water');
 				}
-				if (enemyData.windPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('wind', 'wind');
+				if (enemyInfo.windPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('water', 'wind');
 				}
-				if (enemyData.earthPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('wind', 'earth');
+				if (enemyInfo.earthPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('water', 'earth');
 				}
-				if (enemyData.lightPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('wind', 'light');
+				if (enemyInfo.lightPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('water', 'light');
 				}
-				if (enemyData.darkPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('wind', 'dark');
-				}
-			}
-			
-			if (fairyData.earthPoint > 0) {
-				if (enemyData.firePoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('earth', 'fire');
-				}
-				if (enemyData.waterPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('earth', 'water');
-				}
-				if (enemyData.windPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('earth', 'wind');
-				}
-				if (enemyData.earthPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('earth', 'earth');
-				}
-				if (enemyData.lightPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('earth', 'light');
-				}
-				if (enemyData.darkPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('earth', 'dark');
+				if (enemyInfo.darkPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('water', 'dark');
 				}
 			}
 			
-			if (fairyData.lightPoint > 0) {
-				if (enemyData.firePoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('light', 'fire');
+			if (fairyInfo.windPoint > 0) {
+				if (enemyInfo.firePoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('wind', 'fire');
 				}
-				if (enemyData.waterPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('light', 'water');
+				if (enemyInfo.waterPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('wind', 'water');
 				}
-				if (enemyData.windPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('light', 'wind');
+				if (enemyInfo.windPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('wind', 'wind');
 				}
-				if (enemyData.earthPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('light', 'earth');
+				if (enemyInfo.earthPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('wind', 'earth');
 				}
-				if (enemyData.lightPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('light', 'light');
+				if (enemyInfo.lightPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('wind', 'light');
 				}
-				if (enemyData.darkPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('light', 'dark');
+				if (enemyInfo.darkPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('wind', 'dark');
 				}
 			}
 			
-			if (fairyData.darkPoint > 0) {
-				if (enemyData.firePoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('dark', 'fire');
+			if (fairyInfo.earthPoint > 0) {
+				if (enemyInfo.firePoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('earth', 'fire');
 				}
-				if (enemyData.waterPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('dark', 'water');
+				if (enemyInfo.waterPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('earth', 'water');
 				}
-				if (enemyData.windPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('dark', 'wind');
+				if (enemyInfo.windPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('earth', 'wind');
 				}
-				if (enemyData.earthPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('dark', 'earth');
+				if (enemyInfo.earthPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('earth', 'earth');
 				}
-				if (enemyData.lightPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('dark', 'light');
+				if (enemyInfo.lightPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('earth', 'light');
 				}
-				if (enemyData.darkPoint > 0) {
-					appendDamagePercent += calculateRuneDamagePercent('dark', 'dark');
+				if (enemyInfo.darkPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('earth', 'dark');
+				}
+			}
+			
+			if (fairyInfo.lightPoint > 0) {
+				if (enemyInfo.firePoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('light', 'fire');
+				}
+				if (enemyInfo.waterPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('light', 'water');
+				}
+				if (enemyInfo.windPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('light', 'wind');
+				}
+				if (enemyInfo.earthPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('light', 'earth');
+				}
+				if (enemyInfo.lightPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('light', 'light');
+				}
+				if (enemyInfo.darkPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('light', 'dark');
+				}
+			}
+			
+			if (fairyInfo.darkPoint > 0) {
+				if (enemyInfo.firePoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('dark', 'fire');
+				}
+				if (enemyInfo.waterPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('dark', 'water');
+				}
+				if (enemyInfo.windPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('dark', 'wind');
+				}
+				if (enemyInfo.earthPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('dark', 'earth');
+				}
+				if (enemyInfo.lightPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('dark', 'light');
+				}
+				if (enemyInfo.darkPoint > 0) {
+					appendDamagePercent += calculateElementDamagePercent('dark', 'dark');
 				}
 			}
 			
 			return appendDamagePercent;
 		};
 		
-		let calculateTurn = (fairyData, enemyData) => {
-			//REQUIRED: fairyData
-			//REQUIRED: fairyData.hpLevel
-			//REQUIRED: fairyData.attackLevel
-			//REQUIRED: fairyData.defenceLevel
-			//REQUIRED: fairyData.strengthLevel
-			//REQUIRED: fairyData.agilityLevel
-			//REQUIRED: fairyData.dexterityLevel
-			//REQUIRED: fairyData.firePoint
-			//REQUIRED: fairyData.waterPoint
-			//REQUIRED: fairyData.windPoint
-			//REQUIRED: fairyData.earthPoint
-			//REQUIRED: fairyData.lightPoint
-			//REQUIRED: fairyData.darkPoint
-			//REQUIRED: enemyData
-			//REQUIRED: enemyData.hpLevel
-			//REQUIRED: enemyData.attackLevel
-			//REQUIRED: enemyData.defenceLevel
-			//REQUIRED: enemyData.strengthLevel
-			//REQUIRED: enemyData.agilityLevel
-			//REQUIRED: enemyData.dexterityLevel
-			//REQUIRED: enemyData.firePoint
-			//REQUIRED: enemyData.waterPoint
-			//REQUIRED: enemyData.windPoint
-			//REQUIRED: enemyData.earthPoint
-			//REQUIRED: enemyData.lightPoint
-			//REQUIRED: enemyData.darkPoint
+		let calculateElementDamage = self.calculateElementDamage = (elementPoint) => {
+			//REQUIRED: elementPoint
+			
+			return elementPoint * 5;
+		};
+		
+		let calculateTurn = (fairyInfo, enemyInfo) => {
+			//REQUIRED: fairyInfo
+			//REQUIRED: fairyInfo.hpPoint
+			//REQUIRED: fairyInfo.attackPoint
+			//REQUIRED: fairyInfo.defencePoint
+			//REQUIRED: fairyInfo.strengthPoint
+			//REQUIRED: fairyInfo.agilityPoint
+			//REQUIRED: fairyInfo.dexterityPoint
+			//REQUIRED: fairyInfo.firePoint
+			//REQUIRED: fairyInfo.waterPoint
+			//REQUIRED: fairyInfo.windPoint
+			//REQUIRED: fairyInfo.earthPoint
+			//REQUIRED: fairyInfo.lightPoint
+			//REQUIRED: fairyInfo.darkPoint
+			//REQUIRED: enemyInfo
+			//REQUIRED: enemyInfo.hpPoint
+			//REQUIRED: enemyInfo.attackPoint
+			//REQUIRED: enemyInfo.defencePoint
+			//REQUIRED: enemyInfo.strengthPoint
+			//REQUIRED: enemyInfo.agilityPoint
+			//REQUIRED: enemyInfo.dexterityPoint
+			//REQUIRED: enemyInfo.firePoint
+			//REQUIRED: enemyInfo.waterPoint
+			//REQUIRED: enemyInfo.windPoint
+			//REQUIRED: enemyInfo.earthPoint
+			//REQUIRED: enemyInfo.lightPoint
+			//REQUIRED: enemyInfo.darkPoint
 			
 			// 데미지 계산
-			let damage = (calculateDamage(fairyData.attackLevel)
-				+ calculateRuneDamage(fairyData.firePoint)
-				+ calculateRuneDamage(fairyData.waterPoint)
-				+ calculateRuneDamage(fairyData.windPoint)
-				+ calculateRuneDamage(fairyData.earthPoint)
-				+ calculateRuneDamage(fairyData.lightPoint)
-				+ calculateRuneDamage(fairyData.darkPoint)
-			) * (100 - calculateDefencePercent(enemyData.defenceLevel)) / 100 * (1 + calculateRuneAppendDamagePercent(fairyData, enemyData) / 100);
+			let damage = (calculateDamage(fairyInfo.attackPoint)
+				+ calculateElementDamage(fairyInfo.firePoint)
+				+ calculateElementDamage(fairyInfo.waterPoint)
+				+ calculateElementDamage(fairyInfo.windPoint)
+				+ calculateElementDamage(fairyInfo.earthPoint)
+				+ calculateElementDamage(fairyInfo.lightPoint)
+				+ calculateElementDamage(fairyInfo.darkPoint)
+			) * (100 - calculateDefencePercent(enemyInfo.defencePoint)) / 100 * (1 + calculateElementAppendDamagePercent(fairyInfo, enemyInfo) / 100);
 			
 			// 공격 횟수 계산
-			let attackCount = calculateAttackSpeed(fairyData.agilityLevel) / 60 * (100 - calculateAvoidability(enemyData.dexterityLevel)) / 100;
+			let attackCount = calculateAttackSpeed(fairyInfo.agilityPoint) / 60 * (100 - calculateAvoidability(enemyInfo.dexterityPoint)) / 100;
 			
-			let bonusDamage = damage * calculateCriticalPercent(fairyData.dexterityLevel) / 100 * 10;
+			let bonusDamage = damage * calculateCriticalPercent(fairyInfo.dexterityPoint) / 100 * 10;
 			
-			return calculateHP(enemyData.hpLevel) / (damage + bonusDamage) * attackCount;
+			return calculateHP(enemyInfo.hpPoint) / (damage + bonusDamage) * attackCount;
 		};
 		
 		// 두 요정에 전투를 붙힙니다. (winner가 1이면 첫번째 요정의 승리, 2면 두번째 요정의 승리)
 		let battle = self.battle = (params) => {
 			//REQUIRED: params
 			//REQUIRED: params.fairyData
-			//REQUIRED: params.fairyData.hpLevel
-			//REQUIRED: params.fairyData.attackLevel
-			//REQUIRED: params.fairyData.defenceLevel
-			//REQUIRED: params.fairyData.strengthLevel
-			//REQUIRED: params.fairyData.agilityLevel
-			//REQUIRED: params.fairyData.dexterityLevel
-			//REQUIRED: params.fairyData.firePoint
-			//REQUIRED: params.fairyData.waterPoint
-			//REQUIRED: params.fairyData.windPoint
-			//REQUIRED: params.fairyData.earthPoint
-			//REQUIRED: params.fairyData.lightPoint
-			//REQUIRED: params.fairyData.darkPoint
 			//REQUIRED: params.enemyData
-			//REQUIRED: params.enemyData.hpLevel
-			//REQUIRED: params.enemyData.attackLevel
-			//REQUIRED: params.enemyData.defenceLevel
-			//REQUIRED: params.enemyData.strengthLevel
-			//REQUIRED: params.enemyData.agilityLevel
-			//REQUIRED: params.enemyData.dexterityLevel
-			//REQUIRED: params.enemyData.firePoint
-			//REQUIRED: params.enemyData.waterPoint
-			//REQUIRED: params.enemyData.windPoint
-			//REQUIRED: params.enemyData.earthPoint
-			//REQUIRED: params.enemyData.lightPoint
-			//REQUIRED: params.enemyData.darkPoint
 			
-			let fairyData = params.fairyData;
-			let enemyData = params.enemyData;
+			let fairyInfo = COPY(params.fairyData);
+			let enemyInfo = COPY(params.enemyData);
 			
-			console.log(calculateTurn(fairyData, enemyData), calculateTurn(enemyData, fairyData));
+			let fairyLevel = calculateLevel(calculateEXP(fairyInfo.birthTime)) + fairyInfo.appendedLevel;
+			let enemyLevel = calculateLevel(calculateEXP(enemyInfo.birthTime)) + enemyInfo.appendedLevel;
 			
-			return calculateTurn(fairyData, enemyData) <= calculateTurn(enemyData, fairyData);
+			fairyInfo.hpPoint = fairyInfo.hpPointPerLevel * fairyLevel;
+			fairyInfo.attackPoint = fairyInfo.attackPointPerLevel * fairyLevel;
+			fairyInfo.defencePoint = fairyInfo.defencePointPerLevel * fairyLevel;
+			fairyInfo.agilityPoint = fairyInfo.agilityPointPerLevel * fairyLevel;
+			fairyInfo.dexterityPoint = fairyInfo.dexterityPointPerLevel * fairyLevel;
+			
+			fairyInfo.firePoint = fairyInfo.firePointPerLevel * fairyLevel;
+			fairyInfo.waterPoint = fairyInfo.waterPointPerLevel * fairyLevel;
+			fairyInfo.windPoint = fairyInfo.windPointPerLevel * fairyLevel;
+			fairyInfo.earthPoint = fairyInfo.earthPointPerLevel * fairyLevel;
+			fairyInfo.lightPoint = fairyInfo.lightPointPerLevel * fairyLevel;
+			fairyInfo.darkPoint = fairyInfo.darkPointPerLevel * fairyLevel;
+			
+			enemyInfo.hpPoint = enemyInfo.hpPointPerLevel * fairyLevel;
+			enemyInfo.attackPoint = enemyInfo.attackPointPerLevel * fairyLevel;
+			enemyInfo.defencePoint = enemyInfo.defencePointPerLevel * fairyLevel;
+			enemyInfo.agilityPoint = enemyInfo.agilityPointPerLevel * fairyLevel;
+			enemyInfo.dexterityPoint = enemyInfo.dexterityPointPerLevel * fairyLevel;
+			
+			enemyInfo.firePoint = enemyInfo.firePointPerLevel * fairyLevel;
+			enemyInfo.waterPoint = enemyInfo.waterPointPerLevel * fairyLevel;
+			enemyInfo.windPoint = enemyInfo.windPointPerLevel * fairyLevel;
+			enemyInfo.earthPoint = enemyInfo.earthPointPerLevel * fairyLevel;
+			enemyInfo.lightPoint = enemyInfo.lightPointPerLevel * fairyLevel;
+			enemyInfo.darkPoint = enemyInfo.darkPointPerLevel * fairyLevel;
+			
+			return calculateTurn(fairyInfo, enemyInfo) <= calculateTurn(enemyInfo, fairyInfo);
 		};
 	}
 });
