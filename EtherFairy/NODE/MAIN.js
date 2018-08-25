@@ -70,8 +70,8 @@ EtherFairy.MAIN = METHOD({
 				saveFairyInfo(result.fairyId);
 			});
 			
-			// 1분에 한번씩 요정들끼리 자동으로 서로 싸우게 합니다.
-			INTERVAL(60, () => {
+			// 10분에 한번씩 요정들끼리 자동으로 서로 싸우게 합니다.
+			INTERVAL(600, () => {
 				EtherFairy.FairyModel.find({
 					isFindAll : true
 				}, (fairyDataSet) => {
@@ -87,15 +87,16 @@ EtherFairy.MAIN = METHOD({
 							isRandom : true
 						}, (enemyFairyData) => {
 							
-							// 전투 결과 기록
-							EtherFairy.BattleRecordModel.create({
-								fairyId : fairyData.id,
-								enemyId : enemyFairyData.id,
-								isWin : EtherFairy.CalculateManager.battle({
-									fairyData : fairyData,
-									enemyData : enemyFairyData
-								})
+							let battleResult = EtherFairy.CalculateManager.battle({
+								fairyData : fairyData,
+								enemyData : enemyFairyData
 							});
+							
+							battleResult.fairyId = fairyData.id;
+							battleResult.enemyId = enemyFairyData.id;
+							
+							// 전투 결과 기록
+							EtherFairy.BattleResultModel.create(battleResult);
 						});
 					});
 				});

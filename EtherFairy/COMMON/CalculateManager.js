@@ -337,9 +337,12 @@ EtherFairy.CalculateManager = OBJECT({
 			// 공격 횟수 계산
 			let attackCount = calculateAttackSpeed(fairyInfo.agilityPoint) / 60 * (100 - calculateAvoidability(enemyInfo.dexterityPoint)) / 100;
 			
-			let bonusDamage = damage * calculateCriticalPercent(fairyInfo.dexterityPoint) / 100 * 10;
+			damage += damage * calculateCriticalPercent(fairyInfo.dexterityPoint) / 100 * 10;
 			
-			return calculateHP(enemyInfo.hpPoint) / (damage + bonusDamage) * attackCount;
+			return {
+				damage : damage,
+				turn : calculateHP(enemyInfo.hpPoint) / damage * attackCount
+			};
 		};
 		
 		// 두 요정에 전투를 붙힙니다. (winner가 1이면 첫번째 요정의 승리, 2면 두번째 요정의 승리)
@@ -380,7 +383,18 @@ EtherFairy.CalculateManager = OBJECT({
 			enemyInfo.lightPoint = enemyInfo.lightPointPerLevel * fairyLevel;
 			enemyInfo.darkPoint = enemyInfo.darkPointPerLevel * fairyLevel;
 			
-			return calculateTurn(fairyInfo, enemyInfo) <= calculateTurn(enemyInfo, fairyInfo);
+			let fairyTurnResult = calculateTurn(fairyInfo, enemyInfo);
+			let enemyTurnResult = calculateTurn(enemyInfo, fairyInfo);
+			
+			return {
+				fairyHP : calculateHP(fairyInfo.hpPoint),
+				enemyHP : calculateHP(enemyInfo.hpPoint),
+				fairyDamage : fairyTurnResult.damage,
+				enemyDamage : enemyTurnResult.damage,
+				fairyTurn : fairyTurnResult.turn,
+				enemyTurn : enemyTurnResult.turn,
+				isWin : fairyTurnResult.turn <= enemyTurnResult.turn
+			};
 		};
 	}
 });
