@@ -114,41 +114,47 @@ EtherFairy.Start = CLASS({
 				on : {
 					tap : () => {
 						
-						if (EtherFairy.WalletManager.checkIsLocked() === true) {
-							Yogurt.Alert({
-								msg : MSG('PLEASE_UNLOCK_METAMASK')
-							});
-						}
-						
-						else {
+						EtherFairy.WalletManager.checkIsLocked((isLocked) => {
 							
-							EtherFairy.MasterModel.checkExists({
-								filter : {
-									id : EtherFairy.WalletManager.getWalletAddress()
-								}
-							}, (exists) => {
+							if (isLocked === true) {
+								Yogurt.Alert({
+									msg : MSG('PLEASE_UNLOCK_METAMASK')
+								});
+							}
+							
+							else {
 								
-								if (exists === true) {
-									EtherFairy.REFRESH('master');
-								}
-								
-								// 존재하지 않으면, 생성
-								else {
-									EtherFairy.GO('master/join');
-									/*
-									Yogurt.Prompt(MSG('PLEASE_ENTER_MASTER_NICKNAME'), (value) => {
+								EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+									
+									EtherFairy.MasterModel.checkExists({
+										filter : {
+											id : walletAddress
+										}
+									}, (exists) => {
 										
-										EtherFairy.MasterModel.create({
-											id : EtherFairy.WalletManager.getWalletAddress(),
-											nickname : value
-										}, () => {
-											EtherFairy.GO('master');
-										});
+										if (exists === true) {
+											EtherFairy.REFRESH('master');
+										}
+										
+										// 존재하지 않으면, 생성
+										else {
+											EtherFairy.GO('master/join');
+											/*
+											Yogurt.Prompt(MSG('PLEASE_ENTER_MASTER_NICKNAME'), (value) => {
+												
+												EtherFairy.MasterModel.create({
+													id : walletAddress,
+													nickname : value
+												}, () => {
+													EtherFairy.GO('master');
+												});
+											});
+											*/
+										}
 									});
-									*/
-								}
-							});
-						}
+								});
+							}
+						});
 					}
 				}
 			}));

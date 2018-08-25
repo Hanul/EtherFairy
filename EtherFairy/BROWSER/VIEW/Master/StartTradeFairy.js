@@ -32,49 +32,52 @@ EtherFairy('Master').StartTradeFairy = CLASS({
 			})]
 		}));
 		
-		EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
-			notExists : () => {
-				//TODO:
-			},
-			success : () => {
-				
-				EtherFairy.EtherFairyContractController.balanceOf(EtherFairy.WalletManager.getWalletAddress(), (fairyCount) => {
+		EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+			
+			EtherFairy.MasterModel.get(walletAddress, {
+				notExists : () => {
+					//TODO:
+				},
+				success : () => {
 					
-					fairyList.empty();
-					
-					REPEAT(fairyCount, (i) => {
-							
-						let fairyCardWrapper = DIV().appendTo(fairyList);
+					EtherFairy.EtherFairyContractController.balanceOf(walletAddress, (fairyCount) => {
 						
-						EtherFairy.EtherFairyContractController.getFairyId(EtherFairy.WalletManager.getWalletAddress(), i, (fairyId) => {
+						fairyList.empty();
+						
+						REPEAT(fairyCount, (i) => {
+								
+							let fairyCardWrapper = DIV().appendTo(fairyList);
 							
-							fairyCardWrapper.append(EtherFairy.FairyCard({
-								style : {
-									marginTop : 10,
-									marginRight : 10,
-									flt : 'left',
-									cursor : 'pointer'
-								},
-								fairyId : fairyId,
-								on : {
-									tap : () => {
-										
-										// 가격 입력
-										Yogurt.Prompt(MSG('ENTER_FAIRY_PRICE') + ' (Ether)', (price) => {
+							EtherFairy.EtherFairyContractController.getFairyId(walletAddress, i, (fairyId) => {
+								
+								fairyCardWrapper.append(EtherFairy.FairyCard({
+									style : {
+										marginTop : 10,
+										marginRight : 10,
+										flt : 'left',
+										cursor : 'pointer'
+									},
+									fairyId : fairyId,
+									on : {
+										tap : () => {
 											
-											EtherFairy.FairyMarketContractController.startSale(fairyId, REAL(price), () => {
-												EtherFairy.GO('master/tradefairy');
+											// 가격 입력
+											Yogurt.Prompt(MSG('ENTER_FAIRY_PRICE') + ' (Ether)', (price) => {
+												
+												EtherFairy.FairyMarketContractController.startSale(fairyId, REAL(price), () => {
+													EtherFairy.GO('master/tradefairy');
+												});
 											});
-										});
+										}
 									}
-								}
-							}));
+								}));
+							});
 						});
+						
+						fairyList.append(CLEAR_BOTH());
 					});
-					
-					fairyList.append(CLEAR_BOTH());
-				});
-			}
+				}
+			});
 		});
 	}
 });

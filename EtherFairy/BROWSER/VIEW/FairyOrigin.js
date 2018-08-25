@@ -53,55 +53,62 @@ EtherFairy.FairyOrigin = CLASS({
 				}));
 				
 				// 소유주가 접속해 있으면 소유주 메뉴 추가
-				if (EtherFairy.WalletManager.checkIsLocked() !== true) {
-					EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
-						notExists : () => {
-							// ignore.
-						},
-						success : () => {
+				EtherFairy.WalletManager.checkIsLocked((isLocked) => {
+					
+					if (isLocked !== true) {
+						
+						EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 							
-							masterMenu.append(Yogurt.Button({
-								c : MSG('BUY_FAIRY_BUTTON'),
-								on : {
-									tap : () => {
-										
-										// 이름 입력받기
-										Yogurt.Prompt(MSG('PLEASE_ENTER_FAIRY_NAME'), (fairyName) => {
-											
-											let loadingPanel;
-											
-											masterMenu.append(loadingPanel = DIV({
-												c : MSG('BUYING_FAIRY')
-											}));
-											
-											// 요정 탄생시키기
-											EtherFairy.EtherFairyContractController.birthFairy(
-												fairyOriginData.id,
-												'0x38b4343b3BE52374D83398159F2FA06ef78bDA7D',
-												fairyName,
-												fairyOriginData.firePointPerLevel,
-												fairyOriginData.waterPointPerLevel,
-												fairyOriginData.windPointPerLevel,
-												fairyOriginData.earthPointPerLevel,
-												fairyOriginData.lightPointPerLevel,
-												fairyOriginData.darkPointPerLevel
-											, {
-												error : (errorMsg) => {
-													alert(errorMsg);
-													loadingPanel.remove();
-												},
-												success : () => {
-													loadingPanel.remove();
-													EtherFairy.GO('master/managefairy');
-												}
-											});
-										});
-									}
+							EtherFairy.MasterModel.get(walletAddress, {
+								notExists : () => {
+									// ignore.
+								},
+								success : () => {
+									
+									masterMenu.append(Yogurt.Button({
+										c : MSG('BUY_FAIRY_BUTTON'),
+										on : {
+											tap : () => {
+												
+												// 이름 입력받기
+												Yogurt.Prompt(MSG('PLEASE_ENTER_FAIRY_NAME'), (fairyName) => {
+													
+													let loadingPanel;
+													
+													masterMenu.append(loadingPanel = DIV({
+														c : MSG('BUYING_FAIRY')
+													}));
+													
+													// 요정 탄생시키기
+													EtherFairy.EtherFairyContractController.birthFairy(
+														fairyOriginData.id,
+														'0x38b4343b3BE52374D83398159F2FA06ef78bDA7D',
+														fairyName,
+														fairyOriginData.firePointPerLevel,
+														fairyOriginData.waterPointPerLevel,
+														fairyOriginData.windPointPerLevel,
+														fairyOriginData.earthPointPerLevel,
+														fairyOriginData.lightPointPerLevel,
+														fairyOriginData.darkPointPerLevel
+													, {
+														error : (errorMsg) => {
+															alert(errorMsg);
+															loadingPanel.remove();
+														},
+														success : () => {
+															loadingPanel.remove();
+															EtherFairy.GO('master/managefairy');
+														}
+													});
+												});
+											}
+										}
+									}));
 								}
-							}));
-						}
-					});
-				}
+							});
+						});
+					}
+				});
 			});
 		});
 	}

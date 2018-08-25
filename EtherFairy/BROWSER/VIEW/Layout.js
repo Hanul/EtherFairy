@@ -320,126 +320,132 @@ EtherFairy.Layout = CLASS((cls) => {
 			NEXT([
 			(next) => {
 				
-				if (EtherFairy.WalletManager.checkIsLocked() !== true) {
+				EtherFairy.WalletManager.checkIsLocked((isLocked) => {
 					
-					EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
+					if (isLocked !== true) {
 						
-						notExists : () => {
-							next();
-						},
-						
-						success : () => {
+						EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 							
-							leftMenu.append(DIV({
-								style : {
-									width : '100%',
-									borderBottom : '1px solid #444',
-									cursor : 'pointer'
+							EtherFairy.MasterModel.get(walletAddress, {
+								
+								notExists : () => {
+									next();
 								},
-								c : [DIV({
-									style : {
-										padding : 10,
-										fontSize : 15
-									},
-									c : MSG('LAYOUT_MASTER_MENU')
-								}),
 								
-								// 요정 구매 버튼
-								DIV({
-									style : {
-										width : '100%',
-										cursor : 'pointer',
-										backgroundColor : '#33393e'
-									},
-									c : UUI.BUTTON_H({
+								success : () => {
+									
+									leftMenu.append(DIV({
 										style : {
-											padding : 10,
-											paddingLeft : 15,
-											fontSize : 15
+											width : '100%',
+											borderBottom : '1px solid #444',
+											cursor : 'pointer'
 										},
-										icon : SPAN({
+										c : [DIV({
 											style : {
-												width : 12
+												padding : 10,
+												fontSize : 15
 											},
-											c : FontAwesome.GetIcon('shopping-cart')
+											c : MSG('LAYOUT_MASTER_MENU')
 										}),
-										spacing : 10,
-										title : MSG('BUY_FAIRY')
-									}),
-									on : {
-										tap : () => {
-											EtherFairy.GO('master/buyfairy');
-											menuLayout.hideLeftMenu();
-										}
-									}
-								}),
-								
-								// 요정 거래 버튼
-								DIV({
-									style : {
-										borderTop : '1px solid #222',
-										width : '100%',
-										cursor : 'pointer',
-										backgroundColor : '#33393e'
-									},
-									c : UUI.BUTTON_H({
-										style : {
-											padding : 10,
-											paddingLeft : 15,
-											fontSize : 15
-										},
-										icon : SPAN({
+										
+										// 요정 구매 버튼
+										DIV({
 											style : {
-												width : 12
+												width : '100%',
+												cursor : 'pointer',
+												backgroundColor : '#33393e'
 											},
-											c : FontAwesome.GetIcon('arrows-alt-h')
+											c : UUI.BUTTON_H({
+												style : {
+													padding : 10,
+													paddingLeft : 15,
+													fontSize : 15
+												},
+												icon : SPAN({
+													style : {
+														width : 12
+													},
+													c : FontAwesome.GetIcon('shopping-cart')
+												}),
+												spacing : 10,
+												title : MSG('BUY_FAIRY')
+											}),
+											on : {
+												tap : () => {
+													EtherFairy.GO('master/buyfairy');
+													menuLayout.hideLeftMenu();
+												}
+											}
 										}),
-										spacing : 10,
-										title : MSG('TRADE_FAIRY')
-									}),
-									on : {
-										tap : () => {
-											EtherFairy.GO('master/tradefairy');
-											menuLayout.hideLeftMenu();
-										}
-									}
-								}),
-								
-								// 요정 관리 버튼
-								DIV({
-									style : {
-										borderTop : '1px solid #222',
-										width : '100%',
-										cursor : 'pointer',
-										backgroundColor : '#33393e'
-									},
-									c : UUI.BUTTON_H({
-										style : {
-											padding : 10,
-											paddingLeft : 15,
-											fontSize : 15
-										},
-										icon : SPAN({
+										
+										// 요정 거래 버튼
+										DIV({
 											style : {
-												width : 12
+												borderTop : '1px solid #222',
+												width : '100%',
+												cursor : 'pointer',
+												backgroundColor : '#33393e'
 											},
-											c : FontAwesome.GetIcon('cog')
+											c : UUI.BUTTON_H({
+												style : {
+													padding : 10,
+													paddingLeft : 15,
+													fontSize : 15
+												},
+												icon : SPAN({
+													style : {
+														width : 12
+													},
+													c : FontAwesome.GetIcon('arrows-alt-h')
+												}),
+												spacing : 10,
+												title : MSG('TRADE_FAIRY')
+											}),
+											on : {
+												tap : () => {
+													EtherFairy.GO('master/tradefairy');
+													menuLayout.hideLeftMenu();
+												}
+											}
 										}),
-										spacing : 10,
-										title : MSG('MANAGE_FAIRY')
-									}),
-									on : {
-										tap : () => {
-											EtherFairy.GO('master/managefairy');
-											menuLayout.hideLeftMenu();
-										}
-									}
-								})]
-							}));
-							
-							next(true);
-						}
-					});
+										
+										// 요정 관리 버튼
+										DIV({
+											style : {
+												borderTop : '1px solid #222',
+												width : '100%',
+												cursor : 'pointer',
+												backgroundColor : '#33393e'
+											},
+											c : UUI.BUTTON_H({
+												style : {
+													padding : 10,
+													paddingLeft : 15,
+													fontSize : 15
+												},
+												icon : SPAN({
+													style : {
+														width : 12
+													},
+													c : FontAwesome.GetIcon('cog')
+												}),
+												spacing : 10,
+												title : MSG('MANAGE_FAIRY')
+											}),
+											on : {
+												tap : () => {
+													EtherFairy.GO('master/managefairy');
+													menuLayout.hideLeftMenu();
+												}
+											}
+										})]
+									}));
+									
+									next(true);
+								}
+							});
+						});
+					}
 				}
 				
 				else {

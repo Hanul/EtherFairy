@@ -28,45 +28,51 @@ EtherFairy('Master').ManageFairy = CLASS({
 			})]
 		}));
 		
-		if (EtherFairy.WalletManager.checkIsLocked() !== true) {
+		EtherFairy.WalletManager.checkIsLocked((isLocked) => {
 			
-			EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
-				notExists : () => {
-					//TODO:
-				},
-				success : () => {
+			if (isLocked !== true) {
+				
+				EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 					
-					EtherFairy.EtherFairyContractController.balanceOf(EtherFairy.WalletManager.getWalletAddress(), (fairyCount) => {
-						
-						fairyList.empty();
-						
-						REPEAT(fairyCount, (i) => {
+					EtherFairy.MasterModel.get(walletAddress, {
+						notExists : () => {
+							//TODO:
+						},
+						success : () => {
 							
-							let fairyCardWrapper = DIV().appendTo(fairyList);
-							
-							EtherFairy.EtherFairyContractController.getFairyId(EtherFairy.WalletManager.getWalletAddress(), i, (fairyId) => {
+							EtherFairy.EtherFairyContractController.balanceOf(walletAddress, (fairyCount) => {
 								
-								fairyCardWrapper.append(EtherFairy.FairyCard({
-									style : {
-										marginTop : 10,
-										marginRight : 10,
-										flt : 'left',
-										cursor : 'pointer'
-									},
-									fairyId : fairyId,
-									on : {
-										tap : () => {
-											EtherFairy.GO('fairy/' + fairyId);
-										}
-									}
-								}));
+								fairyList.empty();
+								
+								REPEAT(fairyCount, (i) => {
+									
+									let fairyCardWrapper = DIV().appendTo(fairyList);
+									
+									EtherFairy.EtherFairyContractController.getFairyId(walletAddress, i, (fairyId) => {
+										
+										fairyCardWrapper.append(EtherFairy.FairyCard({
+											style : {
+												marginTop : 10,
+												marginRight : 10,
+												flt : 'left',
+												cursor : 'pointer'
+											},
+											fairyId : fairyId,
+											on : {
+												tap : () => {
+													EtherFairy.GO('fairy/' + fairyId);
+												}
+											}
+										}));
+									});
+								});
+								
+								fairyList.append(CLEAR_BOTH());
 							});
-						});
-						
-						fairyList.append(CLEAR_BOTH());
+						}
 					});
-				}
-			});
+				});
+			}
 		}
 	}
 });

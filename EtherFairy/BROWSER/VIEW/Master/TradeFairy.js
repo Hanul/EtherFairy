@@ -42,48 +42,51 @@ EtherFairy('Master').TradeFairy = CLASS({
 			})]
 		}));
 		
-		EtherFairy.MasterModel.get(EtherFairy.WalletManager.getWalletAddress(), {
-			notExists : () => {
-				//TODO:
-			},
-			success : () => {
-				
-				EtherFairy.FairyMarketContractController.getSaleCount((saleCount) => {
+		EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+			
+			EtherFairy.MasterModel.get(walletAddress, {
+				notExists : () => {
+					//TODO:
+				},
+				success : () => {
 					
-					fairyList.empty();
-					
-					REPEAT(saleCount, (i) => {
+					EtherFairy.FairyMarketContractController.getSaleCount((saleCount) => {
 						
-						let fairyCardWrapper = DIV().appendTo(fairyList);
+						fairyList.empty();
 						
-						EtherFairy.FairyMarketContractController.getSaleInfo(i, (saleInfo) => {
+						REPEAT(saleCount, (i) => {
 							
-							let seller = saleInfo[0];
-							let fairyId = saleInfo[1];
-							let price = saleInfo[2];
+							let fairyCardWrapper = DIV().appendTo(fairyList);
 							
-							fairyCardWrapper.append(EtherFairy.FairyCard({
-								style : {
-									marginTop : 10,
-									marginRight : 10,
-									flt : 'left',
-									cursor : 'pointer'
-								},
-								fairyId : fairyId,
-								on : {
-									tap : () => {
-										EtherFairy.GO('fairy/' + fairyId);
+							EtherFairy.FairyMarketContractController.getSaleInfo(i, (saleInfo) => {
+								
+								let seller = saleInfo[0];
+								let fairyId = saleInfo[1];
+								let price = saleInfo[2];
+								
+								fairyCardWrapper.append(EtherFairy.FairyCard({
+									style : {
+										marginTop : 10,
+										marginRight : 10,
+										flt : 'left',
+										cursor : 'pointer'
+									},
+									fairyId : fairyId,
+									on : {
+										tap : () => {
+											EtherFairy.GO('fairy/' + fairyId);
+										}
 									}
-								}
-							}));
+								}));
+							});
 						});
+						
+						fairyList.append(CLEAR_BOTH());
 					});
 					
-					fairyList.append(CLEAR_BOTH());
-				});
-				
-				//EtherFairy.FairyMarketContractController.findSaleIdByFairyId(0, console.log);
-			}
+					//EtherFairy.FairyMarketContractController.findSaleIdByFairyId(0, console.log);
+				}
+			});
 		});
 	}
 });

@@ -53,49 +53,52 @@ EtherFairy.Fairy = CLASS({
 								let fairyId = saleInfo[1];
 								let price = saleInfo[2];
 								
-								if (EtherFairy.WalletManager.getWalletAddress() === seller) {
+								EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 									
-									menu.append(DIV({
-										c : A({
-											c : MSG('CANCEL_TRADE'),
-											on : {
-												tap : () => {
-													
-													Yogurt.Confirm({
-														msg : MSG('REALLY_CANCEL_PROMPT')
-													}, () => {
+									if (walletAddress === seller) {
+										
+										menu.append(DIV({
+											c : A({
+												c : MSG('CANCEL_TRADE'),
+												on : {
+													tap : () => {
 														
-														EtherFairy.FairyMarketContractController.cancelSale(fairyId, () => {
-															EtherFairy.REFRESH('fairy/' + fairyId);
+														Yogurt.Confirm({
+															msg : MSG('REALLY_CANCEL_PROMPT')
+														}, () => {
+															
+															EtherFairy.FairyMarketContractController.cancelSale(fairyId, () => {
+																EtherFairy.REFRESH('fairy/' + fairyId);
+															});
 														});
-													});
+													}
 												}
-											}
-										})
-									}));
-								}
-								
-								else {
+											})
+										}));
+									}
 									
-									menu.append(DIV({
-										c : A({
-											c : MSG('BUY_TRADE_FAIRY'),
-											on : {
-												tap : () => {
-													
-													Yogurt.Confirm({
-														msg : MSG('REALLY_BUY_TRADE_FAIRY_PROMPT')
-													}, () => {
+									else {
+										
+										menu.append(DIV({
+											c : A({
+												c : MSG('BUY_TRADE_FAIRY'),
+												on : {
+													tap : () => {
 														
-														EtherFairy.FairyMarketContractController.buy(fairyId, price, () => {
-															EtherFairy.REFRESH('fairy/' + fairyId);
+														Yogurt.Confirm({
+															msg : MSG('REALLY_BUY_TRADE_FAIRY_PROMPT')
+														}, () => {
+															
+															EtherFairy.FairyMarketContractController.buy(fairyId, price, () => {
+																EtherFairy.REFRESH('fairy/' + fairyId);
+															});
 														});
-													});
+													}
 												}
-											}
-										})
-									}));
-								}
+											})
+										}));
+									}
+								});
 							});
 						});
 					}
@@ -104,181 +107,184 @@ EtherFairy.Fairy = CLASS({
 				// 만약 소유주면 소유주 메뉴를 추가합니다.
 				EtherFairy.EtherFairyContractController.ownerOf(fairyId, (ownerAddress) => {
 					
-					if (EtherFairy.WalletManager.getWalletAddress() === ownerAddress) {
+					EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 						
-						menu.append(DIV({
-							c : A({
-								c : MSG('CHANGE_NAME'),
-								on : {
-									tap : () => {
-										
-										Yogurt.Prompt(MSG('CHANGE_NAME_PROMPT'), (newName) => {
+						if (walletAddress === ownerAddress) {
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('CHANGE_NAME'),
+									on : {
+										tap : () => {
 											
-											EtherFairy.EtherFairyContractController.changeFairyName(fairyId, newName, () => {
+											Yogurt.Prompt(MSG('CHANGE_NAME_PROMPT'), (newName) => {
+												
+												EtherFairy.EtherFairyContractController.changeFairyName(fairyId, newName, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											});
+										}
+									}
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('CUSTOM_LEVEL_UP') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.levelUpFairy(fairyId, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
-										});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('CUSTOM_LEVEL_UP') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.levelUpFairy(fairyId, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_HP_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseHPPointPerLevel(fairyId, fairyInfo.hpPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_HP_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseHPPointPerLevel(fairyId, fairyInfo.hpPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_ATTACK_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseAttackPointPerLevel(fairyId, fairyInfo.attackPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_ATTACK_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseAttackPointPerLevel(fairyId, fairyInfo.attackPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_DEFENCE_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseDefencePointPerLevel(fairyId, fairyInfo.defencePointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_DEFENCE_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseDefencePointPerLevel(fairyId, fairyInfo.defencePointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_AGILITY_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseAgilityPointPerLevel(fairyId, fairyInfo.agilityPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_AGILITY_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseAgilityPointPerLevel(fairyId, fairyInfo.agilityPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_DEXTERITY_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseDexterityPointPerLevel(fairyId, fairyInfo.dexterityPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_DEXTERITY_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseDexterityPointPerLevel(fairyId, fairyInfo.dexterityPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_FIRE_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseFirePointPerLevel(fairyId, fairyInfo.firePointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_FIRE_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseFirePointPerLevel(fairyId, fairyInfo.firePointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_WATER_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseWaterPointPerLevel(fairyId, fairyInfo.waterPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_WATER_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseWaterPointPerLevel(fairyId, fairyInfo.waterPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_WIND_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseWindPointPerLevel(fairyId, fairyInfo.windPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_WIND_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseWindPointPerLevel(fairyId, fairyInfo.windPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_EARTH_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseEarthPointPerLevel(fairyId, fairyInfo.earthPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_EARTH_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseEarthPointPerLevel(fairyId, fairyInfo.earthPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_LIGHT_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseLightPointPerLevel(fairyId, fairyInfo.lightPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_LIGHT_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseLightPointPerLevel(fairyId, fairyInfo.lightPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
+								})
+							}));
+							
+							menu.append(DIV({
+								c : A({
+									c : MSG('INCREASE_DARK_POINT_PER_LEVEL') + ' (0.01 Ether)',
+									on : {
+										tap : () => {
+											EtherFairy.EtherFairyContractController.increaseDarkPointPerLevel(fairyId, fairyInfo.darkPointPerLevel, () => {
+												EtherFairy.REFRESH('fairy/' + fairyId);
+											});
+										}
 									}
-								}
-							})
-						}));
-						
-						menu.append(DIV({
-							c : A({
-								c : MSG('INCREASE_DARK_POINT_PER_LEVEL') + ' (0.01 Ether)',
-								on : {
-									tap : () => {
-										EtherFairy.EtherFairyContractController.increaseDarkPointPerLevel(fairyId, fairyInfo.darkPointPerLevel, () => {
-											EtherFairy.REFRESH('fairy/' + fairyId);
-										});
-									}
-								}
-							})
-						}));
-					}
+								})
+							}));
+						}
+					});
 				});
 			}
 		});
