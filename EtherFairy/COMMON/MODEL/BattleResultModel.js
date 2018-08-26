@@ -18,6 +18,16 @@ EtherFairy.BattleResultModel = OBJECT({
 				integer : true
 			},
 			
+			fairyLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			enemyLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
 			fairyHP : {
 				notEmpty : true,
 				real : true

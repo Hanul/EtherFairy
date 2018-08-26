@@ -387,6 +387,8 @@ EtherFairy.CalculateManager = OBJECT({
 			let enemyTurnResult = calculateTurn(enemyInfo, fairyInfo);
 			
 			return {
+				fairyLevel : fairyLevel,
+				enemyLevel : enemyLevel,
 				fairyHP : calculateHP(fairyInfo.hpPoint),
 				enemyHP : calculateHP(enemyInfo.hpPoint),
 				fairyDamage : fairyTurnResult.damage,

@@ -89,11 +89,19 @@ EtherFairy.FairyModel = OBJECT({
 			darkPointPerLevel : {
 				notEmpty : true,
 				integer : true
+			},
+			
+			rating : {
+				notEmpty : true,
+				integer : true
 			}
 		};
 		
 		return {
 			name : 'Fairy',
+			initData : {
+				rating : 0
+			},
 			isNotUsingObjectId : true,
 			methodConfig : {
 				create : {
