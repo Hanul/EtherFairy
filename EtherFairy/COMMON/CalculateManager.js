@@ -341,7 +341,7 @@ EtherFairy.CalculateManager = OBJECT({
 			
 			return {
 				damage : damage,
-				turn : calculateHP(enemyInfo.hpPoint) / damage * attackCount
+				turn : calculateHP(enemyInfo.hpPoint) / (damage * attackCount)
 			};
 		};
 		
