@@ -27,7 +27,7 @@ EtherFairy.Ranking = CLASS({
 					style : {
 						width : 100
 					},
-					src : EtherFairy.R('loading.gif')
+					src : EtherFairy.R('loading.svg')
 				})
 			})]
 		}));

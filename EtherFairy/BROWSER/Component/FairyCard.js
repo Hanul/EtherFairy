@@ -34,7 +34,7 @@ EtherFairy.FairyCard = CLASS({
 				textAlign : 'center'
 			},
 			c : IMG({
-				src : EtherFairy.R('cardloading.gif')
+				src : EtherFairy.R('loading.svg')
 			})
 		}));
 		

@@ -446,11 +446,11 @@ EtherFairy.Layout = CLASS((cls) => {
 							});
 						});
 					}
-				}
-				
-				else {
-					next();
-				}
+					
+					else {
+						next();
+					}
+				});
 			},
 			
 			() => {
