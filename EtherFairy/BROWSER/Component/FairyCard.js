@@ -309,6 +309,71 @@ EtherFairy.FairyCard = CLASS({
 						
 						dy += 53;
 					}
+					
+					// 레이팅 정보
+					EtherFairy.FairyModel.get(fairyId, (fairyData) => {
+						
+						let markLevel = INTEGER(fairyData.rating / 300) + 1;
+						if (markLevel > 6) {
+							markLevel = 6;
+						}
+						
+						let markGrade = INTEGER(fairyData.rating % 300 / 100) + 1;
+						
+						// 랭킹 확인
+						EtherFairy.FairyModel.count({
+							filter : {
+								rating : {
+									$gt : fairyData.rating
+								}
+							}
+						}, (count) => {
+							
+							// 랭킹 1등
+							if (count === 0) {
+								markLevel = 10;
+							}
+							
+							// 랭킹 10등
+							else if (count < 10) {
+								markLevel = 9;
+							}
+							
+							// 랭킹 100등
+							else if (count < 100) {
+								markLevel = 8;
+							}
+							
+							// 랭킹 1000등
+							else if (count < 1000) {
+								markLevel = 7;
+							}
+							
+							self.append(UUI.V_CENTER({
+								style : {
+									position : 'absolute',
+									left : -5,
+									top : 0,
+									width : 66,
+									height : 66,
+									backgroundImage : EtherFairy.R('rank/' + markLevel + '.png'),
+									textAlign : 'center',
+								},
+								c : markLevel > 6 ? '' : IMG({
+									style : {
+										marginTop : 5
+									},
+									src : EtherFairy.R('rank/' + RUN(() => {
+										let markGradeStr = '';
+										REPEAT(markGrade, () => {
+											markGradeStr += 'i';
+										});
+										return markGradeStr;
+									}) + '.png')
+								})
+							}));
+						});
+					});
 				};
 			}]);
 		};

@@ -72,6 +72,7 @@ EtherFairy.MAIN = METHOD({
 			
 			// 10분에 한번씩 요정들끼리 자동으로 서로 싸우게 합니다.
 			INTERVAL(600, () => {
+				
 				EtherFairy.FairyModel.find({
 					isFindAll : true
 				}, (fairyDataSet) => {
@@ -82,21 +83,95 @@ EtherFairy.MAIN = METHOD({
 							filter : {
 								id : {
 									$ne : fairyData.id
+								},
+								rating : {
+									$gte : fairyData.rating - 100,
+									$lte : fairyData.rating + 100
 								}
 							},
 							isRandom : true
-						}, (enemyFairyData) => {
-							
-							let battleResult = EtherFairy.CalculateManager.battle({
-								fairyData : fairyData,
-								enemyData : enemyFairyData
-							});
-							
-							battleResult.fairyId = fairyData.id;
-							battleResult.enemyId = enemyFairyData.id;
-							
-							// 전투 결과 기록
-							EtherFairy.BattleResultModel.create(battleResult);
+						}, {
+							notExists : () => {
+								// 매칭 상대를 찾을 수 없음
+							},
+							success : (enemyFairyData) => {
+								
+								let battleResult = EtherFairy.CalculateManager.battle({
+									fairyData : fairyData,
+									enemyData : enemyFairyData
+								});
+								
+								battleResult.fairyId = fairyData.id;
+								battleResult.enemyId = enemyFairyData.id;
+								
+								// 점수 변동
+								if (battleResult.isWin === true) {
+									
+									let ratingUp = 10 + fairyData.winningStreak * 3;
+									
+									EtherFairy.FairyModel.update({
+										id : fairyData.id,
+										$inc : {
+											rating : ratingUp,
+											winningStreak : 1
+										},
+										losingStreak : 0
+									});
+									
+									let ratingDown = 10 + enemyFairyData.losingStreak * 3;
+									
+									EtherFairy.FairyModel.update({
+										id : enemyFairyData.id,
+										$inc : {
+											rating : enemyFairyData.rating < ratingDown ? -enemyFairyData.rating : -ratingDown,
+											losingStreak : 1
+										},
+										winningStreak : 0
+									}, (savedData) => {
+										if (savedData.rating < 0) {
+											EtherFairy.FairyModel.update({
+												id : savedData.id,
+												rating : 0
+											});
+										}
+									});
+								}
+								
+								else {
+									
+									let ratingUp = 10 + enemyFairyData.winningStreak * 3;
+									
+									EtherFairy.FairyModel.update({
+										id : enemyFairyData.id,
+										$inc : {
+											rating : ratingUp,
+											winningStreak : 1
+										},
+										losingStreak : 0
+									});
+									
+									let ratingDown = 10 + fairyData.losingStreak * 3;
+									
+									EtherFairy.FairyModel.update({
+										id : fairyData.id,
+										$inc : {
+											rating : fairyData.rating < ratingDown ? -fairyData.rating : -ratingDown,
+											losingStreak : 1
+										},
+										winningStreak : 0
+									}, (savedData) => {
+										if (savedData.rating < 0) {
+											EtherFairy.FairyModel.update({
+												id : savedData.id,
+												rating : 0
+											});
+										}
+									});
+								}
+								
+								// 전투 결과 기록
+								EtherFairy.BattleResultModel.create(battleResult);
+							}
 						});
 					});
 				});

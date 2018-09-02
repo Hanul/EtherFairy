@@ -94,13 +94,25 @@ EtherFairy.FairyModel = OBJECT({
 			rating : {
 				notEmpty : true,
 				integer : true
+			},
+			
+			winningStreak : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			losingStreak : {
+				notEmpty : true,
+				integer : true
 			}
 		};
 		
 		return {
 			name : 'Fairy',
 			initData : {
-				rating : 0
+				rating : 0,
+				winningStreak : 0,
+				losingStreak : 0
 			},
 			isNotUsingObjectId : true,
 			methodConfig : {

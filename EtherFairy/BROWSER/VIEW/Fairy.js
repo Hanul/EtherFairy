@@ -10,9 +10,10 @@ EtherFairy.Fairy = CLASS({
 		
 		inner.on('paramsChange', (params) => {
 			
-			let fairyId = params.fairyId;
+			let fairyId = INTEGER(params.fairyId);
 			
 			let menu;
+			let battleHistory;
 			EtherFairy.Layout.setContent(DIV({
 				style : {
 					padding : 10
@@ -32,7 +33,9 @@ EtherFairy.Fairy = CLASS({
 					}
 				}),
 				
-				CLEAR_BOTH()]
+				CLEAR_BOTH(),
+				
+				battleHistory = DIV()]
 			}));
 			
 			// 지갑을 사용할 때는 스마트 계약을 사용한다.
@@ -287,6 +290,109 @@ EtherFairy.Fairy = CLASS({
 					});
 				});
 			}
+			
+			// 전투 기록을 가져옵니다.
+			EtherFairy.BattleResultModel.find({
+				filter : {
+					$or : [{
+						fairyId : fairyId
+					}, {
+						enemyId : fairyId
+					}]
+				}
+			}, (battleResults) => {
+				
+				EACH(battleResults, (battleResult) => {
+					
+					let battleResultPanel;
+					let fairyPanel;
+					let opponentPanel;
+					battleHistory.append(battleResultPanel = DIV({
+						style : {
+							marginTop : 10,
+							padding : 10,
+							backgroundColor : '#fff',
+							color : '#000'
+						},
+						c : [fairyPanel = DIV({
+							style : {
+								width : '40%',
+								flt : 'left'
+							}
+						}), FontAwesome.GetIcon({
+							style : {
+								position : 'absolute',
+								left : '50%',
+								marginLeft : -7
+							},
+							key : battleResult.fairyId === fairyId ? 'arrow-right' : 'arrow-left'
+						}), opponentPanel = DIV({
+							style : {
+								width : '40%',
+								flt : 'right'
+							}
+						}), CLEAR_BOTH()]
+					}));
+					
+					// 현재 요정 정보
+					EtherFairy.FairyModel.get(fairyId, (fairyData) => {
+						fairyPanel.append(DIV({
+							c : (battleResult.fairyId === fairyId && battleResult.isWin === true) || (battleResult.fairyId !== fairyId && battleResult.isWin !== true) ? '승리!' : '패배!'
+						}));
+						fairyPanel.append(DIV({
+							c : ['이름: ', A({
+								c : fairyData.name,
+								on : {
+									tap : () => {
+										EtherFairy.GO('fairy/' + fairyData.id);
+									}
+								}
+							})]
+						}));
+						fairyPanel.append(DIV({
+							c : '점수: ' + fairyData.rating
+						}));
+						fairyPanel.append(DIV({
+							c : '레벨: ' + (battleResult.fairyId === fairyId ? battleResult.fairyLevel : battleResult.enemyLevel)
+						}));
+						fairyPanel.append(DIV({
+							c : 'HP: ' + (battleResult.fairyId === fairyId ? battleResult.fairyHP : battleResult.enemyHP)
+						}));
+						fairyPanel.append(DIV({
+							c : '데미지: ' + INTEGER(battleResult.fairyId === fairyId ? battleResult.fairyDamage : battleResult.enemyDamage)
+						}));
+					});
+					
+					// 상대 정보
+					EtherFairy.FairyModel.get(battleResult.fairyId !== fairyId ? battleResult.fairyId : battleResult.enemyId, (opponentData) => {
+						opponentPanel.append(DIV({
+							c : (battleResult.fairyId !== fairyId && battleResult.isWin === true) || (battleResult.fairyId === fairyId && battleResult.isWin !== true) ? '승리!' : '패배!'
+						}));
+						opponentPanel.append(DIV({
+							c : ['이름: ', A({
+								c : opponentData.name,
+								on : {
+									tap : () => {
+										EtherFairy.GO('fairy/' + opponentData.id);
+									}
+								}
+							})]
+						}));
+						opponentPanel.append(DIV({
+							c : '점수: ' + opponentData.rating
+						}));
+						opponentPanel.append(DIV({
+							c : '레벨: ' + (battleResult.fairyId !== fairyId ? battleResult.fairyLevel : battleResult.enemyLevel)
+						}));
+						opponentPanel.append(DIV({
+							c : 'HP: ' + (battleResult.fairyId !== fairyId ? battleResult.fairyHP : battleResult.enemyHP)
+						}));
+						opponentPanel.append(DIV({
+							c : '데미지: ' + INTEGER(battleResult.fairyId !== fairyId ? battleResult.fairyDamage : battleResult.enemyDamage)
+						}));
+					});
+				});
+			});
 		});
 		
 		inner.on('remove', () => {
