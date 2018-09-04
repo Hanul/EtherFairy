@@ -8,9 +8,23 @@ EtherFairy.Start = CLASS({
 		
 		let masterPannel;
 		let masterDescription;
-		EtherFairy.Layout.setContent(DIV({
+		EtherFairy.Layout.setContent(UUI.PANEL({
 			style : {
-				padding : 10
+				margin : 'auto',
+				onDisplayResize : (width, height) => {
+					if (width < 1024) {
+						return {
+							width : '100%'
+						};
+					} else {
+						return {
+							width : 1024
+						};
+					}
+				}
+			},
+			contentStyle : {
+				padding : '50px 10px'
 			},
 			c : [
 			
@@ -27,38 +41,10 @@ EtherFairy.Start = CLASS({
 			// 소유주로 시작하기
 			masterPannel = DIV({
 				style : {
+					border : '1px solid #999',
 					flt : 'left',
 					width : '49%',
-					height : 300,
-					backgroundImage : EtherFairy.R('pattern/footer_lodyas.png')
-				},
-				c : [masterDescription = DIV({
-					style : {
-						height : 300
-					},
-					c : [H2({
-						style : {
-							textAlign : 'center',
-							fontSize : 20,
-							fontWeight : 'bold',
-							color : '#FFEA4F'
-						},
-						c : MSG('START_MASTER')
-					}), P({
-						style : {
-							textAlign : 'center'
-						},
-						c : MSG('START_MASTER_DESCRIPTION')
-					})]
-				})]
-			}),
-			
-			// 디자이너로 시작하기
-			DIV({
-				style : {
-					flt : 'right',
-					width : '49%',
-					backgroundImage : EtherFairy.R('pattern/footer_lodyas.png')
+					borderRadius : '20px 20px 0 0'
 				},
 				c : [DIV({
 					style : {
@@ -69,26 +55,68 @@ EtherFairy.Start = CLASS({
 							textAlign : 'center',
 							fontSize : 20,
 							fontWeight : 'bold',
-							color : '#FFEA4F'
+							color : '#FFEA4F',
+							padding : '20px 0',
+							borderBottom : '1px solid #999'
+						},
+						c : MSG('START_MASTER')
+					}), masterDescription = DIV({
+						style : {
+							textAlign : 'center',
+							padding : 10
+						},
+						c : P({
+							c : MSG('START_MASTER_DESCRIPTION')
+						})
+					})]
+				})]
+			}),
+			
+			// 디자이너로 시작하기
+			DIV({
+				style : {
+					border : '1px solid #999',
+					flt : 'right',
+					width : '49%',
+					borderRadius : '20px 20px 0 0'
+				},
+				c : [DIV({
+					style : {
+						height : 300
+					},
+					c : [H2({
+						style : {
+							textAlign : 'center',
+							fontSize : 20,
+							fontWeight : 'bold',
+							color : '#FFEA4F',
+							padding : '20px 0',
+							borderBottom : '1px solid #999'
 						},
 						c : MSG('START_DESIGNER')
 					}), P({
 						style : {
-							textAlign : 'center'
+							textAlign : 'center',
+							padding : 10
 						},
 						c : MSG('START_DESIGNER_DESCRIPTION')
 					})]
-				}), Yogurt.Button({
+				}), DIV({
 					style : {
-						marginTop : 20,
-						border : 'none'
+						padding : 20
 					},
-					title : MSG('START_BUTTON'),
-					on : {
-						tap : () => {
-							EtherFairy.GO('designer/start');
+					c : Yogurt.Button({
+						style : {
+							marginTop : 20,
+							border : 'none'
+						},
+						title : MSG('START_BUTTON'),
+						on : {
+							tap : () => {
+								EtherFairy.GO('designer/start');
+							}
 						}
-					}
+					})
 				})]
 			}),
 			
@@ -105,58 +133,67 @@ EtherFairy.Start = CLASS({
 				c : MSG('START_DESCRIPTION')
 			}));
 			
-			masterPannel.append(Yogurt.Button({
+			masterPannel.append(DIV({
 				style : {
-					marginTop : 20,
-					border : 'none'
+					padding : 20
 				},
-				title : MSG('START_BUTTON'),
-				on : {
-					tap : () => {
-						
-						EtherFairy.WalletManager.checkIsLocked((isLocked) => {
+				c : Yogurt.Button({
+					style : {
+						marginTop : 20,
+						border : 'none'
+					},
+					title : MSG('START_BUTTON'),
+					on : {
+						tap : () => {
 							
-							if (isLocked === true) {
-								Yogurt.Alert({
-									msg : MSG('PLEASE_UNLOCK_METAMASK')
-								});
-							}
-							
-							else {
+							EtherFairy.WalletManager.checkIsLocked((isLocked) => {
 								
-								EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
-									
-									EtherFairy.MasterModel.checkExists({
-										filter : {
-											id : walletAddress
-										}
-									}, (exists) => {
-										
-										if (exists === true) {
-											EtherFairy.REFRESH('master');
-										}
-										
-										// 존재하지 않으면, 생성
-										else {
-											EtherFairy.GO('master/join');
-											/*
-											Yogurt.Prompt(MSG('PLEASE_ENTER_MASTER_NICKNAME'), (value) => {
-												
-												EtherFairy.MasterModel.create({
-													id : walletAddress,
-													nickname : value
-												}, () => {
-													EtherFairy.GO('master');
-												});
-											});
-											*/
-										}
+								if (isLocked === true) {
+									Yogurt.Alert({
+										msg : [IMG({
+											src : EtherFairy.R('metamask.png')
+										}), P({
+											c : MSG('PLEASE_UNLOCK_METAMASK')
+										})]
 									});
-								});
-							}
-						});
+								}
+								
+								else {
+									
+									EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+										
+										EtherFairy.MasterModel.checkExists({
+											filter : {
+												id : walletAddress
+											}
+										}, (exists) => {
+											
+											if (exists === true) {
+												EtherFairy.REFRESH('master');
+											}
+											
+											// 존재하지 않으면, 생성
+											else {
+												EtherFairy.GO('master/join');
+												/*
+												Yogurt.Prompt(MSG('PLEASE_ENTER_MASTER_NICKNAME'), (value) => {
+													
+													EtherFairy.MasterModel.create({
+														id : walletAddress,
+														nickname : value
+													}, () => {
+														EtherFairy.GO('master');
+													});
+												});
+												*/
+											}
+										});
+									});
+								}
+							});
+						}
 					}
-				}
+				})
 			}));
 		}
 		
@@ -169,14 +206,19 @@ EtherFairy.Start = CLASS({
 				c : MSG('PLEASE_INSTALL_METAMASK')
 			}));
 			
-			masterPannel.append(Yogurt.Button({
+			masterPannel.append(DIV({
 				style : {
-					marginTop : 20,
-					border : 'none'
+					padding : 20
 				},
-				href : 'https://metamask.io',
-				target : '_blank',
-				title : MSG('INSTALL_METAMASK_BUTTON')
+				c : Yogurt.Button({
+					style : {
+						marginTop : 20,
+						border : 'none'
+					},
+					href : 'https://metamask.io',
+					target : '_blank',
+					title : MSG('INSTALL_METAMASK_BUTTON')
+				})
 			}));
 		}
 	}

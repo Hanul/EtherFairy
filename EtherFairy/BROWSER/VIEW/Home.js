@@ -180,7 +180,8 @@ EtherFairy.Home = CLASS({
 				P({
 					style : {
 						marginTop : 20,
-						textAlign : 'center'
+						textAlign : 'center',
+						color : '#fff5cb'
 					},
 					c : '최고의 순간이 당신 앞에 있습니다!\n지금 바로 시작해보세요!'
 				}),

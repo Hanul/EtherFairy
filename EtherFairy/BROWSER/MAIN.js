@@ -13,7 +13,8 @@ EtherFairy.MAIN = METHOD({
 		});
 		
 		BODY.addStyle({
-			cursor : 'url(' + EtherFairy.R('cursor.png') + ') 1 2, auto'
+			cursor : 'url(' + EtherFairy.R('cursor.png') + ') 1 2, auto',
+			overflowY : 'scroll'
 		});
 		
 		let style = document.createElement('style');

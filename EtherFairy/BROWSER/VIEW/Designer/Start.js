@@ -6,9 +6,23 @@ EtherFairy('Designer').Start = CLASS({
 	
 	init : (inner, self) => {
 		
-		EtherFairy.Layout.setContent(DIV({
+		EtherFairy.Layout.setContent(UUI.PANEL({
 			style : {
-				padding : 10
+				margin : 'auto',
+				onDisplayResize : (width, height) => {
+					if (width < 600) {
+						return {
+							width : '100%'
+						};
+					} else {
+						return {
+							width : 600
+						};
+					}
+				}
+			},
+			contentStyle : {
+				padding : '50px 10px'
 			},
 			c : [
 			
@@ -16,13 +30,15 @@ EtherFairy('Designer').Start = CLASS({
 				style : {
 					fontSize : 30,
 					fontWeight : 'bold',
-					color : '#FFEA4F',
-					marginBottom : 20
+					color : '#FFEA4F'
 				},
 				c : MSG('START_DESIGNER')
 			}),
 			
 			UUI.VALID_FORM({
+				style : {
+					marginTop : 30
+				},
 				errorMsgs : {
 					username : {
 						notEmpty : MSG('NOT_VALID_USERNAME_NOT_EMPTY'),
@@ -46,7 +62,10 @@ EtherFairy('Designer').Start = CLASS({
 				c : [
 				Yogurt.Input({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						padding : 10,
+						border : 'none',
+						borderRadius : 10
 					},
 					name : 'username',
 					placeholder : MSG('USERNAME')
@@ -54,30 +73,44 @@ EtherFairy('Designer').Start = CLASS({
 				
 				Yogurt.Input({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						padding : 10,
+						border : 'none',
+						borderRadius : 10
 					},
 					name : 'password',
 					type : 'password',
 					placeholder : MSG('PASSWORD')
 				}),
 				
-				Yogurt.Submit({
+				DIV({
 					style : {
-						marginTop : 10
+						marginTop : 30
 					},
-					value : MSG('LOGIN_DESIGNER')
-				}),
-				
-				Yogurt.Button({
-					style : {
-						marginTop : 10
-					},
-					title : MSG('JOIN_DESIGNER'),
-					on : {
-						tap : () => {
-							EtherFairy.GO('designer/join');
+					c : [Yogurt.Submit({
+						style : {
+							flt : 'left',
+							padding : 10,
+							width : '46%'
+						},
+						value : MSG('LOGIN_DESIGNER')
+					}),
+					
+					Yogurt.Button({
+						style : {
+							flt : 'right',
+							padding : 10,
+							width : '46%'
+						},
+						title : MSG('JOIN_DESIGNER'),
+						on : {
+							tap : () => {
+								EtherFairy.GO('designer/join');
+							}
 						}
-					}
+					}),
+					
+					CLEAR_BOTH()]
 				})
 				],
 				on : {

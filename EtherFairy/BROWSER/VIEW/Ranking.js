@@ -13,16 +13,13 @@ EtherFairy.Ranking = CLASS({
 		
 		EtherFairy.Layout.setContent(DIV({
 			style : {
-				padding : 10
+				margin : 'auto',
+				width : 1110,
+				padding : '30px 0 50px 10px'
 			},
 			c : [
 			totalFairyInfoPanel = DIV(),
 			fairyList = DIV({
-				style : {
-					margin : 'auto',
-					width : 1110,
-					paddingLeft : 10
-				},
 				c : IMG({
 					style : {
 						width : 100

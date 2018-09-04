@@ -6,9 +6,23 @@ EtherFairy('Designer').Join = CLASS({
 	
 	init : (inner, self) => {
 		
-		EtherFairy.Layout.setContent(DIV({
+		EtherFairy.Layout.setContent(UUI.PANEL({
 			style : {
-				padding : 10
+				margin : 'auto',
+				onDisplayResize : (width, height) => {
+					if (width < 600) {
+						return {
+							width : '100%'
+						};
+					} else {
+						return {
+							width : 600
+						};
+					}
+				}
+			},
+			contentStyle : {
+				padding : '50px 10px'
 			},
 			c : [
 			
@@ -16,13 +30,15 @@ EtherFairy('Designer').Join = CLASS({
 				style : {
 					fontSize : 30,
 					fontWeight : 'bold',
-					color : '#FFEA4F',
-					marginBottom : 20
+					color : '#FFEA4F'
 				},
 				c : MSG('JOIN_DESIGNER')
 			}),
 			
 			UUI.VALID_FORM({
+				style : {
+					marginTop : 30
+				},
 				errorMsgs : {
 					username : {
 						notEmpty : MSG('NOT_VALID_USERNAME_NOT_EMPTY'),
@@ -66,7 +82,10 @@ EtherFairy('Designer').Join = CLASS({
 				c : [
 				Yogurt.Input({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						padding : 10,
+						border : 'none',
+						borderRadius : 10
 					},
 					name : 'username',
 					placeholder : MSG('USERNAME')
@@ -74,7 +93,10 @@ EtherFairy('Designer').Join = CLASS({
 				
 				Yogurt.Input({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						padding : 10,
+						border : 'none',
+						borderRadius : 10
 					},
 					name : 'nickname',
 					placeholder : MSG('NICKNAME')
@@ -82,7 +104,10 @@ EtherFairy('Designer').Join = CLASS({
 				
 				Yogurt.Input({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						padding : 10,
+						border : 'none',
+						borderRadius : 10
 					},
 					name : 'password',
 					type : 'password',
@@ -91,7 +116,10 @@ EtherFairy('Designer').Join = CLASS({
 				
 				Yogurt.Input({
 					style : {
-						marginTop : 10
+						marginTop : 10,
+						padding : 10,
+						border : 'none',
+						borderRadius : 10
 					},
 					name : 'email',
 					placeholder : MSG('EMAIL_FOR_PASSWORD')
@@ -133,7 +161,7 @@ EtherFairy('Designer').Join = CLASS({
 				
 				Yogurt.Submit({
 					style : {
-						marginTop : 10
+						marginTop : 30
 					},
 					value : MSG('JOIN_DONE')
 				})
