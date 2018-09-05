@@ -175,17 +175,6 @@ EtherFairy.Start = CLASS({
 											// 존재하지 않으면, 생성
 											else {
 												EtherFairy.GO('master/join');
-												/*
-												Yogurt.Prompt(MSG('PLEASE_ENTER_MASTER_NICKNAME'), (value) => {
-													
-													EtherFairy.MasterModel.create({
-														id : walletAddress,
-														nickname : value
-													}, () => {
-														EtherFairy.GO('master');
-													});
-												});
-												*/
 											}
 										});
 									});
