@@ -76,7 +76,7 @@ EtherFairy.MAIN = METHOD({
 			// 소유주 홈
 			EtherFairy.MATCH_VIEW({
 				uri : 'master',
-				target : EtherFairy.MasterHome
+				target : EtherFairy.Master.Home
 			});
 			
 			// 요정 구매
@@ -117,7 +117,7 @@ EtherFairy.MAIN = METHOD({
 			// 디자이너 홈
 			EtherFairy.MATCH_VIEW({
 				uri : 'designer',
-				target : EtherFairy.DesignerHome
+				target : EtherFairy.Designer.Home
 			});
 			
 			// 페어리 원형 디자인 폼

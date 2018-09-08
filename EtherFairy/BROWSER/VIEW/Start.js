@@ -60,13 +60,21 @@ EtherFairy.Start = CLASS({
 							borderBottom : '1px solid #999'
 						},
 						c : MSG('START_MASTER')
-					}), masterDescription = DIV({
+					}), masterDescription = P({
 						style : {
 							textAlign : 'center',
 							padding : 10
 						},
 						c : P({
 							c : MSG('START_MASTER_DESCRIPTION')
+						})
+					}), DIV({
+						style : {
+							marginTop : 35,
+							textAlign : 'center'
+						},
+						c : IMG({
+							src : EtherFairy.R('start/master.png')
 						})
 					})]
 				})]
@@ -100,6 +108,14 @@ EtherFairy.Start = CLASS({
 							padding : 10
 						},
 						c : MSG('START_DESIGNER_DESCRIPTION')
+					}), DIV({
+						style : {
+							marginTop : 35,
+							textAlign : 'center'
+						},
+						c : IMG({
+							src : EtherFairy.R('start/designer.png')
+						})
 					})]
 				}), DIV({
 					style : {
@@ -125,13 +141,6 @@ EtherFairy.Start = CLASS({
 		
 		// 메타마스크가 설치되어 있는 경우
 		if (EtherFairy.WalletManager.checkIsEnable() === true) {
-			
-			masterDescription.append(P({
-				style : {
-					marginTop : 20
-				},
-				c : MSG('START_DESCRIPTION')
-			}));
 			
 			masterPannel.append(DIV({
 				style : {

@@ -1,4 +1,4 @@
-EtherFairy.MasterHome = CLASS({
+EtherFairy('Master').Home = CLASS({
 	
 	preset : () => {
 		return VIEW;
@@ -28,6 +28,7 @@ EtherFairy.MasterHome = CLASS({
 					}
 					
 					else {
+						
 						
 					}
 				});

@@ -134,7 +134,8 @@ EtherFairy.Layout = CLASS((cls) => {
 							},
 							icon : SPAN({
 								style : {
-									width : 12
+									width : 15,
+									textAlign : 'center'
 								},
 								c : FontAwesome.GetIcon('home')
 							}),
@@ -160,7 +161,8 @@ EtherFairy.Layout = CLASS((cls) => {
 							},
 							icon : SPAN({
 								style : {
-									width : 12
+									width : 15,
+									textAlign : 'center'
 								},
 								c : FontAwesome.GetIcon('sign-in-alt')
 							}),
@@ -186,7 +188,8 @@ EtherFairy.Layout = CLASS((cls) => {
 							},
 							icon : SPAN({
 								style : {
-									width : 12
+									width : 15,
+									textAlign : 'center'
 								},
 								c : FontAwesome.GetIcon('list-ol')
 							}),
@@ -220,7 +223,8 @@ EtherFairy.Layout = CLASS((cls) => {
 								},
 								icon : SPAN({
 									style : {
-										width : 12
+										width : 15,
+										textAlign : 'center'
 									},
 									c : FontAwesome.GetIcon('music')
 								}),
@@ -240,7 +244,8 @@ EtherFairy.Layout = CLASS((cls) => {
 								},
 								icon : SPAN({
 									style : {
-										width : 12
+										width : 15,
+										textAlign : 'center'
 									},
 									c : FontAwesome.GetIcon('tasks')
 								}),
@@ -340,15 +345,21 @@ EtherFairy.Layout = CLASS((cls) => {
 											borderBottom : '1px solid #444',
 											cursor : 'pointer'
 										},
-										c : [DIV({
+										c : [
+										UUI.BUTTON_H({
 											style : {
 												padding : 10,
+												paddingLeft : 10,
 												fontSize : 15
 											},
-											c : MSG('LAYOUT_MASTER_MENU')
+											icon : IMG({
+												src : EtherFairy.R('layout/master.png')
+											}),
+											spacing : 10,
+											title : MSG('LAYOUT_MASTER_MENU')
 										}),
 										
-										// 요정 구매 버튼
+										// 소유주 홈 버튼
 										DIV({
 											style : {
 												width : '100%',
@@ -363,7 +374,40 @@ EtherFairy.Layout = CLASS((cls) => {
 												},
 												icon : SPAN({
 													style : {
-														width : 12
+														width : 15,
+														textAlign : 'center'
+													},
+													c : FontAwesome.GetIcon('home')
+												}),
+												spacing : 10,
+												title : MSG('MASTER_HOME')
+											}),
+											on : {
+												tap : () => {
+													EtherFairy.GO('master');
+													menuLayout.hideLeftMenu();
+												}
+											}
+										}),
+										
+										// 요정 구매 버튼
+										DIV({
+											style : {
+												borderTop : '1px solid #222',
+												width : '100%',
+												cursor : 'pointer',
+												backgroundColor : '#33393e'
+											},
+											c : UUI.BUTTON_H({
+												style : {
+													padding : 10,
+													paddingLeft : 15,
+													fontSize : 15
+												},
+												icon : SPAN({
+													style : {
+														width : 15,
+														textAlign : 'center'
 													},
 													c : FontAwesome.GetIcon('shopping-cart')
 												}),
@@ -394,7 +438,8 @@ EtherFairy.Layout = CLASS((cls) => {
 												},
 												icon : SPAN({
 													style : {
-														width : 12
+														width : 15,
+														textAlign : 'center'
 													},
 													c : FontAwesome.GetIcon('arrows-alt-h')
 												}),
@@ -425,7 +470,8 @@ EtherFairy.Layout = CLASS((cls) => {
 												},
 												icon : SPAN({
 													style : {
-														width : 12
+														width : 15,
+														textAlign : 'center'
 													},
 													c : FontAwesome.GetIcon('cog')
 												}),
@@ -464,15 +510,21 @@ EtherFairy.Layout = CLASS((cls) => {
 								borderBottom : '1px solid #444',
 								cursor : 'pointer'
 							},
-							c : [DIV({
+							c : [
+							UUI.BUTTON_H({
 								style : {
 									padding : 10,
+									paddingLeft : 10,
 									fontSize : 15
 								},
-								c : MSG('LAYOUT_DESIGNER_MENU')
+								icon : IMG({
+									src : EtherFairy.R('layout/designer.png')
+								}),
+								spacing : 10,
+								title : MSG('LAYOUT_DESIGNER_MENU')
 							}),
 							
-							// 요정 원본 관리 버튼
+							// 디자이너 홈 버튼
 							DIV({
 								style : {
 									width : '100%',
@@ -487,7 +539,40 @@ EtherFairy.Layout = CLASS((cls) => {
 									},
 									icon : SPAN({
 										style : {
-											width : 12
+											width : 15,
+											textAlign : 'center'
+										},
+										c : FontAwesome.GetIcon('home')
+									}),
+									spacing : 10,
+									title : MSG('DESIGNER_HOME')
+								}),
+								on : {
+									tap : () => {
+										EtherFairy.GO('designer');
+										menuLayout.hideLeftMenu();
+									}
+								}
+							}),
+							
+							// 요정 원본 관리 버튼
+							DIV({
+								style : {
+									borderTop : '1px solid #222',
+									width : '100%',
+									cursor : 'pointer',
+									backgroundColor : '#33393e'
+								},
+								c : UUI.BUTTON_H({
+									style : {
+										padding : 10,
+										paddingLeft : 15,
+										fontSize : 15
+									},
+									icon : SPAN({
+										style : {
+											width : 15,
+											textAlign : 'center'
 										},
 										c : FontAwesome.GetIcon('cog')
 									}),
@@ -518,7 +603,8 @@ EtherFairy.Layout = CLASS((cls) => {
 									},
 									icon : SPAN({
 										style : {
-											width : 12
+											width : 15,
+											textAlign : 'center'
 										},
 										c : FontAwesome.GetIcon('dollar-sign')
 									}),
@@ -549,7 +635,8 @@ EtherFairy.Layout = CLASS((cls) => {
 									},
 									icon : SPAN({
 										style : {
-											width : 12
+											width : 15,
+											textAlign : 'center'
 										},
 										c : FontAwesome.GetIcon('sign-out-alt')
 									}),
