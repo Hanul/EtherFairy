@@ -87,7 +87,7 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 									password : password
 								});
 								
-								data.roles = [EtherFairy.ROLE.USER];
+								data.roles = [EtherFairy.ROLE.DESIGNER];
 	
 								next();
 							}

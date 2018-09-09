@@ -69,6 +69,10 @@ EtherFairy.DesignerModel = OBJECT({
 			
 			roles : {
 				array : true
+			},
+			
+			profileImageFileId : {
+				id : true
 			}
 		};
 		

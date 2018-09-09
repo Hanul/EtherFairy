@@ -452,38 +452,6 @@ EtherFairy.Layout = CLASS((cls) => {
 													menuLayout.hideLeftMenu();
 												}
 											}
-										}),
-										
-										// 요정 관리 버튼
-										DIV({
-											style : {
-												borderTop : '1px solid #222',
-												width : '100%',
-												cursor : 'pointer',
-												backgroundColor : '#33393e'
-											},
-											c : UUI.BUTTON_H({
-												style : {
-													padding : 10,
-													paddingLeft : 15,
-													fontSize : 15
-												},
-												icon : SPAN({
-													style : {
-														width : 15,
-														textAlign : 'center'
-													},
-													c : FontAwesome.GetIcon('cog')
-												}),
-												spacing : 10,
-												title : MSG('MANAGE_FAIRY')
-											}),
-											on : {
-												tap : () => {
-													EtherFairy.GO('master/managefairy');
-													menuLayout.hideLeftMenu();
-												}
-											}
 										})]
 									}));
 									
@@ -550,38 +518,6 @@ EtherFairy.Layout = CLASS((cls) => {
 								on : {
 									tap : () => {
 										EtherFairy.GO('designer');
-										menuLayout.hideLeftMenu();
-									}
-								}
-							}),
-							
-							// 요정 원본 관리 버튼
-							DIV({
-								style : {
-									borderTop : '1px solid #222',
-									width : '100%',
-									cursor : 'pointer',
-									backgroundColor : '#33393e'
-								},
-								c : UUI.BUTTON_H({
-									style : {
-										padding : 10,
-										paddingLeft : 15,
-										fontSize : 15
-									},
-									icon : SPAN({
-										style : {
-											width : 15,
-											textAlign : 'center'
-										},
-										c : FontAwesome.GetIcon('cog')
-									}),
-									spacing : 10,
-									title : MSG('MANAGE_FAIRY_ORIGIN')
-								}),
-								on : {
-									tap : () => {
-										EtherFairy.GO('designer/managefairyorigin');
 										menuLayout.hideLeftMenu();
 									}
 								}

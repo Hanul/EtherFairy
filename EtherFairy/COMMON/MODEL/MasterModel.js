@@ -36,6 +36,10 @@ EtherFairy.MasterModel = OBJECT({
 				size : {
 					max : 5
 				}
+			},
+			
+			profileImageFileId : {
+				id : true
 			}
 		};
 		

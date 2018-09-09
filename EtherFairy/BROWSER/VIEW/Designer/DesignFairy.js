@@ -79,7 +79,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 								
 								imageFileId = fileInfo.id;
 							}
-						}),]
+						})]
 					}),
 					
 					UUI.VALID_FORM({

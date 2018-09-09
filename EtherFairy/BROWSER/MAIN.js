@@ -85,12 +85,6 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Master.BuyFairy
 			});
 			
-			// 요정 관리
-			EtherFairy.MATCH_VIEW({
-				uri : 'master/managefairy',
-				target : EtherFairy.Master.ManageFairy
-			});
-			
 			// 요정 거래
 			EtherFairy.MATCH_VIEW({
 				uri : 'master/tradefairy',

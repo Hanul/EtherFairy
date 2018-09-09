@@ -18,6 +18,16 @@ EtherFairy.Ranking = CLASS({
 				padding : '30px 0 50px 10px'
 			},
 			c : [
+			H1({
+				style : {
+					fontSize : 30,
+					fontWeight : 'bold',
+					color : '#FFEA4F',
+					marginBottom : 20
+				},
+				c : MSG('RANKING_TITLE')
+			}),
+			
 			totalFairyInfoPanel = DIV(),
 			fairyList = DIV({
 				c : IMG({
