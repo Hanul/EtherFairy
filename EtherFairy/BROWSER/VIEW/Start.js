@@ -7,7 +7,6 @@ EtherFairy.Start = CLASS({
 	init : (inner, self) => {
 		
 		let masterPannel;
-		let masterDescription;
 		EtherFairy.Layout.setContent(UUI.PANEL({
 			style : {
 				margin : 'auto',
@@ -18,13 +17,13 @@ EtherFairy.Start = CLASS({
 						};
 					} else {
 						return {
-							width : 1024
+							width : 950
 						};
 					}
 				}
 			},
 			contentStyle : {
-				padding : '50px 10px'
+				padding : '50px 0'
 			},
 			c : [
 			
@@ -33,7 +32,8 @@ EtherFairy.Start = CLASS({
 					fontSize : 30,
 					fontWeight : 'bold',
 					color : '#FFEA4F',
-					marginBottom : 20
+					marginBottom : 40,
+					textAlign : 'center'
 				},
 				c : MSG('START_TITLE')
 			}),
@@ -41,119 +41,38 @@ EtherFairy.Start = CLASS({
 			// 소유주로 시작하기
 			masterPannel = DIV({
 				style : {
-					border : '1px solid #999',
 					flt : 'left',
-					width : '49%',
-					borderRadius : '20px 20px 0 0'
+					width : 458,
+					height : 368,
+					backgroundImage : EtherFairy.R('start/masterpanel.png'),
+					cursor : 'pointer'
 				},
-				c : [DIV({
+				c : [H2({
 					style : {
-						height : 300
+						marginTop : 15,
+						textAlign : 'center',
+						fontSize : 20,
+						fontWeight : 'bold',
+						color : '#633618'
 					},
-					c : [H2({
-						style : {
-							textAlign : 'center',
-							fontSize : 20,
-							fontWeight : 'bold',
-							color : '#FFEA4F',
-							padding : '20px 0',
-							borderBottom : '1px solid #999'
-						},
-						c : MSG('START_MASTER')
-					}), masterDescription = P({
-						style : {
-							textAlign : 'center',
-							padding : 10
-						},
-						c : P({
-							c : MSG('START_MASTER_DESCRIPTION')
-						})
-					}), DIV({
-						style : {
-							marginTop : 35,
-							textAlign : 'center'
-						},
-						c : IMG({
-							src : EtherFairy.R('start/master.png')
-						})
-					})]
-				})]
-			}),
-			
-			// 디자이너로 시작하기
-			DIV({
-				style : {
-					border : '1px solid #999',
-					flt : 'right',
-					width : '49%',
-					borderRadius : '20px 20px 0 0'
-				},
-				c : [DIV({
+					c : MSG('START_MASTER')
+				}), UUI.V_CENTER({
 					style : {
-						height : 300
+						margin : 'auto',
+						marginTop : 260,
+						color : '#fef2d8',
+						width : 300,
+						height : 60,
+						textAlign : 'center',
+						lineHeight : '1.5em'
 					},
-					c : [H2({
-						style : {
-							textAlign : 'center',
-							fontSize : 20,
-							fontWeight : 'bold',
-							color : '#FFEA4F',
-							padding : '20px 0',
-							borderBottom : '1px solid #999'
-						},
-						c : MSG('START_DESIGNER')
-					}), P({
-						style : {
-							textAlign : 'center',
-							padding : 10
-						},
-						c : MSG('START_DESIGNER_DESCRIPTION')
-					}), DIV({
-						style : {
-							marginTop : 35,
-							textAlign : 'center'
-						},
-						c : IMG({
-							src : EtherFairy.R('start/designer.png')
-						})
-					})]
-				}), DIV({
-					style : {
-						padding : 20
-					},
-					c : Yogurt.Button({
-						style : {
-							marginTop : 20,
-							border : 'none'
-						},
-						title : MSG('START_BUTTON'),
-						on : {
-							tap : () => {
-								EtherFairy.GO('designer/start');
-							}
-						}
-					})
-				})]
-			}),
-			
-			CLEAR_BOTH()]
-		}));
-		
-		// 메타마스크가 설치되어 있는 경우
-		if (EtherFairy.WalletManager.checkIsEnable() === true) {
-			
-			masterPannel.append(DIV({
-				style : {
-					padding : 20
-				},
-				c : Yogurt.Button({
-					style : {
-						marginTop : 20,
-						border : 'none'
-					},
-					title : MSG('START_BUTTON'),
-					on : {
-						tap : () => {
+					c : MSG('START_MASTER_DESCRIPTION')
+				})],
+				on : {
+					tap : () => {
+						
+						// 메타마스크가 설치되어 있는 경우
+						if (EtherFairy.WalletManager.checkIsEnable() === true) {
 							
 							EtherFairy.WalletManager.checkIsLocked((isLocked) => {
 								
@@ -190,34 +109,62 @@ EtherFairy.Start = CLASS({
 								}
 							});
 						}
+						
+						// 메타마스크가 없는 경우 설치 경로 안내
+						else {
+							Yogurt.Confirm({
+								msg : [IMG({
+									src : EtherFairy.R('metamask.png')
+								}), P({
+									c : MSG('PLEASE_INSTALL_METAMASK')
+								})],
+								okButtonTitle : MSG('INSTALL_METAMASK_BUTTON'),
+								target : '_blank',
+								href : 'https://metamask.io'
+							});
+						}
 					}
-				})
-			}));
-		}
-		
-		// 메타마스크가 없는 경우 설치 경로 안내
-		else {
-			masterDescription.append(P({
-				style : {
-					marginTop : 20
-				},
-				c : MSG('PLEASE_INSTALL_METAMASK')
-			}));
+				}
+			}),
 			
-			masterPannel.append(DIV({
+			// 디자이너로 시작하기
+			DIV({
 				style : {
-					padding : 20
+					flt : 'right',
+					width : 458,
+					height : 368,
+					backgroundImage : EtherFairy.R('start/designerpanel.png'),
+					cursor : 'pointer'
 				},
-				c : Yogurt.Button({
+				c : [H2({
 					style : {
-						marginTop : 20,
-						border : 'none'
+						marginTop : 15,
+						textAlign : 'center',
+						fontSize : 20,
+						fontWeight : 'bold',
+						color : '#633618'
 					},
-					href : 'https://metamask.io',
-					target : '_blank',
-					title : MSG('INSTALL_METAMASK_BUTTON')
-				})
-			}));
-		}
+					c : MSG('START_DESIGNER')
+				}), UUI.V_CENTER({
+					style : {
+						margin : 'auto',
+						marginTop : 260,
+						color : '#fef2d8',
+						width : 300,
+						height : 60,
+						textAlign : 'center',
+						lineHeight : '1.5em'
+					},
+					c : MSG('START_DESIGNER_DESCRIPTION')
+				})],
+				on : {
+					tap : () => {
+						EtherFairy.GO('designer/start');
+					}
+				}
+			}),
+			
+			CLEAR_BOTH()]
+		}));
 	}
 });
