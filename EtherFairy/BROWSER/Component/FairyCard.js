@@ -10,7 +10,7 @@ EtherFairy.FairyCard = CLASS({
 				position : 'relative',
 				width : 360,
 				height : 600,
-				backgroundImage : EtherFairy.R('card.png'),
+				backgroundImage : EtherFairy.R('cardframe/1.png'),
 				boxShadow : '0 0 8px rgba(0, 0, 0, 0.8)'
 			}
 		};
@@ -352,8 +352,9 @@ EtherFairy.FairyCard = CLASS({
 							self.append(UUI.V_CENTER({
 								style : {
 									position : 'absolute',
-									left : -5,
-									top : 0,
+									left : '50%',
+									bottom : 130,
+									marginLeft : -33,
 									width : 66,
 									height : 66,
 									backgroundImage : EtherFairy.R('rank/' + markLevel + '.png'),

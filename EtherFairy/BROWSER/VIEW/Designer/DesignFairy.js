@@ -28,6 +28,9 @@ EtherFairy('Designer').DesignFairy = CLASS({
 				let availablePointsPanel;
 				let pointsFormWrapper;
 				
+				let preview;
+				let uploadForm;
+				
 				let firePointPerLevelPanel;
 				let waterPointPerLevelPanel;
 				let windPointPerLevelPanel;
@@ -37,56 +40,200 @@ EtherFairy('Designer').DesignFairy = CLASS({
 				
 				EtherFairy.Layout.setContent(DIV({
 					style : {
-						padding : 10
+						margin : 'auto',
+						width : 801,
+						height : 1289,
+						backgroundImage : EtherFairy.R('designfairy/background.png'),
+						textAlign : 'center'
 					},
 					c : [
 					
 					H1({
 						style : {
+							paddingTop : 30,
 							fontSize : 30,
 							fontWeight : 'bold',
-							color : '#FFEA4F',
-							marginBottom : 20
+							color : '#ffde5c',
+							textShadow : EtherFairy.TextBorderShadow('#160b00')
 						},
 						c : MSG('DESIGN_FAIRY')
 					}),
 					
+					uploadForm = UUI.FULL_UPLOAD_FORM({
+						style : {
+							position : 'fixed',
+							left : -999999,
+							top : -999999
+						},
+						box : EtherFairy
+					}, {
+						success : (fileInfo, uploadForm) => {
+							
+							preview.empty();
+							preview.addStyle({
+								backgroundImage : EtherFairy.RF(fileInfo.id)
+							});
+							
+							imageFileId = fileInfo.id;
+						}
+					}),
+					
 					DIV({
 						style : {
-							width : 400,
-							flt : 'left'
+							position : 'relative',
+							margin : 'auto',
+							marginTop : 50,
+							width : 360,
+							height : 550,
+							backgroundImage : EtherFairy.R('origincard.png')
 						},
-						c : [
-						H2({
+						c : [DIV({
 							style : {
-								marginBottom : 10
+								paddingTop : 12,
+								color : '#ffde5c',
+								textShadow : EtherFairy.TextBorderShadow('#160b00')
 							},
-							c : MSG('FAIRY_IMAGE_UPLOAD')
+							c : '(' + MSG('DESIGN_FAIRY_FAIRY_NAME_DESCRIPTION') + ')'
 						}),
-						previewWrapper = DIV(),
-						UUI.FULL_UPLOAD_FORM({
-							box : EtherFairy
-						}, {
-							success : (fileInfo, uploadForm) => {
-								
-								previewWrapper.empty();
-								previewWrapper.append(IMG({
-									style : {
-										width : '100%'
-									},
-									src : EtherFairy.RF(fileInfo.id)
-								}));
-								
-								imageFileId = fileInfo.id;
+						
+						// 이미지 업로드
+						preview = UUI.V_CENTER({
+							style : {
+								position : 'absolute',
+								left : 10,
+								top : 43,
+								width : 339,
+								height : 399,
+								textAlign : 'center',
+								borderRadius : 6,
+								backgroundSize : 'cover',
+								backgroundPosition : 'center center',
+								cursor : 'pointer',
+								color : '#999'
+							},
+							c : [MSG('PLEASE_FILE_UPLOAD'), FontAwesome.GetIcon({
+								style : {
+									marginTop : 20,
+									display : 'block',
+									fontSize : 30,
+									textAlign : 'center'
+								},
+								key : 'upload'
+							})],
+							on : {
+								tap : () => {
+									uploadForm.select();
+								}
 							}
+						}),
+						
+						// 속성값 표시
+						DIV({
+							style : {
+								position : 'absolute',
+								left : 16,
+								bottom : 52
+							},
+							c : [UUI.V_CENTER({
+								style : {
+									flt : 'left',
+									width : 52,
+									height : 52,
+									backgroundImage : EtherFairy.R('element/fire.png'),
+									color : '#fff5ef',
+									textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+									textAlign : 'center',
+									fontSize : 20
+								},
+								c : 0
+							}), UUI.V_CENTER({
+								style : {
+									marginLeft : 3,
+									flt : 'left',
+									width : 52,
+									height : 52,
+									backgroundImage : EtherFairy.R('element/water.png'),
+									color : '#fff5ef',
+									textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+									textAlign : 'center',
+									fontSize : 20
+								},
+								c : 0
+							}), UUI.V_CENTER({
+								style : {
+									marginLeft : 3,
+									flt : 'left',
+									width : 52,
+									height : 52,
+									backgroundImage : EtherFairy.R('element/wind.png'),
+									color : '#fff5ef',
+									textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+									textAlign : 'center',
+									fontSize : 20
+								},
+								c : 0
+							}), UUI.V_CENTER({
+								style : {
+									marginLeft : 3,
+									flt : 'left',
+									width : 52,
+									height : 52,
+									backgroundImage : EtherFairy.R('element/earth.png'),
+									color : '#fff5ef',
+									textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+									textAlign : 'center',
+									fontSize : 20
+								},
+								c : 0
+							}), UUI.V_CENTER({
+								style : {
+									marginLeft : 3,
+									flt : 'left',
+									width : 52,
+									height : 52,
+									backgroundImage : EtherFairy.R('element/light.png'),
+									color : '#fff5ef',
+									textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+									textAlign : 'center',
+									fontSize : 20
+								},
+								c : 0
+							}), UUI.V_CENTER({
+								style : {
+									marginLeft : 3,
+									flt : 'left',
+									width : 52,
+									height : 52,
+									backgroundImage : EtherFairy.R('element/dark.png'),
+									color : '#fff5ef',
+									textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+									textAlign : 'center',
+									fontSize : 20
+								},
+								c : 0
+							}), CLEAR_BOTH()]
+						}),
+						
+						UUI.FULL_INPUT({
+							style : {
+								position : 'absolute',
+								left : 10,
+								bottom : 10,
+								width : 326,
+								padding : 7,
+								borderRadius : 4
+							},
+							inputStyle : {
+								textAlign : 'center'
+							},
+							name : 'name',
+							placeholder : MSG('PLEASE_ENTER_FAIRY_ORIGIN_NAME')
 						})]
 					}),
 					
 					UUI.VALID_FORM({
 						style : {
-							width : 470,
-							marginLeft : 20,
-							flt : 'left'
+							marginLeft : 20
 						},
 						c : [
 						H2({
@@ -117,13 +264,22 @@ EtherFairy('Designer').DesignFairy = CLASS({
 							pointsFormWrapper = DIV()]
 						}),
 						
-						Yogurt.Submit({
+						INPUT({
+							type : 'submit',
 							style : {
-								marginTop : 10
+								width : 296,
+								height : 97,
+								backgroundColor : 'transparent',
+								backgroundImage : EtherFairy.R('designfairy/save.png'),
+								border : 'none',
+								color : '#fff2ec',
+								textShadow : EtherFairy.TextBorderShadow('#180b00'),
+								fontSize : 30,
+								paddingBottom : 12,
+								cursor : 'pointer'
 							},
 							value : MSG('SAVE_DESIGN_FAIRY')
-						})
-						],
+						})],
 						on : {
 							submit : (e, form) => {
 								
@@ -171,9 +327,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 								});
 							}
 						}
-					}),
-					
-					CLEAR_BOTH()]
+					})]
 				}));
 				
 				let getUsingPoints = (exceptPoint) => {

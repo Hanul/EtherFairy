@@ -7,9 +7,10 @@ EtherFairy.FairyOriginCard = CLASS({
 	params : () => {
 		return {
 			style : {
-				width : 300,
-				backgroundColor : '#fff',
-				borderRadius : 6,
+				position : 'relative',
+				width : 360,
+				height : 550,
+				backgroundImage : EtherFairy.R('origincard.png'),
 				boxShadow : '0 0 8px rgba(0, 0, 0, 0.8)'
 			}
 		};
@@ -21,124 +22,121 @@ EtherFairy.FairyOriginCard = CLASS({
 		
 		let fairyOriginData = params.fairyOriginData;
 		
+		// 요정 이미지
 		self.append(DIV({
 			style : {
-				position : 'relative',
-				height : 400,
-				borderRadius : '6px 6px 0 0',
+				position : 'absolute',
+				left : 10,
+				top : 43,
+				width : 339,
+				height : 399,
+				borderRadius : 6,
 				backgroundImage : EtherFairy.RF(fairyOriginData.imageFileId),
 				backgroundSize : 'cover',
 				backgroundPosition : 'center center'
-			},
-			c : DIV({
-				style : {
-					position : 'absolute',
-					left : 10,
-					bottom : 10,
-					width : 280
-				},
-				c : [DIV({
-					style : {
-						flt : 'left',
-						backgroundColor : 'rgba(0, 0, 0, 0.5)',
-						padding : '3px 6px',
-						borderRadius : 3
-					},
-					c : fairyOriginData.name
-				}), CLEAR_BOTH()]
-			})
+			}
 		}));
 		
+		// 속성값 표시
 		self.append(DIV({
 			style : {
-				backgroundColor : '#222',
-				padding : 5
+				position : 'absolute',
+				left : 16,
+				bottom : 52
 			},
-			c : [UUI.BUTTON_H({
+			c : [UUI.V_CENTER({
 				style : {
-					width : 130,
-					padding : 5,
-					flt : 'left'
+					flt : 'left',
+					width : 52,
+					height : 52,
+					backgroundImage : EtherFairy.R('element/fire.png'),
+					color : '#fff5ef',
+					textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+					textAlign : 'center',
+					fontSize : 20
 				},
-				icon : IMG({
-					style : {
-						width : 20
-					},
-					src : EtherFairy.R('element/fire.png')
-				}),
-				spacing : 10,
-				title : fairyOriginData.firePointPerLevel
-			}), UUI.BUTTON_H({
+				c : fairyOriginData.firePointPerLevel
+			}), UUI.V_CENTER({
 				style : {
-					width : 130,
-					padding : 5,
-					flt : 'left'
+					marginLeft : 3,
+					flt : 'left',
+					width : 52,
+					height : 52,
+					backgroundImage : EtherFairy.R('element/water.png'),
+					color : '#fff5ef',
+					textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+					textAlign : 'center',
+					fontSize : 20
 				},
-				icon : IMG({
-					style : {
-						width : 20
-					},
-					src : EtherFairy.R('element/water.png')
-				}),
-				spacing : 10,
-				title : fairyOriginData.waterPointPerLevel
-			}), UUI.BUTTON_H({
+				c : fairyOriginData.waterPointPerLevel
+			}), UUI.V_CENTER({
 				style : {
-					width : 130,
-					padding : 5,
-					flt : 'left'
+					marginLeft : 3,
+					flt : 'left',
+					width : 52,
+					height : 52,
+					backgroundImage : EtherFairy.R('element/wind.png'),
+					color : '#fff5ef',
+					textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+					textAlign : 'center',
+					fontSize : 20
 				},
-				icon : IMG({
-					style : {
-						width : 20
-					},
-					src : EtherFairy.R('element/wind.png')
-				}),
-				spacing : 10,
-				title : fairyOriginData.windPointPerLevel
-			}), UUI.BUTTON_H({
+				c : fairyOriginData.windPointPerLevel
+			}), UUI.V_CENTER({
 				style : {
-					width : 130,
-					padding : 5,
-					flt : 'left'
+					marginLeft : 3,
+					flt : 'left',
+					width : 52,
+					height : 52,
+					backgroundImage : EtherFairy.R('element/earth.png'),
+					color : '#fff5ef',
+					textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+					textAlign : 'center',
+					fontSize : 20
 				},
-				icon : IMG({
-					style : {
-						width : 20
-					},
-					src : EtherFairy.R('element/earth.png')
-				}),
-				spacing : 10,
-				title : fairyOriginData.earthPointPerLevel
-			}), UUI.BUTTON_H({
+				c : fairyOriginData.earthPointPerLevel
+			}), UUI.V_CENTER({
 				style : {
-					width : 130,
-					padding : 5,
-					flt : 'left'
+					marginLeft : 3,
+					flt : 'left',
+					width : 52,
+					height : 52,
+					backgroundImage : EtherFairy.R('element/light.png'),
+					color : '#fff5ef',
+					textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+					textAlign : 'center',
+					fontSize : 20
 				},
-				icon : IMG({
-					style : {
-						width : 20
-					},
-					src : EtherFairy.R('element/light.png')
-				}),
-				spacing : 10,
-				title : fairyOriginData.lightPointPerLevel
-			}), UUI.BUTTON_H({
+				c : fairyOriginData.lightPointPerLevel
+			}), UUI.V_CENTER({
 				style : {
-					width : 130,
-					padding : 5,
-					flt : 'left'
+					marginLeft : 3,
+					flt : 'left',
+					width : 52,
+					height : 52,
+					backgroundImage : EtherFairy.R('element/dark.png'),
+					color : '#fff5ef',
+					textShadow : EtherFairy.TextBorderShadow('#1d0e08'),
+					textAlign : 'center',
+					fontSize : 20
 				},
-				icon : IMG({
-					style : {
-						width : 20
-					},
-					src : EtherFairy.R('element/dark.png')
-				}),
-				spacing : 10,
-				title : fairyOriginData.darkPointPerLevel
+				c : fairyOriginData.darkPointPerLevel
 			}), CLEAR_BOTH()]
+		}));
+		
+		// 요정 원본 이름
+		self.append(DIV({
+			style : {
+				position : 'absolute',
+				left : 10,
+				bottom : 10,
+				width : 326,
+				padding : 7,
+				textAlign : 'center',
+				color : '#fff2ec',
+				textShadow : EtherFairy.TextBorderShadow('#180b00')
+			},
+			c : '[' + fairyOriginData.name + ']'
 		}));
 	}
 });
