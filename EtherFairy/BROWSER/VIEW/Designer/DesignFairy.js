@@ -231,6 +231,21 @@ EtherFairy('Designer').DesignFairy = CLASS({
 						})]
 					}),
 					
+					DIV({
+						style : {
+							marginTop : 30,
+							width : 600
+						},
+						c : [H3({
+							style : {
+								textAlign : 'right',
+								color : '#ffde5c',
+								textShadow : EtherFairy.TextBorderShadow('#160b00')
+							},
+							c : MSG('REMAIN_LEVEL_POINT') + ' : ' + 5
+						})]
+					}),
+					
 					UUI.VALID_FORM({
 						style : {
 							marginLeft : 20
