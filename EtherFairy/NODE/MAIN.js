@@ -82,7 +82,7 @@ EtherFairy.MAIN = METHOD({
 						EtherFairy.FairyModel.get({
 							filter : {
 								id : {
-									$ne : fairyData.id
+									$ne : [fairyData.id, fairyData.lastEnemyFairyId]
 								},
 								rating : {
 									$gte : fairyData.rating - 100,

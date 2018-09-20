@@ -96,6 +96,10 @@ EtherFairy.FairyModel = OBJECT({
 				integer : true
 			},
 			
+			lastEnemyFairyId : {
+				id : true
+			},
+			
 			winningStreak : {
 				notEmpty : true,
 				integer : true
