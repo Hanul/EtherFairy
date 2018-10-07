@@ -23,13 +23,11 @@ EtherFairy('Designer').DesignFairy = CLASS({
 				let lightPointPerLevel = 0;
 				let darkPointPerLevel = 0;
 				
-				let previewWrapper;
-				let fairyRootPercentPanel;
 				let availablePointsPanel;
-				let pointsFormWrapper;
 				
 				let preview;
 				let uploadForm;
+				let nameInput;
 				
 				let firePointPerLevelPanel;
 				let waterPointPerLevelPanel;
@@ -38,8 +36,123 @@ EtherFairy('Designer').DesignFairy = CLASS({
 				let lightPointPerLevelPanel;
 				let darkPointPerLevelPanel;
 				
-				EtherFairy.Layout.setContent(DIV({
+				let firePointPerLevelIconPanel;
+				let waterPointPerLevelIconPanel;
+				let windPointPerLevelIconPanel;
+				let earthPointPerLevelIconPanel;
+				let lightPointPerLevelIconPanel;
+				let darkPointPerLevelIconPanel;
+				
+				let getTotalPoint = () => {
+					return firePointPerLevel +
+						waterPointPerLevel +
+						windPointPerLevel +
+						earthPointPerLevel +
+						lightPointPerLevel +
+						darkPointPerLevel;
+				};
+				
+				let changePoint = (type, amount) => {
+					
+					let nowTotalPoint = getTotalPoint();
+					
+					if (nowTotalPoint + amount > 5) {
+						amount = 5 - nowTotalPoint;
+					}
+					
+					if (type === 'fire') {
+						
+						if (firePointPerLevel + amount < 0) {
+							amount = 0;
+						}
+						firePointPerLevel += amount;
+						
+						firePointPerLevelPanel.empty();
+						firePointPerLevelPanel.append(firePointPerLevel);
+						
+						firePointPerLevelIconPanel.empty();
+						firePointPerLevelIconPanel.append(firePointPerLevel);
+					}
+					
+					if (type === 'water') {
+						
+						if (waterPointPerLevel + amount < 0) {
+							amount = 0;
+						}
+						waterPointPerLevel += amount;
+						
+						waterPointPerLevelPanel.empty();
+						waterPointPerLevelPanel.append(waterPointPerLevel);
+						
+						waterPointPerLevelIconPanel.empty();
+						waterPointPerLevelIconPanel.append(waterPointPerLevel);
+					}
+					
+					if (type === 'wind') {
+						
+						if (windPointPerLevel + amount < 0) {
+							amount = 0;
+						}
+						windPointPerLevel += amount;
+						
+						windPointPerLevelPanel.empty();
+						windPointPerLevelPanel.append(windPointPerLevel);
+						
+						windPointPerLevelIconPanel.empty();
+						windPointPerLevelIconPanel.append(windPointPerLevel);
+					}
+					
+					if (type === 'earth') {
+						
+						if (earthPointPerLevel + amount < 0) {
+							amount = 0;
+						}
+						earthPointPerLevel += amount;
+						
+						earthPointPerLevelPanel.empty();
+						earthPointPerLevelPanel.append(earthPointPerLevel);
+						
+						earthPointPerLevelIconPanel.empty();
+						earthPointPerLevelIconPanel.append(earthPointPerLevel);
+					}
+					
+					if (type === 'light') {
+						
+						if (lightPointPerLevel + amount < 0) {
+							amount = 0;
+						}
+						lightPointPerLevel += amount;
+						
+						lightPointPerLevelPanel.empty();
+						lightPointPerLevelPanel.append(lightPointPerLevel);
+						
+						lightPointPerLevelIconPanel.empty();
+						lightPointPerLevelIconPanel.append(lightPointPerLevel);
+					}
+					
+					if (type === 'dark') {
+						
+						if (darkPointPerLevel + amount < 0) {
+							amount = 0;
+						}
+						darkPointPerLevel += amount;
+						
+						darkPointPerLevelPanel.empty();
+						darkPointPerLevelPanel.append(darkPointPerLevel);
+						
+						darkPointPerLevelIconPanel.empty();
+						darkPointPerLevelIconPanel.append(darkPointPerLevel);
+					}
+					
+					availablePointsPanel.empty();
+					availablePointsPanel.append(5 - getTotalPoint());
+				};
+				
+				EtherFairy.Layout.setContent(UUI.PANEL({
 					style : {
+						padding : '40px 0 60px'
+					},
+					contentStyle : {
 						margin : 'auto',
 						width : 801,
 						height : 1289,
@@ -82,7 +195,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 						style : {
 							position : 'relative',
 							margin : 'auto',
-							marginTop : 50,
+							marginTop : 70,
 							width : 360,
 							height : 550,
 							backgroundImage : EtherFairy.R('origincard.png')
@@ -134,7 +247,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 								left : 16,
 								bottom : 52
 							},
-							c : [UUI.V_CENTER({
+							c : [firePointPerLevelIconPanel = UUI.V_CENTER({
 								style : {
 									flt : 'left',
 									width : 52,
@@ -145,8 +258,8 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									textAlign : 'center',
 									fontSize : 20
 								},
-								c : 0
-							}), UUI.V_CENTER({
+								c : firePointPerLevel
+							}), waterPointPerLevelIconPanel = UUI.V_CENTER({
 								style : {
 									marginLeft : 3,
 									flt : 'left',
@@ -158,8 +271,8 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									textAlign : 'center',
 									fontSize : 20
 								},
-								c : 0
-							}), UUI.V_CENTER({
+								c : waterPointPerLevel
+							}), windPointPerLevelIconPanel = UUI.V_CENTER({
 								style : {
 									marginLeft : 3,
 									flt : 'left',
@@ -171,8 +284,8 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									textAlign : 'center',
 									fontSize : 20
 								},
-								c : 0
-							}), UUI.V_CENTER({
+								c : windPointPerLevel
+							}), earthPointPerLevelIconPanel = UUI.V_CENTER({
 								style : {
 									marginLeft : 3,
 									flt : 'left',
@@ -184,8 +297,8 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									textAlign : 'center',
 									fontSize : 20
 								},
-								c : 0
-							}), UUI.V_CENTER({
+								c : earthPointPerLevel
+							}), lightPointPerLevelIconPanel = UUI.V_CENTER({
 								style : {
 									marginLeft : 3,
 									flt : 'left',
@@ -197,8 +310,8 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									textAlign : 'center',
 									fontSize : 20
 								},
-								c : 0
-							}), UUI.V_CENTER({
+								c : lightPointPerLevel
+							}), darkPointPerLevelIconPanel = UUI.V_CENTER({
 								style : {
 									marginLeft : 3,
 									flt : 'left',
@@ -210,11 +323,11 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									textAlign : 'center',
 									fontSize : 20
 								},
-								c : 0
+								c : darkPointPerLevel
 							}), CLEAR_BOTH()]
 						}),
 						
-						UUI.FULL_INPUT({
+						nameInput = UUI.FULL_INPUT({
 							style : {
 								position : 'absolute',
 								left : 10,
@@ -233,8 +346,9 @@ EtherFairy('Designer').DesignFairy = CLASS({
 					
 					DIV({
 						style : {
-							marginTop : 30,
-							width : 600
+							width : 400,
+							margin : 'auto',
+							marginTop : 50
 						},
 						c : [H3({
 							style : {
@@ -242,46 +356,351 @@ EtherFairy('Designer').DesignFairy = CLASS({
 								color : '#ffde5c',
 								textShadow : EtherFairy.TextBorderShadow('#160b00')
 							},
-							c : MSG('REMAIN_LEVEL_POINT') + ' : ' + 5
+							c : [SPAN({
+								style : {
+									color : '#FFFFCC',
+									marginRight : 20
+								},
+								c : MSG('REMAIN_LEVEL_POINT')
+							}), availablePointsPanel = SPAN({
+								c : availablePoints
+							})]
 						})]
 					}),
 					
 					UUI.VALID_FORM({
 						style : {
-							marginLeft : 20
+							width : 400,
+							margin : 'auto',
+							marginTop : 30
 						},
 						c : [
-						H2({
-							style : {
-								marginBottom : 10
-							},
-							c : MSG('FAIRY_INFO_FORM')
-						}),
 						
-						UUI.FULL_INPUT({
-							name : 'name',
-							placeholder : MSG('FAIRY_ORIGIN_NAME')
-						}),
-						
-						P({
-							c : MSG('FAIRY_ORIGIN_NAME_DESCRIPTION')
+						DIV({
+							c : [SPAN({
+								style : {
+									color : '#663300',
+									fontWeight : 'bold',
+									flt : 'left',
+									marginTop : 8
+								},
+								c : MSG('FIRE_POINT_PER_LEVEL')
+							}), DIV({
+								style : {
+									flt : 'right'
+								},
+								c : [A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/minus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('fire', -1);
+										}
+									}
+								}), firePointPerLevelPanel = DIV({
+									style : {
+										flt : 'left',
+										color : '#ffde5c',
+										textShadow : EtherFairy.TextBorderShadow('#160b00'),
+										marginTop : 8,
+										width : 50,
+										textAlign : 'center'
+									},
+									c : firePointPerLevel
+								}), A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/plus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('fire', 1);
+										}
+									}
+								}), CLEAR_BOTH()]
+							}), CLEAR_BOTH()]
 						}),
 						
 						DIV({
 							style : {
-								marginTop : 30
+								marginTop : 20
 							},
-							c : [
-							availablePointsPanel = DIV({
-								c : MSG('AVAILABLE_POINTS') + ' : ' + availablePoints
-							}),
-							
-							pointsFormWrapper = DIV()]
+							c : [SPAN({
+								style : {
+									color : '#663300',
+									fontWeight : 'bold',
+									flt : 'left',
+									marginTop : 8
+								},
+								c : MSG('WATER_POINT_PER_LEVEL')
+							}), DIV({
+								style : {
+									flt : 'right'
+								},
+								c : [A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/minus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('water', -1);
+										}
+									}
+								}), waterPointPerLevelPanel = DIV({
+									style : {
+										flt : 'left',
+										color : '#ffde5c',
+										textShadow : EtherFairy.TextBorderShadow('#160b00'),
+										marginTop : 8,
+										width : 50,
+										textAlign : 'center'
+									},
+									c : waterPointPerLevel
+								}), A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/plus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('water', 1);
+										}
+									}
+								}), CLEAR_BOTH()]
+							}), CLEAR_BOTH()]
+						}),
+						
+						DIV({
+							style : {
+								marginTop : 20
+							},
+							c : [SPAN({
+								style : {
+									color : '#663300',
+									fontWeight : 'bold',
+									flt : 'left',
+									marginTop : 8
+								},
+								c : MSG('WIND_POINT_PER_LEVEL')
+							}), DIV({
+								style : {
+									flt : 'right'
+								},
+								c : [A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/minus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('wind', -1);
+										}
+									}
+								}), windPointPerLevelPanel = DIV({
+									style : {
+										flt : 'left',
+										color : '#ffde5c',
+										textShadow : EtherFairy.TextBorderShadow('#160b00'),
+										marginTop : 8,
+										width : 50,
+										textAlign : 'center'
+									},
+									c : windPointPerLevel
+								}), A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/plus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('wind', 1);
+										}
+									}
+								}), CLEAR_BOTH()]
+							}), CLEAR_BOTH()]
+						}),
+						
+						DIV({
+							style : {
+								marginTop : 20
+							},
+							c : [SPAN({
+								style : {
+									color : '#663300',
+									fontWeight : 'bold',
+									flt : 'left',
+									marginTop : 8
+								},
+								c : MSG('EARTH_POINT_PER_LEVEL')
+							}), DIV({
+								style : {
+									flt : 'right'
+								},
+								c : [A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/minus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('earth', -1);
+										}
+									}
+								}), earthPointPerLevelPanel = DIV({
+									style : {
+										flt : 'left',
+										color : '#ffde5c',
+										textShadow : EtherFairy.TextBorderShadow('#160b00'),
+										marginTop : 8,
+										width : 50,
+										textAlign : 'center'
+									},
+									c : earthPointPerLevel
+								}), A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/plus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('earth', 1);
+										}
+									}
+								}), CLEAR_BOTH()]
+							}), CLEAR_BOTH()]
+						}),
+						
+						DIV({
+							style : {
+								marginTop : 20
+							},
+							c : [SPAN({
+								style : {
+									color : '#663300',
+									fontWeight : 'bold',
+									flt : 'left',
+									marginTop : 8
+								},
+								c : MSG('LIGHT_POINT_PER_LEVEL')
+							}), DIV({
+								style : {
+									flt : 'right'
+								},
+								c : [A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/minus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('light', -1);
+										}
+									}
+								}), lightPointPerLevelPanel = DIV({
+									style : {
+										flt : 'left',
+										color : '#ffde5c',
+										textShadow : EtherFairy.TextBorderShadow('#160b00'),
+										marginTop : 8,
+										width : 50,
+										textAlign : 'center'
+									},
+									c : lightPointPerLevel
+								}), A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/plus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('light', 1);
+										}
+									}
+								}), CLEAR_BOTH()]
+							}), CLEAR_BOTH()]
+						}),
+						
+						DIV({
+							style : {
+								marginTop : 20
+							},
+							c : [SPAN({
+								style : {
+									color : '#663300',
+									fontWeight : 'bold',
+									flt : 'left',
+									marginTop : 8
+								},
+								c : MSG('DARK_POINT_PER_LEVEL')
+							}), DIV({
+								style : {
+									flt : 'right'
+								},
+								c : [A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/minus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('dark', -1);
+										}
+									}
+								}), darkPointPerLevelPanel = DIV({
+									style : {
+										flt : 'left',
+										color : '#ffde5c',
+										textShadow : EtherFairy.TextBorderShadow('#160b00'),
+										marginTop : 8,
+										width : 50,
+										textAlign : 'center'
+									},
+									c : darkPointPerLevel
+								}), A({
+									c : IMG({
+										style : {
+											flt : 'left'
+										},
+										src : EtherFairy.R('designfairy/plus.png')
+									}),
+									on : {
+										tap : () => {
+											changePoint('dark', 1);
+										}
+									}
+								}), CLEAR_BOTH()]
+							}), CLEAR_BOTH()]
 						}),
 						
 						INPUT({
 							type : 'submit',
 							style : {
+								marginTop : 55,
 								width : 296,
 								height : 97,
 								backgroundColor : 'transparent',
@@ -298,237 +717,70 @@ EtherFairy('Designer').DesignFairy = CLASS({
 						on : {
 							submit : (e, form) => {
 								
-								let data = form.getData();
+								if (getTotalPoint() < 5) {
+									Yogurt.Alert({
+										msg : MSG('TOTAL_POINT_IS_NOT_FIVE')
+									});
+								}
 								
-								data.designerId = signedDesignerData.id;
-								data.imageFileId = imageFileId;
-								
-								EtherFairy.FairyOriginModel.create(data, {
-									notValid : (validErrors) => {
-										
-										// 이름 검사 실패
-										if (validErrors.name !== undefined) {
-											let type = validErrors.name.type;
-											let validParams = validErrors.name.validParams;
+								else {
+									
+									let data = form.getData();
+									
+									data.name = nameInput.getValue();
+									data.designerId = signedDesignerData.id;
+									data.imageFileId = imageFileId;
+									
+									data.firePointPerLevel = firePointPerLevel;
+									data.waterPointPerLevel = waterPointPerLevel;
+									data.windPointPerLevel = windPointPerLevel;
+									data.earthPointPerLevel = earthPointPerLevel;
+									data.lightPointPerLevel = lightPointPerLevel;
+									data.darkPointPerLevel = darkPointPerLevel;
+									
+									EtherFairy.FairyOriginModel.create(data, {
+										notValid : (validErrors) => {
 											
-											if (type === 'notEmpty') {
-												Yogurt.Alert({
-													msg : MSG('NOT_VALID_NAME_NOT_EMPTY')
-												});
+											// 이름 검사 실패
+											if (validErrors.name !== undefined) {
+												let type = validErrors.name.type;
+												let validParams = validErrors.name.validParams;
+												
+												if (type === 'notEmpty') {
+													Yogurt.Alert({
+														msg : MSG('NOT_VALID_NAME_NOT_EMPTY')
+													});
+												}
+												
+												else if (type === 'size') {
+													Yogurt.Alert({
+														msg : MSG('NOT_VALID_NAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max)
+													});
+												}
 											}
 											
-											else if (type === 'size') {
-												Yogurt.Alert({
-													msg : MSG('NOT_VALID_NAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max)
-												});
+											// 이미지 등록 실패
+											else if (validErrors.imageFileId !== undefined) {
+												let type = validErrors.imageFileId.type;
+												let validParams = validErrors.imageFileId.validParams;
+												
+												if (type === 'notEmpty') {
+													Yogurt.Alert({
+														msg : MSG('NOT_VALID_IMAGE_FILE_ID_NOT_EMPTY')
+													});
+												}
 											}
+										},
+										success : (savedData) => {
+											EtherFairy.GO('fairyorigin/' + savedData.id);
 										}
-										
-										// 이미지 등록 실패
-										else if (validErrors.imageFileId !== undefined) {
-											let type = validErrors.imageFileId.type;
-											let validParams = validErrors.imageFileId.validParams;
-											
-											if (type === 'notEmpty') {
-												Yogurt.Alert({
-													msg : MSG('NOT_VALID_IMAGE_FILE_ID_NOT_EMPTY')
-												});
-											}
-										}
-									},
-									success : (savedData) => {
-										EtherFairy.GO('fairyorigin/' + savedData.id);
-									}
-								});
+									});
+								}
 							}
 						}
 					})]
 				}));
 				
-				let getUsingPoints = (exceptPoint) => {
-					return firePointPerLevel +
-						waterPointPerLevel +
-						windPointPerLevel +
-						earthPointPerLevel +
-						lightPointPerLevel +
-						darkPointPerLevel -
-						exceptPoint;
-				};
-				
-				let refreshPointsForm = RAR(() => {
-					
-					pointsFormWrapper.empty();
-					pointsFormWrapper.append(DIV({
-						c : [
-						
-						// FIRE
-						H3({
-							c : MSG('FIRE_POINT_PER_LEVEL')
-						}),
-						firePointPerLevelPanel = DIV({
-							c : firePointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'firePointPerLevel',
-							max : availablePoints - getUsingPoints(firePointPerLevel),
-							value : firePointPerLevel,
-							on : {
-								show : (e, range) => {
-									firePointPerLevel = range.getValue();
-									
-									firePointPerLevelPanel.empty();
-									firePointPerLevelPanel.append(firePointPerLevel);
-								},
-								change : (e, range) => {
-									firePointPerLevel = range.getValue();
-									
-									firePointPerLevelPanel.empty();
-									firePointPerLevelPanel.append(firePointPerLevel);
-								}
-							}
-						}),
-						
-						// WATER
-						H3({
-							c : MSG('WATER_POINT_PER_LEVEL')
-						}),
-						waterPointPerLevelPanel = DIV({
-							c : waterPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'waterPointPerLevel',
-							max : availablePoints - getUsingPoints(waterPointPerLevel),
-							value : waterPointPerLevel,
-							on : {
-								show : (e, range) => {
-									waterPointPerLevel = range.getValue();
-									
-									waterPointPerLevelPanel.empty();
-									waterPointPerLevelPanel.append(waterPointPerLevel);
-								},
-								change : (e, range) => {
-									waterPointPerLevel = range.getValue();
-									
-									waterPointPerLevelPanel.empty();
-									waterPointPerLevelPanel.append(waterPointPerLevel);
-								}
-							}
-						}),
-						
-						// WIND
-						H3({
-							c : MSG('WIND_POINT_PER_LEVEL')
-						}),
-						windPointPerLevelPanel = DIV({
-							c : windPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'windPointPerLevel',
-							max : availablePoints - getUsingPoints(windPointPerLevel),
-							value : windPointPerLevel,
-							on : {
-								show : (e, range) => {
-									windPointPerLevel = range.getValue();
-									
-									windPointPerLevelPanel.empty();
-									windPointPerLevelPanel.append(windPointPerLevel);
-								},
-								change : (e, range) => {
-									windPointPerLevel = range.getValue();
-									
-									windPointPerLevelPanel.empty();
-									windPointPerLevelPanel.append(windPointPerLevel);
-								}
-							}
-						}),
-						
-						// EARTH
-						H3({
-							c : MSG('EARTH_POINT_PER_LEVEL')
-						}),
-						earthPointPerLevelPanel = DIV({
-							c : earthPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'earthPointPerLevel',
-							max : availablePoints - getUsingPoints(earthPointPerLevel),
-							value : earthPointPerLevel,
-							on : {
-								show : (e, range) => {
-									earthPointPerLevel = range.getValue();
-									
-									earthPointPerLevelPanel.empty();
-									earthPointPerLevelPanel.append(earthPointPerLevel);
-								},
-								change : (e, range) => {
-									earthPointPerLevel = range.getValue();
-									
-									earthPointPerLevelPanel.empty();
-									earthPointPerLevelPanel.append(earthPointPerLevel);
-								}
-							}
-						}),
-						
-						// LIGHT
-						H3({
-							c : MSG('LIGHT_POINT_PER_LEVEL')
-						}),
-						lightPointPerLevelPanel = DIV({
-							c : lightPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'lightPointPerLevel',
-							max : availablePoints - getUsingPoints(lightPointPerLevel),
-							value : lightPointPerLevel,
-							on : {
-								show : (e, range) => {
-									lightPointPerLevel = range.getValue();
-									
-									lightPointPerLevelPanel.empty();
-									lightPointPerLevelPanel.append(lightPointPerLevel);
-								},
-								change : (e, range) => {
-									lightPointPerLevel = range.getValue();
-									
-									lightPointPerLevelPanel.empty();
-									lightPointPerLevelPanel.append(lightPointPerLevel);
-								}
-							}
-						}),
-						
-						// DARK
-						H3({
-							c : MSG('DARK_POINT_PER_LEVEL')
-						}),
-						darkPointPerLevelPanel = DIV({
-							c : darkPointPerLevel
-						}),
-						Yogurt.Range({
-							name : 'darkPointPerLevel',
-							max : availablePoints - getUsingPoints(darkPointPerLevel),
-							value : darkPointPerLevel,
-							on : {
-								show : (e, range) => {
-									darkPointPerLevel = range.getValue();
-									
-									darkPointPerLevelPanel.empty();
-									darkPointPerLevelPanel.append(darkPointPerLevel);
-								},
-								change : (e, range) => {
-									darkPointPerLevel = range.getValue();
-									
-									darkPointPerLevelPanel.empty();
-									darkPointPerLevelPanel.append(darkPointPerLevel);
-								}
-							}
-						})]
-					}));
-				});
-				
-				let touchendEvent = EVENT('touchend', refreshPointsForm);
-				pointsFormWrapper.on('remove', () => {
-					touchendEvent.remove();
-				});
 			}
 		});
 	}
