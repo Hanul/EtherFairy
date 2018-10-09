@@ -31,14 +31,15 @@ EtherFairy('Master').Home = CLASS({
 						EtherFairy.MasterModel.get(walletAddress, (masterData) => {
 							
 							let profileImage;
+							let profileImageUploadForm;
+							let fairyCountPanel;
 							let fairyList;
 							
-							EtherFairy.Layout.setContent(UUI.PANEL({
+							EtherFairy.Layout.setContent(DIV({
 								style : {
-									padding : 10
-								},
-								contentStyle : {
-									padding : '50px 10px'
+									margin : 'auto',
+									width : 1110,
+									padding : '30px 0 50px 10px'
 								},
 								c : [
 								H1({
@@ -62,13 +63,43 @@ EtherFairy('Master').Home = CLASS({
 											backgroundImage : masterData.profileImageFileId === undefined ? EtherFairy.R('default-profile.png') : EtherFairy.RF(masterData.profileImageFileId),
 											backgroundSize : 'cover',
 											backgroundPosition : 'center center',
-											backgroundRepeat : 'no-repeat'
+											backgroundRepeat : 'no-repeat',
+											cursor : 'pointer',
+											borderRadius : 10
+										},
+										on : {
+											mouseover : () => {
+												
+												if (profileImage.getChildren().length === 0) {
+													
+													profileImage.append(UUI.V_CENTER({
+														style : {
+															width : 200,
+															height : 200,
+															background : 'rgba(0, 0, 0, 0.5)',
+															borderRadius : 10,
+															textAlign : 'center'
+														},
+														c : MSG('CHANGE_PROFILE_IMAGE_BUTTON'),
+														on : {
+															mouseout : () => {
+																profileImage.empty();
+															}
+														}
+													}));
+												}
+											},
+											tap : () => {
+												profileImageUploadForm.select();
+											}
 										}
 									}),
 									
-									UUI.FULL_UPLOAD_FORM({
+									profileImageUploadForm = UUI.FULL_UPLOAD_FORM({
 										style : {
-											width : 190
+											position : 'fixed',
+											left : -999999,
+											top : -999999
 										},
 										box : EtherFairy
 									}, {
@@ -88,19 +119,25 @@ EtherFairy('Master').Home = CLASS({
 								
 								DIV({
 									style : {
-										marginLeft : 10,
+										marginLeft : 20,
 										flt : 'left'
 									},
-									c : ['test']
+									c : [fairyCountPanel = DIV()]
 								}),
 								
 								CLEAR_BOTH(),
 								
+								H3({
+									style : {
+										marginTop : 30,
+										fontSize : 25
+									},
+									c : MSG('OWN_FAIRY_LIST')
+								}),
+								
 								fairyList = DIV({
 									style : {
-										margin : 'auto',
-										width : 930,
-										paddingLeft : 10
+										marginTop : 10
 									},
 									c : IMG({
 										style : {
@@ -112,6 +149,8 @@ EtherFairy('Master').Home = CLASS({
 							}));
 							
 							EtherFairy.EtherFairyContractController.balanceOf(walletAddress, (fairyCount) => {
+								
+								fairyCountPanel.append(MSG('OWN_FAIRY_COUNT') + ' : ' + fairyCount);
 								
 								fairyList.empty();
 								
