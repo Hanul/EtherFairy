@@ -10,12 +10,23 @@ EtherFairy('Master').TradeFairy = CLASS({
 		
 		EtherFairy.Layout.setContent(DIV({
 			style : {
-				padding : 10
+				margin : 'auto',
+				width : 1110,
+				padding : '30px 0 50px 10px'
 			},
 			c : [
+			H1({
+				style : {
+					fontSize : 30,
+					fontWeight : 'bold',
+					color : '#FFEA4F',
+					marginBottom : 20
+				},
+				c : MSG('TRADE_TITLE')
+			}),
 			
-			A({
-				c : MSG('START_TRADE_FAIRY'),
+			Yogurt.Button({
+				title : MSG('START_TRADE_FAIRY'),
 				on : {
 					tap : () => {
 						EtherFairy.GO('master/starttradefairy');
@@ -23,16 +34,7 @@ EtherFairy('Master').TradeFairy = CLASS({
 				}
 			}),
 			
-			P({
-				c : 'test'
-			}),
-			
 			fairyList = DIV({
-				style : {
-					margin : 'auto',
-					width : 930,
-					paddingLeft : 10
-				},
 				c : IMG({
 					style : {
 						width : 100
