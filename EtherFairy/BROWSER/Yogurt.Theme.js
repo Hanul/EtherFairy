@@ -7,7 +7,7 @@ Yogurt.Theme = {
 		fontSize : 16
 	},
 	menuLayoutMenuWidth : 200,
-	menuLayoutHideMenuWinWidth : 800,
+	menuLayoutHideMenuWinWidth : 1200,
 	menuLayoutMenuBackgroundColor : '#171a1d',
 	
 	// 버튼 관련 스타일

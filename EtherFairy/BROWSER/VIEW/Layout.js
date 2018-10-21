@@ -32,7 +32,7 @@ EtherFairy.Layout = CLASS((cls) => {
 				
 				toolbar : Yogurt.Toolbar({
 					
-					height : 70,
+					height : 68,
 	
 					contentStyle : {
 						onDisplayResize : (width, height) => {
@@ -54,7 +54,7 @@ EtherFairy.Layout = CLASS((cls) => {
 					// left
 					left : Yogurt.ToolbarButton({
 						style : {
-							marginTop : 6,
+							marginTop : 10,
 							color : '#999',
 							onDisplayResize : (width, height) => {
 	
@@ -80,7 +80,7 @@ EtherFairy.Layout = CLASS((cls) => {
 					// right
 					right : Yogurt.ToolbarButton({
 						style : {
-							marginTop : 6,
+							marginTop : 10,
 							color : '#999',
 							onDisplayResize : (width, height) => {
 	
@@ -95,7 +95,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								}
 							}
 						},
-						icon : FontAwesome.GetIcon('users'),
+						icon : FontAwesome.GetIcon('clipboard-list'),
 						on : {
 							tap : (e) => {
 								menuLayout.toggleRightMenu();
@@ -191,7 +191,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									width : 15,
 									textAlign : 'center'
 								},
-								c : FontAwesome.GetIcon('list-ol')
+								c : FontAwesome.GetIcon('trophy')
 							}),
 							spacing : 10,
 							title : MSG('LAYOUT_RANKING_BUTTON')
@@ -199,6 +199,33 @@ EtherFairy.Layout = CLASS((cls) => {
 						on : {
 							tap : () => {
 								EtherFairy.GO('ranking');
+								menuLayout.hideLeftMenu();
+							}
+						}
+					}), DIV({
+						style : {
+							width : '100%',
+							borderBottom : '1px solid #333',
+							cursor : 'pointer'
+						},
+						c : [UUI.BUTTON_H({
+							style : {
+								padding : 10,
+								fontSize : 15
+							},
+							icon : SPAN({
+								style : {
+									width : 15,
+									textAlign : 'center'
+								},
+								c : FontAwesome.GetIcon('list-ol')
+							}),
+							spacing : 10,
+							title : MSG('LAYOUT_OWNER_RANKING_BUTTON')
+						})],
+						on : {
+							tap : () => {
+								EtherFairy.GO('ranking/master');
 								menuLayout.hideLeftMenu();
 							}
 						}
@@ -272,7 +299,19 @@ EtherFairy.Layout = CLASS((cls) => {
 							backgroundColor : '#171a1d',
 							color : '#999',
 							padding : '20px',
-							boxShadow : '0 -2px 4px rgba(0, 0, 0, .5)'
+							boxShadow : '0 -2px 4px rgba(0, 0, 0, .5)',
+							lineHeight : '1.5em',
+							onDisplayResize : (width, height) => {
+								if (width < 820) {
+									return {
+										fontSize : 14
+									};
+								} else {
+									return {
+										fontSize : 16
+									};
+								}
+							}
 						},
 						c : [DIV({
 							style : {
@@ -304,6 +343,7 @@ EtherFairy.Layout = CLASS((cls) => {
 							},
 							c : [A({
 								style : {
+									marginLeft : 20,
 									fontSize : 20
 								},
 								c : FontAwesome.GetBrandIcon('facebook'),

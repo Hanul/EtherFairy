@@ -17,9 +17,29 @@ EtherFairy.Ranking = CLASS({
 				width : 1110,
 				padding : '30px 0 50px 10px',
 				onDisplayResize : (width, height) => {
-					if (width < 1300) {
+					if (width < 400) {
+						return {
+							width : 310
+						};
+					} else if (width < 620) {
+						return {
+							width : 380
+						};
+					} else if (width < 800) {
+						return {
+							width : 570
+						};
+					} else if (width < 1300) {
 						return {
 							width : 760
+						};
+					} else if (width < 1550) {
+						return {
+							width : 740
+						};
+					} else {
+						return {
+							width : 1110
 						};
 					}
 				}
@@ -66,7 +86,14 @@ EtherFairy.Ranking = CLASS({
 							flt : 'left',
 							cursor : 'pointer',
 							onDisplayResize : (width, height) => {
-								if (width < 1300) {
+								if (width < 400) {
+									return {
+										transform : 'scale(0.4)',
+										transformOrigin : 'left top',
+										width : 144,
+										height : 240
+									};
+								} else if (width < 1300) {
 									return {
 										transform : 'scale(0.5)',
 										transformOrigin : 'left top',
@@ -75,8 +102,8 @@ EtherFairy.Ranking = CLASS({
 									};
 								} else {
 									return {
-										transform : undefined,
-										transformOrigin : undefined,
+										transform : TO_DELETE,
+										transformOrigin : TO_DELETE,
 										width : 360,
 										height : 600
 									};
@@ -115,7 +142,31 @@ EtherFairy.Ranking = CLASS({
 							marginTop : 10,
 							marginRight : 10,
 							flt : 'left',
-							cursor : 'pointer'
+							cursor : 'pointer',
+							onDisplayResize : (width, height) => {
+								if (width < 400) {
+									return {
+										transform : 'scale(0.4)',
+										transformOrigin : 'left top',
+										width : 144,
+										height : 240
+									};
+								} else if (width < 1300) {
+									return {
+										transform : 'scale(0.5)',
+										transformOrigin : 'left top',
+										width : 180,
+										height : 300
+									};
+								} else {
+									return {
+										transform : TO_DELETE,
+										transformOrigin : TO_DELETE,
+										width : 360,
+										height : 600
+									};
+								}
+							}
 						},
 						fairyId : fairyId,
 						on : {
