@@ -1,12 +1,12 @@
 EtherFairy.FairyCard = CLASS({
 	
 	preset : () => {
-		return DIV;
+		return UUI.PANEL;
 	},
 	
 	params : () => {
 		return {
-			style : {
+			contentStyle : {
 				position : 'relative',
 				width : 360,
 				height : 600,

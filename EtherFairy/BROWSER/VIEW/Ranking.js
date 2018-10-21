@@ -15,7 +15,14 @@ EtherFairy.Ranking = CLASS({
 			style : {
 				margin : 'auto',
 				width : 1110,
-				padding : '30px 0 50px 10px'
+				padding : '30px 0 50px 10px',
+				onDisplayResize : (width, height) => {
+					if (width < 1300) {
+						return {
+							width : 760
+						};
+					}
+				}
 			},
 			c : [
 			H1({
@@ -57,7 +64,24 @@ EtherFairy.Ranking = CLASS({
 							marginTop : 10,
 							marginRight : 10,
 							flt : 'left',
-							cursor : 'pointer'
+							cursor : 'pointer',
+							onDisplayResize : (width, height) => {
+								if (width < 1300) {
+									return {
+										transform : 'scale(0.5)',
+										transformOrigin : 'left top',
+										width : 180,
+										height : 300
+									};
+								} else {
+									return {
+										transform : undefined,
+										transformOrigin : undefined,
+										width : 360,
+										height : 600
+									};
+								}
+							}
 						},
 						fairyId : fairyId,
 						on : {

@@ -11,7 +11,18 @@ EtherFairy.FairyOriginCard = CLASS({
 				width : 360,
 				height : 550,
 				backgroundImage : EtherFairy.R('origincard.png'),
-				boxShadow : '0 0 8px rgba(0, 0, 0, 0.8)'
+				boxShadow : '0 0 8px rgba(0, 0, 0, 0.8)',
+				onDisplayResize : (width, height) => {
+					if (width < 1300) {
+						return {
+							transform : 'scale(0.5)'
+						};
+					} else {
+						return {
+							transform : undefined
+						};
+					}
+				}
 			}
 		};
 	},
