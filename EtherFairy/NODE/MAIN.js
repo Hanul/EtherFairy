@@ -109,6 +109,8 @@ EtherFairy.MAIN = METHOD({
 									
 									let ratingUp = 10 + fairyData.winningStreak * 3;
 									
+									battleResult.fairyRatingChange = ratingUp;
+									
 									EtherFairy.FairyModel.update({
 										id : fairyData.id,
 										$inc : {
@@ -119,6 +121,8 @@ EtherFairy.MAIN = METHOD({
 									});
 									
 									let ratingDown = 10 + enemyFairyData.losingStreak * 3;
+									
+									battleResult.enemyRatingChange = -ratingDown;
 									
 									EtherFairy.FairyModel.update({
 										id : enemyFairyData.id,
@@ -141,6 +145,8 @@ EtherFairy.MAIN = METHOD({
 									
 									let ratingUp = 10 + enemyFairyData.winningStreak * 3;
 									
+									battleResult.enemyRatingChange = ratingUp;
+									
 									EtherFairy.FairyModel.update({
 										id : enemyFairyData.id,
 										$inc : {
@@ -151,6 +157,8 @@ EtherFairy.MAIN = METHOD({
 									});
 									
 									let ratingDown = 10 + fairyData.losingStreak * 3;
+									
+									battleResult.fairyRatingChange = -ratingDown;
 									
 									EtherFairy.FairyModel.update({
 										id : fairyData.id,

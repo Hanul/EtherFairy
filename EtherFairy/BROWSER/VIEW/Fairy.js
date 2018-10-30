@@ -129,639 +129,642 @@ EtherFairy.Fairy = CLASS({
 				
 				() => {
 					namePanel.append(fairyInfo.name);
-				}]);
-				
-				EtherFairy.EtherFairyContract.tokenURI(fairyId, (tokenURI) => {
-					console.log(tokenURI);
-				});
-				
-				// 판매중인지 확인하고 판매자면 판매 취소가 가능하도록 합니다.
-				EtherFairy.FairyMarketContract.checkFairyForSale(fairyId, (forSale) => {
-					if (forSale === true) {
-						
-						EtherFairy.FairyMarketContract.findSaleIdByFairyId(fairyId, (saleId) => {
-							EtherFairy.FairyMarketContract.getSaleInfo(saleId, (seller, fairyId, price) => {
-								
-								EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+					
+					EtherFairy.EtherFairyContract.tokenURI(fairyId, (tokenURI) => {
+						console.log(tokenURI);
+					});
+					
+					// 판매중인지 확인하고 판매자면 판매 취소가 가능하도록 합니다.
+					EtherFairy.FairyMarketContract.checkFairyForSale(fairyId, (forSale) => {
+						if (forSale === true) {
+							
+							EtherFairy.FairyMarketContract.findSaleIdByFairyId(fairyId, (saleId) => {
+								EtherFairy.FairyMarketContract.getSaleInfo(saleId, (seller, fairyId, price) => {
 									
-									if (walletAddress === seller) {
+									EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 										
-										menu.append(DIV({
-											c : A({
-												c : MSG('CANCEL_TRADE'),
-												on : {
-													tap : () => {
-														
-														Yogurt.Confirm({
-															msg : MSG('REALLY_CANCEL_PROMPT')
-														}, () => {
+										if (walletAddress === seller) {
+											
+											menu.append(DIV({
+												c : A({
+													c : MSG('CANCEL_TRADE'),
+													on : {
+														tap : () => {
 															
-															EtherFairy.FairyMarketContract.cancelSale(fairyId, () => {
-																EtherFairy.REFRESH('fairy/' + fairyId);
-															});
-														});
-													}
-												}
-											})
-										}));
-									}
-									
-									else {
-										
-										menu.append(DIV({
-											c : A({
-												c : MSG('BUY_TRADE_FAIRY'),
-												on : {
-													tap : () => {
-														
-														Yogurt.Confirm({
-															msg : MSG('REALLY_BUY_TRADE_FAIRY_PROMPT')
-														}, () => {
-															
-															EtherFairy.FairyMarketContract.buy({
-																fairyId : fairyId,
-																ether : price
+															Yogurt.Confirm({
+																msg : MSG('REALLY_CANCEL_PROMPT')
 															}, () => {
-																EtherFairy.REFRESH('fairy/' + fairyId);
+																
+																EtherFairy.FairyMarketContract.cancelSale(fairyId, () => {
+																	EtherFairy.REFRESH('fairy/' + fairyId);
+																});
 															});
-														});
+														}
 													}
-												}
-											})
-										}));
-									}
+												})
+											}));
+										}
+										
+										else {
+											
+											menu.append(DIV({
+												c : A({
+													c : MSG('BUY_TRADE_FAIRY'),
+													on : {
+														tap : () => {
+															
+															Yogurt.Confirm({
+																msg : MSG('REALLY_BUY_TRADE_FAIRY_PROMPT')
+															}, () => {
+																
+																EtherFairy.FairyMarketContract.buy({
+																	fairyId : fairyId,
+																	ether : price
+																}, () => {
+																	EtherFairy.REFRESH('fairy/' + fairyId);
+																});
+															});
+														}
+													}
+												})
+											}));
+										}
+									});
 								});
 							});
-						});
-					}
-				});
-				
-				// 만약 소유주면 소유주 메뉴를 추가합니다.
-				EtherFairy.EtherFairyContract.ownerOf(fairyId, (ownerAddress) => {
-					
-					EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
-						
-						if (walletAddress === ownerAddress) {
-							
-							menu.append(UUI.V_CENTER({
-								style : {
-									position : 'absolute',
-									top : -58,
-									right : 0,
-									width : 113,
-									height : 34,
-									textShadow : EtherFairy.TextBorderShadow('#160b00'),
-									backgroundImage : EtherFairy.R('fairyinfo/changename.png'),
-									textAlign : 'center',
-									cursor : 'pointer'
-								},
-								c : MSG('CHANGE_NAME'),
-								on : {
-									tap : () => {
-										
-										Yogurt.Prompt(MSG('CHANGE_NAME_PROMPT'), (newName) => {
-											
-											EtherFairy.EtherFairyContract.changeFairyName({
-												fairyId : fairyId,
-												name : newName
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										});
-									}
-								}
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('CUSTOM_LEVEL_UP')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.levelUpFairy(fairyId, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.appendedLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('HP_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseHPPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.hpPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.hpPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('ATTACK_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseAttackPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.attackPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.attackPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('DEFENCE_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseDefencePointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.defencePointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.defencePointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('AGILITY_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseAgilityPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.agilityPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.agilityPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('DEXTERITY_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseDexterityPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.dexterityPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.dexterityPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('FIRE_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseFirePointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.firePointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.firePointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('WATER_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseWaterPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.waterPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.waterPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('WIND_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseWindPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.windPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.windPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('EARTH_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseEarthPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.earthPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.earthPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('LIGHT_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseLightPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.lightPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.lightPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-							menu.append(DIV({
-								style : {
-									marginTop : 14
-								},
-								c : [P({
-									style : {
-										flt : 'left',
-										marginTop : 6,
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : MSG('DARK_POINT_PER_LEVEL')
-								}), UUI.BUTTON_H({
-									style : {
-										flt : 'right',
-										color : '#fff5cb',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									icon : IMG({
-										src : EtherFairy.R('fairyinfo/plus.png')
-									}),
-									spacing : 20,
-									title : '[0.01 Ether]',
-									on : {
-										tap : () => {
-											EtherFairy.EtherFairyContract.increaseDarkPointPerLevel({
-												fairyId : fairyId,
-												ether : 0.01 * fairyInfo.darkPointPerLevel
-											}, () => {
-												EtherFairy.REFRESH('fairy/' + fairyId);
-											});
-										}
-									}
-								}), P({
-									style : {
-										flt : 'right',
-										marginRight : 15,
-										marginTop : 6,
-										color : '#ffde5c',
-										textShadow : EtherFairy.TextBorderShadow('#160b00')
-									},
-									c : fairyInfo.darkPointPerLevel
-								}), CLEAR_BOTH()]
-							}));
-						}
-						
-						else {
-							createInfoPanel();
 						}
 					});
-				});
+					
+					// 만약 소유주면 소유주 메뉴를 추가합니다.
+					EtherFairy.EtherFairyContract.ownerOf(fairyId, (ownerAddress) => {
+						
+						EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+							
+							if (walletAddress === ownerAddress) {
+								
+								menu.append(UUI.V_CENTER({
+									style : {
+										position : 'absolute',
+										top : -58,
+										right : 0,
+										width : 113,
+										height : 34,
+										textShadow : EtherFairy.TextBorderShadow('#160b00'),
+										backgroundImage : EtherFairy.R('fairyinfo/changename.png'),
+										textAlign : 'center',
+										cursor : 'pointer'
+									},
+									c : MSG('CHANGE_NAME'),
+									on : {
+										tap : () => {
+											
+											Yogurt.Prompt(MSG('CHANGE_NAME_PROMPT'), (newName) => {
+												
+												EtherFairy.EtherFairyContract.changeFairyName({
+													fairyId : fairyId,
+													newName : newName
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											});
+										}
+									}
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('CUSTOM_LEVEL_UP')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.levelUpFairy({
+													fairyId : fairyId,
+													ether : 0.01
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.appendedLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('HP_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseHPPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.hpPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.hpPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('ATTACK_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseAttackPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.attackPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.attackPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('DEFENCE_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseDefencePointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.defencePointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.defencePointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('AGILITY_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseAgilityPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.agilityPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.agilityPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('DEXTERITY_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseDexterityPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.dexterityPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.dexterityPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('FIRE_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseFirePointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.firePointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.firePointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('WATER_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseWaterPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.waterPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.waterPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('WIND_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseWindPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.windPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.windPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('EARTH_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseEarthPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.earthPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.earthPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('LIGHT_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseLightPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.lightPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.lightPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+								menu.append(DIV({
+									style : {
+										marginTop : 14
+									},
+									c : [P({
+										style : {
+											flt : 'left',
+											marginTop : 6,
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : MSG('DARK_POINT_PER_LEVEL')
+									}), UUI.BUTTON_H({
+										style : {
+											flt : 'right',
+											color : '#fff5cb',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										icon : IMG({
+											src : EtherFairy.R('fairyinfo/plus.png')
+										}),
+										spacing : 20,
+										title : '[0.01 Ether]',
+										on : {
+											tap : () => {
+												EtherFairy.EtherFairyContract.increaseDarkPointPerLevel({
+													fairyId : fairyId,
+													ether : 0.01 * fairyInfo.darkPointPerLevel
+												}, () => {
+													EtherFairy.REFRESH('fairy/' + fairyId);
+												});
+											}
+										}
+									}), P({
+										style : {
+											flt : 'right',
+											marginRight : 15,
+											marginTop : 6,
+											color : '#ffde5c',
+											textShadow : EtherFairy.TextBorderShadow('#160b00')
+										},
+										c : fairyInfo.darkPointPerLevel
+									}), CLEAR_BOTH()]
+								}));
+							}
+							
+							else {
+								createInfoPanel();
+							}
+						});
+					});
+				}]);
 			}
 			
 			else {
@@ -800,13 +803,22 @@ EtherFairy.Fairy = CLASS({
 								width : '40%',
 								flt : 'left'
 							}
-						}), FontAwesome.GetIcon({
+						}), UUI.V_CENTER({
 							style : {
 								position : 'absolute',
 								left : '50%',
-								marginLeft : -7
+								marginLeft : -58,
+								width : 116,
+								textAlign : 'center'
 							},
-							key : battleResult.fairyId === fairyId ? 'arrow-right' : 'arrow-left'
+							c : [IMG({
+								src : EtherFairy.R(isWin === true ? 'fairyinfo/win.png' : 'fairyinfo/lose.png')
+							}), IMG({
+								src : EtherFairy.R('fairyinfo/sword.png'),
+								transform : battleResult.fairyId === fairyId ? undefined : 'scaleX(-1)'
+							}), DIV({
+								c : battleResult.fairyId === fairyId ? battleResult.fairyRatingChange : battleResult.enemyRatingChange
+							})]
 						}), opponentPanel = DIV({
 							style : {
 								width : '40%',

@@ -58,6 +58,16 @@ EtherFairy.BattleResultModel = OBJECT({
 				real : true
 			},
 			
+			fairyRatingChange : {
+				notEmpty : true,
+				real : true
+			},
+			
+			enemyRatingChange : {
+				notEmpty : true,
+				real : true
+			},
+			
 			isWin : {
 				notEmpty : true,
 				bool : true
