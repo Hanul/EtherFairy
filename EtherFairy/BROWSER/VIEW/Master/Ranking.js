@@ -6,5 +6,8 @@ EtherFairy('Master').Ranking = CLASS({
 	
 	init : (inner, self) => {
 		
+		EtherFairy.Layout.setContent(DIV({
+			c : 'test'
+		}));
 	}
 });

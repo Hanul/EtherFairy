@@ -225,7 +225,7 @@ EtherFairy.Layout = CLASS((cls) => {
 						})],
 						on : {
 							tap : () => {
-								EtherFairy.GO('ranking/master');
+								EtherFairy.GO('master/ranking');
 								menuLayout.hideLeftMenu();
 							}
 						}
