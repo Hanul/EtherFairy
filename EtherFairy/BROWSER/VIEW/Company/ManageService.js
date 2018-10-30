@@ -32,17 +32,17 @@ EtherFairy('Company').ManageService = CLASS({
 			]
 		}));
 		
-		EtherFairy.EtherFairyContractController.getCompanyAddress((companyAddress) => {
+		EtherFairy.EtherFairyContract.getCompanyAddress((companyAddress) => {
 			
 			EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 				
 				if (walletAddress === companyAddress) {
 					
-					EtherFairy.EtherFairyContractController.getMasterCount((masterCount) => {
+					EtherFairy.EtherFairyContract.getMasterCount((masterCount) => {
 						menu.append('총 소유주 수 : ' + masterCount);
 					});
 					
-					/*EtherFairy.EtherFairyContractController.supportsInterface(0x80ac58cd, (r) => {
+					/*EtherFairy.EtherFairyContract.supportsInterface(0x80ac58cd, (r) => {
 						console.log(r);
 					});*/
 					
@@ -51,7 +51,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '소유권 이전',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.transferOwnership('0xEcCFaA737a5A80bE37e4E70130628E692413cB36', () => {
+									EtherFairy.EtherFairyContract.transferOwnership('0xEcCFaA737a5A80bE37e4E70130628E692413cB36', () => {
 										console.log('Done');
 									});
 								}
@@ -64,7 +64,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '서비스 일시정지',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.pauseService(() => {
+									EtherFairy.EtherFairyContract.pauseService(() => {
 										console.log('Done');
 									});
 								}
@@ -77,7 +77,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '서비스 재개',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.resumeService(() => {
+									EtherFairy.EtherFairyContract.resumeService(() => {
 										console.log('Done');
 									});
 								}
@@ -90,7 +90,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '요정 원본 가격 변경',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.changeFairyOriginPrice(0.01, () => {
+									EtherFairy.EtherFairyContract.changeFairyOriginPrice(0.01, () => {
 										console.log('Done');
 									});
 								}
@@ -103,7 +103,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '임의 레벨업 가격 변경',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.changeCustomLevelUpPrice(0.01, () => {
+									EtherFairy.EtherFairyContract.changeCustomLevelUpPrice(0.01, () => {
 										console.log('Done');
 									});
 								}
@@ -116,7 +116,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '임의로 포인트를 증가시키는데 드는 포인트당 가격 변경',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.changeIncreasePointPricePerPoint(0.01, () => {
+									EtherFairy.EtherFairyContract.changeIncreasePointPricePerPoint(0.01, () => {
 										console.log('Done');
 									});
 								}
@@ -129,7 +129,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : 'tokenMetadataBaseURI 변경',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.changeTokenMetadataBaseURI('test', () => {
+									EtherFairy.EtherFairyContract.changeTokenMetadataBaseURI('test', () => {
 										console.log('Done');
 									});
 								}
@@ -142,7 +142,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '공식 마켓 변경',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.changeOfficialMarket('0x5aa92c9a75e33864ffc49355095b483e607089ae', () => {
+									EtherFairy.EtherFairyContract.changeOfficialMarket('0x5aa92c9a75e33864ffc49355095b483e607089ae', () => {
 										console.log('Done');
 									});
 								}
@@ -155,7 +155,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '특정 소유주 차단',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.blockMaster('0x17a4823037b71aDFE8F5bE1246404B1b14Ae1195', () => {
+									EtherFairy.EtherFairyContract.blockMaster('0x17a4823037b71aDFE8F5bE1246404B1b14Ae1195', () => {
 										console.log('Done');
 									});
 								}
@@ -168,7 +168,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '특정 소유주 차단 해제',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.unblockMaster('0x17a4823037b71aDFE8F5bE1246404B1b14Ae1195', () => {
+									EtherFairy.EtherFairyContract.unblockMaster('0x17a4823037b71aDFE8F5bE1246404B1b14Ae1195', () => {
 										console.log('Done');
 									});
 								}
@@ -181,7 +181,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '특정 요정 차단',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.blockFairy(1, () => {
+									EtherFairy.EtherFairyContract.blockFairy(1, () => {
 										console.log('Done');
 									});
 								}
@@ -194,7 +194,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '특정 요정 차단 해제',
 							on : {
 								tap : () => {
-									EtherFairy.EtherFairyContractController.unblockFairy(1, () => {
+									EtherFairy.EtherFairyContract.unblockFairy(1, () => {
 										console.log('Done');
 									});
 								}
@@ -206,7 +206,7 @@ EtherFairy('Company').ManageService = CLASS({
 		});
 		
 		
-		EtherFairy.FairyMarketContractController.getCompanyAddress((companyAddress) => {
+		EtherFairy.FairyMarketContract.getCompanyAddress((companyAddress) => {
 			
 			EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 				
@@ -217,7 +217,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '마켓 소유권 이전',
 							on : {
 								tap : () => {
-									EtherFairy.FairyMarketContractController.transferOwnership('0xEcCFaA737a5A80bE37e4E70130628E692413cB36', () => {
+									EtherFairy.FairyMarketContract.transferOwnership('0xEcCFaA737a5A80bE37e4E70130628E692413cB36', () => {
 										console.log('Done');
 									});
 								}
@@ -230,7 +230,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '마켓 일시정지',
 							on : {
 								tap : () => {
-									EtherFairy.FairyMarketContractController.pauseMarket(() => {
+									EtherFairy.FairyMarketContract.pauseMarket(() => {
 										console.log('Done');
 									});
 								}
@@ -243,7 +243,7 @@ EtherFairy('Company').ManageService = CLASS({
 							c : '마켓 재개',
 							on : {
 								tap : () => {
-									EtherFairy.FairyMarketContractController.resumeMarket(() => {
+									EtherFairy.FairyMarketContract.resumeMarket(() => {
 										console.log('Done');
 									});
 								}

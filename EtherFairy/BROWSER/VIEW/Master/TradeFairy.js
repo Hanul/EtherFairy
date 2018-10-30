@@ -52,7 +52,7 @@ EtherFairy('Master').TradeFairy = CLASS({
 				},
 				success : () => {
 					
-					EtherFairy.FairyMarketContractController.getSaleCount((saleCount) => {
+					EtherFairy.FairyMarketContract.getSaleCount((saleCount) => {
 						
 						fairyList.empty();
 						
@@ -60,11 +60,7 @@ EtherFairy('Master').TradeFairy = CLASS({
 							
 							let fairyCardWrapper = DIV().appendTo(fairyList);
 							
-							EtherFairy.FairyMarketContractController.getSaleInfo(i, (saleInfo) => {
-								
-								let seller = saleInfo[0];
-								let fairyId = saleInfo[1];
-								let price = saleInfo[2];
+							EtherFairy.FairyMarketContract.getSaleInfo(i, (seller, fairyId, price) => {
 								
 								fairyCardWrapper.append(EtherFairy.FairyCard({
 									style : {
@@ -86,7 +82,7 @@ EtherFairy('Master').TradeFairy = CLASS({
 						fairyList.append(CLEAR_BOTH());
 					});
 					
-					//EtherFairy.FairyMarketContractController.findSaleIdByFairyId(0, console.log);
+					//EtherFairy.FairyMarketContract.findSaleIdByFairyId(0, console.log);
 				}
 			});
 		});

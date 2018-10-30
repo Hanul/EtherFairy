@@ -80,17 +80,17 @@ EtherFairy.FairyOrigin = CLASS({
 													}));
 													
 													// 요정 탄생시키기
-													EtherFairy.EtherFairyContractController.birthFairy(
-														fairyOriginData.id,
-														'0x38b4343b3BE52374D83398159F2FA06ef78bDA7D',
-														fairyName,
-														fairyOriginData.firePointPerLevel,
-														fairyOriginData.waterPointPerLevel,
-														fairyOriginData.windPointPerLevel,
-														fairyOriginData.earthPointPerLevel,
-														fairyOriginData.lightPointPerLevel,
-														fairyOriginData.darkPointPerLevel
-													, {
+													EtherFairy.EtherFairyContract.birthFairy({
+														fairyOriginId : fairyOriginData.id,
+														designer : '0x38b4343b3BE52374D83398159F2FA06ef78bDA7D',
+														name : fairyName,
+														firePointPerLevel : fairyOriginData.firePointPerLevel,
+														waterPointPerLevel : fairyOriginData.waterPointPerLevel,
+														windPointPerLevel : fairyOriginData.windPointPerLevel,
+														earthPointPerLevel : fairyOriginData.earthPointPerLevel,
+														lightPointPerLevel : fairyOriginData.lightPointPerLevel,
+														darkPointPerLevel : fairyOriginData.darkPointPerLevel
+													}, {
 														error : (errorMsg) => {
 															alert(errorMsg);
 															loadingPanel.remove();

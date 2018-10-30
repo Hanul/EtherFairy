@@ -6,8 +6,6 @@ EtherFairy.Fairy = CLASS({
 	
 	init : (inner, self) => {
 		
-		let etherFairyContractRoom = EtherFairy.ROOM('EtherFairyContract');
-		
 		inner.on('paramsChange', (params) => {
 			
 			let fairyId = INTEGER(params.fairyId);
@@ -95,36 +93,36 @@ EtherFairy.Fairy = CLASS({
 				let fairyInfo = {};
 				PARALLEL([
 				(done) => {
-					EtherFairy.EtherFairyContractController.getFairyBasicInfo(fairyId, (basicInfo) => {
-						fairyInfo.fairyOriginId = basicInfo[0];
-						fairyInfo.designer = basicInfo[1];
-						fairyInfo.name = basicInfo[2];
-						fairyInfo.birthTime = basicInfo[3];
-						fairyInfo.appendedLevel = basicInfo[4];
+					EtherFairy.EtherFairyContract.getFairyBasicInfo(fairyId, (fairyOriginId, designer, name, birthTime, appendedLevel) => {
+						fairyInfo.fairyOriginId = fairyOriginId;
+						fairyInfo.designer = designer;
+						fairyInfo.name = name;
+						fairyInfo.birthTime = birthTime;
+						fairyInfo.appendedLevel = appendedLevel;
 						done();
 					});
 				},
 				
 				(done) => {
-					EtherFairy.EtherFairyContractController.getFairyBasicPointsPerLevel(fairyId, (pointsPerLevel) => {
-						fairyInfo.hpPointPerLevel = pointsPerLevel[0];
-						fairyInfo.attackPointPerLevel = pointsPerLevel[1];
-						fairyInfo.defencePointPerLevel = pointsPerLevel[2];
-						fairyInfo.agilityPointPerLevel = pointsPerLevel[3];
-						fairyInfo.dexterityPointPerLevel = pointsPerLevel[4];
+					EtherFairy.EtherFairyContract.getFairyBasicPointsPerLevel(fairyId, (hpPointPerLevel, attackPointPerLevel, defencePointPerLevel, agilityPointPerLevel, dexterityPointPerLevel) => {
+						fairyInfo.hpPointPerLevel = hpPointPerLevel;
+						fairyInfo.attackPointPerLevel = attackPointPerLevel;
+						fairyInfo.defencePointPerLevel = defencePointPerLevel;
+						fairyInfo.agilityPointPerLevel = agilityPointPerLevel;
+						fairyInfo.dexterityPointPerLevel = dexterityPointPerLevel;
 						done();
 					});
 				},
 				
 				(done) => {
 					
-					EtherFairy.EtherFairyContractController.getFairyElementPointsPerLevel(fairyId, (pointsPerLevel) => {
-						fairyInfo.firePointPerLevel = pointsPerLevel[0];
-						fairyInfo.waterPointPerLevel = pointsPerLevel[1];
-						fairyInfo.windPointPerLevel = pointsPerLevel[2];
-						fairyInfo.earthPointPerLevel = pointsPerLevel[3];
-						fairyInfo.lightPointPerLevel = pointsPerLevel[4];
-						fairyInfo.darkPointPerLevel = pointsPerLevel[5];
+					EtherFairy.EtherFairyContract.getFairyElementPointsPerLevel(fairyId, (firePointPerLevel, waterPointPerLevel, windPointPerLevel, earthPointPerLevel, lightPointPerLevel, darkPointPerLevel) => {
+						fairyInfo.firePointPerLevel = firePointPerLevel;
+						fairyInfo.waterPointPerLevel = waterPointPerLevel;
+						fairyInfo.windPointPerLevel = windPointPerLevel;
+						fairyInfo.earthPointPerLevel = earthPointPerLevel;
+						fairyInfo.lightPointPerLevel = lightPointPerLevel;
+						fairyInfo.darkPointPerLevel = darkPointPerLevel;
 						done();
 					});
 				},
@@ -133,20 +131,16 @@ EtherFairy.Fairy = CLASS({
 					namePanel.append(fairyInfo.name);
 				}]);
 				
-				EtherFairy.EtherFairyContractController.tokenURI(fairyId, (tokenURI) => {
+				EtherFairy.EtherFairyContract.tokenURI(fairyId, (tokenURI) => {
 					console.log(tokenURI);
 				});
 				
 				// 판매중인지 확인하고 판매자면 판매 취소가 가능하도록 합니다.
-				EtherFairy.FairyMarketContractController.checkFairyForSale(fairyId, (forSale) => {
+				EtherFairy.FairyMarketContract.checkFairyForSale(fairyId, (forSale) => {
 					if (forSale === true) {
 						
-						EtherFairy.FairyMarketContractController.findSaleIdByFairyId(fairyId, (saleId) => {
-							EtherFairy.FairyMarketContractController.getSaleInfo(saleId, (saleInfo) => {
-								
-								let seller = saleInfo[0];
-								let fairyId = saleInfo[1];
-								let price = saleInfo[2];
+						EtherFairy.FairyMarketContract.findSaleIdByFairyId(fairyId, (saleId) => {
+							EtherFairy.FairyMarketContract.getSaleInfo(saleId, (seller, fairyId, price) => {
 								
 								EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 									
@@ -162,7 +156,7 @@ EtherFairy.Fairy = CLASS({
 															msg : MSG('REALLY_CANCEL_PROMPT')
 														}, () => {
 															
-															EtherFairy.FairyMarketContractController.cancelSale(fairyId, () => {
+															EtherFairy.FairyMarketContract.cancelSale(fairyId, () => {
 																EtherFairy.REFRESH('fairy/' + fairyId);
 															});
 														});
@@ -184,7 +178,10 @@ EtherFairy.Fairy = CLASS({
 															msg : MSG('REALLY_BUY_TRADE_FAIRY_PROMPT')
 														}, () => {
 															
-															EtherFairy.FairyMarketContractController.buy(fairyId, price, () => {
+															EtherFairy.FairyMarketContract.buy({
+																fairyId : fairyId,
+																ether : price
+															}, () => {
 																EtherFairy.REFRESH('fairy/' + fairyId);
 															});
 														});
@@ -200,7 +197,7 @@ EtherFairy.Fairy = CLASS({
 				});
 				
 				// 만약 소유주면 소유주 메뉴를 추가합니다.
-				EtherFairy.EtherFairyContractController.ownerOf(fairyId, (ownerAddress) => {
+				EtherFairy.EtherFairyContract.ownerOf(fairyId, (ownerAddress) => {
 					
 					EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 						
@@ -224,7 +221,10 @@ EtherFairy.Fairy = CLASS({
 										
 										Yogurt.Prompt(MSG('CHANGE_NAME_PROMPT'), (newName) => {
 											
-											EtherFairy.EtherFairyContractController.changeFairyName(fairyId, newName, () => {
+											EtherFairy.EtherFairyContract.changeFairyName({
+												fairyId : fairyId,
+												name : newName
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										});
@@ -256,7 +256,7 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.levelUpFairy(fairyId, () => {
+											EtherFairy.EtherFairyContract.levelUpFairy(fairyId, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -297,7 +297,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseHPPointPerLevel(fairyId, fairyInfo.hpPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseHPPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.hpPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -338,7 +341,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseAttackPointPerLevel(fairyId, fairyInfo.attackPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseAttackPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.attackPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -379,7 +385,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseDefencePointPerLevel(fairyId, fairyInfo.defencePointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseDefencePointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.defencePointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -420,7 +429,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseAgilityPointPerLevel(fairyId, fairyInfo.agilityPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseAgilityPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.agilityPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -461,7 +473,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseDexterityPointPerLevel(fairyId, fairyInfo.dexterityPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseDexterityPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.dexterityPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -502,7 +517,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseFirePointPerLevel(fairyId, fairyInfo.firePointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseFirePointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.firePointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -543,7 +561,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseWaterPointPerLevel(fairyId, fairyInfo.waterPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseWaterPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.waterPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -584,7 +605,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseWindPointPerLevel(fairyId, fairyInfo.windPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseWindPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.windPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -625,7 +649,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseEarthPointPerLevel(fairyId, fairyInfo.earthPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseEarthPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.earthPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -666,7 +693,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseLightPointPerLevel(fairyId, fairyInfo.lightPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseLightPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.lightPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -706,7 +736,10 @@ EtherFairy.Fairy = CLASS({
 									title : '[0.01 Ether]',
 									on : {
 										tap : () => {
-											EtherFairy.EtherFairyContractController.increaseDarkPointPerLevel(fairyId, fairyInfo.darkPointPerLevel, () => {
+											EtherFairy.EtherFairyContract.increaseDarkPointPerLevel({
+												fairyId : fairyId,
+												ether : 0.01 * fairyInfo.darkPointPerLevel
+											}, () => {
 												EtherFairy.REFRESH('fairy/' + fairyId);
 											});
 										}
@@ -841,10 +874,6 @@ EtherFairy.Fairy = CLASS({
 					});
 				});
 			});
-		});
-		
-		inner.on('remove', () => {
-			etherFairyContractRoom.exit();
 		});
 	}
 });

@@ -22,8 +22,6 @@ EtherFairy.FairyCard = CLASS({
 		
 		let fairyId = params.fairyId;
 		
-		let etherFairyContractRoom = EtherFairy.ROOM('EtherFairyContract');
-		
 		self.append(UUI.V_CENTER({
 			style : {
 				position : 'absolute',
@@ -38,7 +36,44 @@ EtherFairy.FairyCard = CLASS({
 			})
 		}));
 		
-		let addFairyInfoToCard = (fairyInfo) => {
+		let fairyInfo = {};
+		PARALLEL([
+		(done) => {
+			EtherFairy.EtherFairyContract.getFairyBasicInfo(fairyId, (fairyOriginId, designer, name, birthTime, appendedLevel) => {
+				fairyInfo.fairyOriginId = fairyOriginId;
+				fairyInfo.designer = designer;
+				fairyInfo.name = name;
+				fairyInfo.birthTime = birthTime;
+				fairyInfo.appendedLevel = appendedLevel;
+				done();
+			});
+		},
+		
+		(done) => {
+			EtherFairy.EtherFairyContract.getFairyBasicPointsPerLevel(fairyId, (hpPointPerLevel, attackPointPerLevel, defencePointPerLevel, agilityPointPerLevel, dexterityPointPerLevel) => {
+				fairyInfo.hpPointPerLevel = hpPointPerLevel;
+				fairyInfo.attackPointPerLevel = attackPointPerLevel;
+				fairyInfo.defencePointPerLevel = defencePointPerLevel;
+				fairyInfo.agilityPointPerLevel = agilityPointPerLevel;
+				fairyInfo.dexterityPointPerLevel = dexterityPointPerLevel;
+				done();
+			});
+		},
+		
+		(done) => {
+			
+			EtherFairy.EtherFairyContract.getFairyElementPointsPerLevel(fairyId, (firePointPerLevel, waterPointPerLevel, windPointPerLevel, earthPointPerLevel, lightPointPerLevel, darkPointPerLevel) => {
+				fairyInfo.firePointPerLevel = firePointPerLevel;
+				fairyInfo.waterPointPerLevel = waterPointPerLevel;
+				fairyInfo.windPointPerLevel = windPointPerLevel;
+				fairyInfo.earthPointPerLevel = earthPointPerLevel;
+				fairyInfo.lightPointPerLevel = lightPointPerLevel;
+				fairyInfo.darkPointPerLevel = darkPointPerLevel;
+				done();
+			});
+		},
+		
+		() => {
 			
 			let exp = EtherFairy.CalculateManager.calculateEXP(fairyInfo.birthTime);
 			let level = EtherFairy.CalculateManager.calculateLevel(exp) + fairyInfo.appendedLevel;
@@ -377,109 +412,6 @@ EtherFairy.FairyCard = CLASS({
 					});
 				};
 			}]);
-		};
-		
-		// 지갑을 사용할 때는 스마트 계약을 사용합니다.
-		if (EtherFairy.WalletManager.checkIsEnable() === true) {
-			
-			let fairyInfo = {};
-			PARALLEL([
-			(done) => {
-				EtherFairy.EtherFairyContractController.getFairyBasicInfo(fairyId, (basicInfo) => {
-					fairyInfo.fairyOriginId = basicInfo[0];
-					fairyInfo.designer = basicInfo[1];
-					fairyInfo.name = basicInfo[2];
-					fairyInfo.birthTime = basicInfo[3];
-					fairyInfo.appendedLevel = basicInfo[4];
-					done();
-				});
-			},
-			
-			(done) => {
-				EtherFairy.EtherFairyContractController.getFairyBasicPointsPerLevel(fairyId, (pointsPerLevel) => {
-					fairyInfo.hpPointPerLevel = pointsPerLevel[0];
-					fairyInfo.attackPointPerLevel = pointsPerLevel[1];
-					fairyInfo.defencePointPerLevel = pointsPerLevel[2];
-					fairyInfo.agilityPointPerLevel = pointsPerLevel[3];
-					fairyInfo.dexterityPointPerLevel = pointsPerLevel[4];
-					done();
-				});
-			},
-			
-			(done) => {
-				
-				EtherFairy.EtherFairyContractController.getFairyElementPointsPerLevel(fairyId, (pointsPerLevel) => {
-					fairyInfo.firePointPerLevel = pointsPerLevel[0];
-					fairyInfo.waterPointPerLevel = pointsPerLevel[1];
-					fairyInfo.windPointPerLevel = pointsPerLevel[2];
-					fairyInfo.earthPointPerLevel = pointsPerLevel[3];
-					fairyInfo.lightPointPerLevel = pointsPerLevel[4];
-					fairyInfo.darkPointPerLevel = pointsPerLevel[5];
-					done();
-				});
-			},
-			
-			() => {
-				addFairyInfoToCard(fairyInfo);
-			}]);
-		}
-		
-		// 지갑을 사용할 수 없을때는 서버에서 가져옵니다.
-		else {
-			
-			let fairyInfo = {};
-			PARALLEL([
-			(done) => {
-				etherFairyContractRoom.send({
-					methodName : 'getFairyBasicInfo',
-					data : fairyId
-				}, (basicInfo) => {
-					fairyInfo.fairyOriginId = basicInfo[0];
-					fairyInfo.designer = basicInfo[1];
-					fairyInfo.name = basicInfo[2];
-					fairyInfo.birthTime = basicInfo[3];
-					fairyInfo.appendedLevel = basicInfo[4];
-					done();
-				});
-			},
-			
-			(done) => {
-				etherFairyContractRoom.send({
-					methodName : 'getFairyBasicPointsPerLevel',
-					data : fairyId
-				}, (pointsPerLevel) => {
-					fairyInfo.hpPointPerLevel = pointsPerLevel[0];
-					fairyInfo.attackPointPerLevel = pointsPerLevel[1];
-					fairyInfo.defencePointPerLevel = pointsPerLevel[2];
-					fairyInfo.agilityPointPerLevel = pointsPerLevel[3];
-					fairyInfo.dexterityPointPerLevel = pointsPerLevel[4];
-					done();
-				});
-			},
-			
-			(done) => {
-				
-				etherFairyContractRoom.send({
-					methodName : 'getFairyElementPointsPerLevel',
-					data : fairyId
-				}, (pointsPerLevel) => {
-					fairyInfo.firePointPerLevel = pointsPerLevel[0];
-					fairyInfo.waterPointPerLevel = pointsPerLevel[1];
-					fairyInfo.windPointPerLevel = pointsPerLevel[2];
-					fairyInfo.earthPointPerLevel = pointsPerLevel[3];
-					fairyInfo.lightPointPerLevel = pointsPerLevel[4];
-					fairyInfo.darkPointPerLevel = pointsPerLevel[5];
-					done();
-				});
-			},
-			
-			() => {
-				addFairyInfoToCard(fairyInfo);
-			}]);
-		}
-		
-		self.on('remove', () => {
-			etherFairyContractRoom.exit();
-		});
+		}]);
 	}
 });

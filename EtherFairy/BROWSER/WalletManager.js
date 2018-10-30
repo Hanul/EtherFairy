@@ -8,10 +8,6 @@ EtherFairy.WalletManager = OBJECT({
 		if (typeof global.web3 !== 'undefined') {
 			global.web3 = new Web3(global.web3.currentProvider);
 			isEnable = true;
-			
-			// 계약 생성
-			EtherFairy.EtherFairyContractController.setContract(web3.eth.contract(EtherFairy.EtherFairyContractABI).at(EtherFairy.EtherFairyContractAddress));
-			EtherFairy.FairyMarketContractController.setContract(web3.eth.contract(EtherFairy.FairyMarketContractABI).at(EtherFairy.FairyMarketContractAddress));
 		}
 		
 		// 지갑을 사용할 수 있는지 확인

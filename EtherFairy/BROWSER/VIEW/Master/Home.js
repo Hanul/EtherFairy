@@ -148,7 +148,7 @@ EtherFairy('Master').Home = CLASS({
 								})]
 							}));
 							
-							EtherFairy.EtherFairyContractController.balanceOf(walletAddress, (fairyCount) => {
+							EtherFairy.EtherFairyContract.balanceOf(walletAddress, (fairyCount) => {
 								
 								fairyCountPanel.append(MSG('OWN_FAIRY_COUNT') + ' : ' + fairyCount);
 								
@@ -158,7 +158,10 @@ EtherFairy('Master').Home = CLASS({
 									
 									let fairyCardWrapper = DIV().appendTo(fairyList);
 									
-									EtherFairy.EtherFairyContractController.getFairyId(walletAddress, i, (fairyId) => {
+									EtherFairy.EtherFairyContract.masterToFairyIds({
+										walletAddress : walletAddress,
+										i : i
+									}, (fairyId) => {
 										
 										fairyCardWrapper.append(EtherFairy.FairyCard({
 											style : {

@@ -37,7 +37,7 @@ EtherFairy('Master').StartTradeFairy = CLASS({
 				},
 				success : () => {
 					
-					EtherFairy.EtherFairyContractController.balanceOf(walletAddress, (fairyCount) => {
+					EtherFairy.EtherFairyContract.balanceOf(walletAddress, (fairyCount) => {
 						
 						fairyList.empty();
 						
@@ -45,7 +45,10 @@ EtherFairy('Master').StartTradeFairy = CLASS({
 								
 							let fairyCardWrapper = DIV().appendTo(fairyList);
 							
-							EtherFairy.EtherFairyContractController.getFairyId(walletAddress, i, (fairyId) => {
+							EtherFairy.EtherFairyContract.getFairyId({
+								walletAddress : walletAddress,
+								i : i
+							}, (fairyId) => {
 								
 								fairyCardWrapper.append(EtherFairy.FairyCard({
 									style : {
@@ -61,7 +64,10 @@ EtherFairy('Master').StartTradeFairy = CLASS({
 											// 가격 입력
 											Yogurt.Prompt(MSG('ENTER_FAIRY_PRICE') + ' (Ether)', (price) => {
 												
-												EtherFairy.FairyMarketContractController.startSale(fairyId, REAL(price), () => {
+												EtherFairy.FairyMarketContract.startSale({
+													fairyId : fairyId,
+													ether : REAL(price)
+												}, () => {
 													EtherFairy.GO('master/tradefairy');
 												});
 											});

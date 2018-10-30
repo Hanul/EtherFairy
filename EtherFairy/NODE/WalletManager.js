@@ -9,8 +9,5 @@ EtherFairy.WalletManager = OBJECT({
 		} else {
 			global.web3 = new Web3(new Web3.providers.WebsocketProvider(CONFIG.isDevMode !== true ? 'wss://mainnet.infura.io/ws' : 'wss://kovan.infura.io/ws'));
 		}
-		
-		// 계약 생성
-		EtherFairy.EtherFairyContractController.setContract(new web3.eth.Contract(EtherFairy.EtherFairyContractABI, EtherFairy.EtherFairyContractAddress));
 	}
 });
