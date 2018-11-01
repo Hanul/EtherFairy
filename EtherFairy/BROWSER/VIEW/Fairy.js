@@ -13,6 +13,7 @@ EtherFairy.Fairy = CLASS({
 			let namePanel;
 			let menu;
 			let battleHistory;
+			let bottom;
 			EtherFairy.Layout.setContent(DIV({
 				style : {
 					padding : '50px 0'
@@ -72,7 +73,7 @@ EtherFairy.Fairy = CLASS({
 						margin : 'auto',
 						width : 882
 					},
-					c : DIV({
+					c : bottom = DIV({
 						style : {
 							marginLeft : 2.4,
 							width : 876,
@@ -771,121 +772,316 @@ EtherFairy.Fairy = CLASS({
 				createInfoPanel();
 			}
 			
-			// 전투 기록을 가져옵니다.
-			EtherFairy.BattleResultModel.find({
-				filter : {
-					$or : [{
-						fairyId : fairyId
-					}, {
-						enemyId : fairyId
-					}]
-				},
-				count : 10
-			}, (battleResults) => {
+			let start = 0;
+			let count = 10;
+			
+			let loadBattleResult = () => {
 				
-				EACH(battleResults, (battleResult) => {
+				// 전투 기록을 가져옵니다.
+				EtherFairy.BattleResultModel.find({
+					filter : {
+						$or : [{
+							fairyId : fairyId
+						}, {
+							enemyId : fairyId
+						}]
+					},
+					start : start,
+					count : count
+				}, (battleResults) => {
 					
-					let isWin = (battleResult.fairyId === fairyId && battleResult.isWin === true) || (battleResult.fairyId !== fairyId && battleResult.isWin !== true) ;
+					battleHistory.empty();
 					
-					let battleResultPanel;
-					let fairyPanel;
-					let opponentPanel;
-					battleHistory.append(battleResultPanel = DIV({
-						style : {
-							marginLeft : 2.4,
-							color : '#000',
-							width : 876,
-							height : 211,
-							backgroundImage : EtherFairy.R(isWin === true ? 'fairyinfo/winpanel.png' : 'fairyinfo/losepanel.png')
-						},
-						c : [fairyPanel = DIV({
+					EACH(battleResults, (battleResult) => {
+						
+						let isWin = (battleResult.fairyId === fairyId && battleResult.isWin === true) || (battleResult.fairyId !== fairyId && battleResult.isWin !== true) ;
+						let ratingChange = battleResult.fairyId === fairyId ? battleResult.fairyRatingChange : battleResult.enemyRatingChange;
+						
+						let battleResultPanel;
+						let fairyPanel;
+						let opponentPanel;
+						battleHistory.append(battleResultPanel = DIV({
 							style : {
-								width : '40%',
-								flt : 'left'
-							}
-						}), UUI.V_CENTER({
-							style : {
-								position : 'absolute',
-								left : '50%',
-								marginLeft : -58,
-								width : 116,
-								textAlign : 'center'
+								marginLeft : 2.4,
+								color : '#000',
+								width : 876,
+								height : 211,
+								backgroundImage : EtherFairy.R(isWin === true ? 'fairyinfo/winpanel.png' : 'fairyinfo/losepanel.png')
 							},
-							c : [IMG({
-								src : EtherFairy.R(isWin === true ? 'fairyinfo/win.png' : 'fairyinfo/lose.png')
-							}), IMG({
-								src : EtherFairy.R('fairyinfo/sword.png'),
-								transform : battleResult.fairyId === fairyId ? undefined : 'scaleX(-1)'
-							}), DIV({
-								c : battleResult.fairyId === fairyId ? battleResult.fairyRatingChange : battleResult.enemyRatingChange
-							})]
-						}), opponentPanel = DIV({
-							style : {
-								width : '40%',
-								flt : 'right'
-							}
-						}), CLEAR_BOTH()]
-					}));
-					
-					// 현재 요정 정보
-					EtherFairy.FairyModel.get(fairyId, (fairyData) => {
-						fairyPanel.append(DIV({
-							c : isWin === true ? '승리!' : '패배!'
-						}));
-						fairyPanel.append(DIV({
-							c : ['이름: ', A({
-								c : fairyData.name,
-								on : {
-									tap : () => {
-										EtherFairy.GO('fairy/' + fairyData.id);
-									}
+							c : [fairyPanel = DIV({
+								style : {
+									width : '40%',
+									flt : 'left'
 								}
-							})]
-						}));
-						fairyPanel.append(DIV({
-							c : '점수: ' + fairyData.rating
-						}));
-						fairyPanel.append(DIV({
-							c : '레벨: ' + (battleResult.fairyId === fairyId ? battleResult.fairyLevel : battleResult.enemyLevel)
-						}));
-						fairyPanel.append(DIV({
-							c : 'HP: ' + (battleResult.fairyId === fairyId ? battleResult.fairyHP : battleResult.enemyHP)
-						}));
-						fairyPanel.append(DIV({
-							c : '데미지: ' + INTEGER(battleResult.fairyId === fairyId ? battleResult.fairyDamage : battleResult.enemyDamage)
-						}));
-					});
-					
-					// 상대 정보
-					EtherFairy.FairyModel.get(battleResult.fairyId !== fairyId ? battleResult.fairyId : battleResult.enemyId, (opponentData) => {
-						opponentPanel.append(DIV({
-							c : isWin !== true ? '승리!' : '패배!'
-						}));
-						opponentPanel.append(DIV({
-							c : ['이름: ', A({
-								c : opponentData.name,
-								on : {
-									tap : () => {
-										EtherFairy.GO('fairy/' + opponentData.id);
-									}
+							}), UUI.V_CENTER({
+								style : {
+									position : 'absolute',
+									left : '50%',
+									marginLeft : -58,
+									width : 116,
+									height : 211,
+									textAlign : 'center'
+								},
+								c : [IMG({
+									src : EtherFairy.R(isWin === true ? 'fairyinfo/win.png' : 'fairyinfo/lose.png')
+								}), IMG({
+									style : {
+										marginTop : 20
+									},
+									src : EtherFairy.R('fairyinfo/sword.png'),
+									transform : battleResult.fairyId === fairyId ? undefined : 'scaleX(-1)'
+								}), DIV({
+									style : {
+										marginTop : 20,
+										color : ratingChange >= 0 ? '#00FFFF' : '#FF0000',
+										textShadow : EtherFairy.TextBorderShadow('#160b00')
+									},
+									c : ratingChange >= 0 ? '+' + ratingChange : ratingChange
+								})]
+							}), opponentPanel = DIV({
+								style : {
+									width : '40%',
+									flt : 'right'
 								}
-							})]
+							}), CLEAR_BOTH()]
 						}));
-						opponentPanel.append(DIV({
-							c : '점수: ' + opponentData.rating
-						}));
-						opponentPanel.append(DIV({
-							c : '레벨: ' + (battleResult.fairyId !== fairyId ? battleResult.fairyLevel : battleResult.enemyLevel)
-						}));
-						opponentPanel.append(DIV({
-							c : 'HP: ' + (battleResult.fairyId !== fairyId ? battleResult.fairyHP : battleResult.enemyHP)
-						}));
-						opponentPanel.append(DIV({
-							c : '데미지: ' + INTEGER(battleResult.fairyId !== fairyId ? battleResult.fairyDamage : battleResult.enemyDamage)
-						}));
+						
+						// 현재 요정 정보
+						EtherFairy.FairyModel.get(fairyId, (fairyData) => {
+							
+							fairyPanel.append(UUI.V_CENTER({
+								style : {
+									marginLeft : 120,
+									flt : 'left',
+									width : 280,
+									height : 211,
+									position : 'relative',
+									fontWeight : 'bold',
+									textShadow : EtherFairy.TextBorderShadow('#160b00')
+								},
+								c : [DIV({
+									style : {
+										flt : 'left'
+									},
+									c : EtherFairy.RankMark(fairyData.rating)
+								}), DIV({
+									style : {
+										marginTop : 5,
+										marginLeft : 20,
+										flt : 'left',
+										color : '#fff5cb'
+									},
+									c : [A({
+										style : {
+											fontSize : 25,
+											color : '#fff'
+										},
+										c : fairyData.name,
+										on : {
+											tap : () => {
+												EtherFairy.GO('fairy/' + fairyData.id);
+											}
+										}
+									}), DIV({
+										c : fairyData.rating
+									})]
+								}), CLEAR_BOTH(), DIV({
+									style : {
+										marginTop : 15,
+										marginLeft : 30,
+										width : 80,
+										flt : 'left',
+										color : '#ffde5c'
+									},
+									c : 'Lv.'
+								}), DIV({
+									style : {
+										marginTop : 15,
+										flt : 'left',
+										color : '#fff5cb'
+									},
+									c : (battleResult.fairyId === fairyId ? battleResult.fairyLevel : battleResult.enemyLevel)
+								}), CLEAR_BOTH(), DIV({
+									style : {
+										marginTop : 10,
+										marginLeft : 30,
+										width : 80,
+										flt : 'left',
+										color : '#ffde5c'
+									},
+									c : 'HP'
+								}), DIV({
+									style : {
+										marginTop : 10,
+										flt : 'left',
+										color : '#fff5cb'
+									},
+									c : (battleResult.fairyId === fairyId ? battleResult.fairyHP : battleResult.enemyHP)
+								}), CLEAR_BOTH(), DIV({
+									style : {
+										marginTop : 10,
+										marginLeft : 30,
+										width : 80,
+										flt : 'left',
+										color : '#ffde5c'
+									},
+									c : MSG('DAMAGE')
+								}), DIV({
+									style : {
+										marginTop : 10,
+										flt : 'left',
+										color : '#fff5cb'
+									},
+									c : INTEGER(battleResult.fairyId === fairyId ? battleResult.fairyDamage : battleResult.enemyDamage)
+								})]
+							}));;
+							
+							// 상대 정보
+							EtherFairy.FairyModel.get(battleResult.fairyId !== fairyId ? battleResult.fairyId : battleResult.enemyId, (opponentData) => {
+								
+								opponentPanel.append(UUI.V_CENTER({
+									style : {
+										flt : 'right',
+										width : 280,
+										height : 211,
+										position : 'relative',
+										fontWeight : 'bold',
+										textShadow : EtherFairy.TextBorderShadow('#160b00')
+									},
+									c : [DIV({
+										style : {
+											flt : 'left'
+										},
+										c : EtherFairy.RankMark(fairyData.rating)
+									}), DIV({
+										style : {
+											marginTop : 5,
+											marginLeft : 20,
+											flt : 'left',
+											color : '#fff5cb'
+										},
+										c : [A({
+											style : {
+												fontSize : 25,
+												color : '#fff'
+											},
+											c : opponentData.name,
+											on : {
+												tap : () => {
+													EtherFairy.GO('fairy/' + opponentData.id);
+												}
+											}
+										}), DIV({
+											c : opponentData.rating
+										})]
+									}), CLEAR_BOTH(), DIV({
+										style : {
+											marginTop : 15,
+											marginLeft : 30,
+											width : 80,
+											flt : 'left',
+											color : '#ffde5c'
+										},
+										c : 'Lv.'
+									}), DIV({
+										style : {
+											marginTop : 15,
+											flt : 'left',
+											color : '#fff5cb'
+										},
+										c : (battleResult.fairyId !== fairyId ? battleResult.fairyLevel : battleResult.enemyLevel)
+									}), CLEAR_BOTH(), DIV({
+										style : {
+											marginTop : 10,
+											marginLeft : 30,
+											width : 80,
+											flt : 'left',
+											color : '#ffde5c'
+										},
+										c : 'HP'
+									}), DIV({
+										style : {
+											marginTop : 10,
+											flt : 'left',
+											color : '#fff5cb'
+										},
+										c : (battleResult.fairyId !== fairyId ? battleResult.fairyHP : battleResult.enemyHP)
+									}), CLEAR_BOTH(), DIV({
+										style : {
+											marginTop : 10,
+											marginLeft : 30,
+											width : 80,
+											flt : 'left',
+											color : '#ffde5c'
+										},
+										c : MSG('DAMAGE')
+									}), DIV({
+										style : {
+											marginTop : 10,
+											flt : 'left',
+											color : '#fff5cb'
+										},
+										c : INTEGER(battleResult.fairyId !== fairyId ? battleResult.fairyDamage : battleResult.enemyDamage)
+									}), CLEAR_BOTH()]
+								}));
+								
+								opponentPanel.append(CLEAR_BOTH());
+							});
+						});
 					});
 				});
-			});
+			};
+			
+			loadBattleResult();
+			
+			bottom.append(UUI.BUTTON_H({
+				style : {
+					marginTop : 10,
+					marginLeft : 40,
+					flt : 'left',
+					textShadow : EtherFairy.TextBorderShadow('#160b00')
+				},
+				icon : IMG({
+					src : EtherFairy.R('fairyinfo/arrow.png')
+				}),
+				spacing : 10,
+				title : MSG('BEFORE_BUTTON'),
+				on : {
+					tap : () => {
+						start -= count;
+						if (start < 0) {
+							start = 0;
+						}
+						loadBattleResult();
+					}
+				}
+			}));
+			
+			bottom.append(UUI.BUTTON_H({
+				style : {
+					marginTop : 10,
+					marginRight : 40,
+					flt : 'right',
+					textShadow : EtherFairy.TextBorderShadow('#160b00')
+				},
+				icon : IMG({
+					style : {
+						transform : 'scaleX(-1)'
+					},
+					src : EtherFairy.R('fairyinfo/arrow.png')
+				}),
+				isIconRight : true,
+				spacing : 10,
+				title : MSG('FORWARD_BUTTON'),
+				on : {
+					tap : () => {
+						start += count;
+						loadBattleResult();
+					}
+				}
+			}));
+			
+			bottom.append(CLEAR_BOTH());
 		});
 	}
 });

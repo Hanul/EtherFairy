@@ -141,7 +141,7 @@ EtherFairy.Home = CLASS({
 				DIV({
 					style : {
 						onDisplayResize : (width, height) => {
-							if (width < 820) {
+							if (width < 1550) {
 								return {
 									marginTop : 30
 								};
@@ -223,28 +223,38 @@ EtherFairy.Home = CLASS({
 										};
 									} else if (width < 1550) {
 										return {
-											marginTop : 40,
+											marginTop : 0,
 											fontSize : 26
 										};
 									} else {
 										return {
-											marginTop : 80,
+											marginTop : 60,
 											fontSize : 30
 										};
 									}
 								}
 							},
-							c : 'Ether Fairy란 무엇입니까?'
+							c : MSG('MAIN_TITLE_1')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : 'Ether Fairy는 이더리움을 기반으로 한 요정 거래 플랫폼입니다. 당신은 요정의 소유주가 되어 요정을 성장시키고, 당신의 요정은 다른 소유주의 요정들과 전투를 벌이게 됩니다.'
+							c : MSG('MAIN_DESCRIPTION_1')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : '최고의 요정을 육성시켜 Ether Fairy 세계관에서 가장 영향력 있는 소유주가 되시기 바랍니다!'
+							c : MSG('MAIN_DESCRIPTION_2')
+						}), Yogurt.Button({
+							style : {
+								margin : 'auto',
+								marginTop : 30,
+								fontSize : 20,
+								width : 200
+							},
+							title : MSG('MAIN_BUTTON_1'),
+							target : '_blank',
+							href : 'https://medium.com/@youngjaesim/'
 						})]
 					}), CLEAR_BOTH()]
 				}),
@@ -252,7 +262,7 @@ EtherFairy.Home = CLASS({
 				DIV({
 					style : {
 						onDisplayResize : (width, height) => {
-							if (width < 820) {
+							if (width < 1550) {
 								return {
 									marginTop : 30
 								};
@@ -311,28 +321,37 @@ EtherFairy.Home = CLASS({
 										};
 									} else if (width < 1550) {
 										return {
-											marginTop : 40,
+											marginTop : 0,
 											fontSize : 26
 										};
 									} else {
 										return {
-											marginTop : 80,
+											marginTop : 60,
 											fontSize : 30
 										};
 									}
 								}
 							},
-							c : 'Ether Fairy란 무엇입니까?'
+							c : MSG('MAIN_TITLE_2')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : 'Ether Fairy는 이더리움을 기반으로 한 요정 거래 플랫폼입니다. 당신은 요정의 소유주가 되어 요정을 성장시키고, 당신의 요정은 다른 소유주의 요정들과 전투를 벌이게 됩니다.'
+							c : MSG('MAIN_DESCRIPTION_3')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : '최고의 요정을 육성시켜 Ether Fairy 세계관에서 가장 영향력 있는 소유주가 되시기 바랍니다!'
+							c : MSG('MAIN_DESCRIPTION_4')
+						}), Yogurt.Button({
+							style : {
+								margin : 'auto',
+								marginTop : 30,
+								fontSize : 20,
+								width : 200
+							},
+							title : MSG('MAIN_BUTTON_2'),
+							href : 'mailto:contact@btncafe.com'
 						})]
 					}), IMG({
 						style : {
@@ -363,131 +382,6 @@ EtherFairy.Home = CLASS({
 						},
 						src : EtherFairy.R('fairysample.png')
 					}), CLEAR_BOTH()]
-				}),
-				
-				DIV({
-					style : {
-						onDisplayResize : (width, height) => {
-							if (width < 820) {
-								return {
-									marginTop : 30
-								};
-							} else {
-								return {
-									marginTop : 0
-								};
-							}
-						}
-					},
-					c : [IMG({
-						style : {
-							width : 300,
-							flt : 'left',
-							onDisplayResize : (width, height) => {
-								if (width < 620) {
-									return {
-										display : 'none'
-									};
-								} else if (width < 820) {
-									return {
-										display : 'block',
-										width : 150
-									};
-								} else if (width < 1550) {
-									return {
-										display : 'block',
-										width : 200
-									};
-								} else {
-									return {
-										display : 'block',
-										width : 300
-									};
-								}
-							}
-						},
-						src : EtherFairy.R('fairysample.png')
-					}), DIV({
-						style : {
-							width : 600,
-							flt : 'right',
-							fontSize : 20,
-							onDisplayResize : (width, height) => {
-								if (width < 620) {
-									return {
-										fontSize : 14,
-										width : 300
-									};
-								} else if (width < 820) {
-									return {
-										fontSize : 16,
-										width : 380
-									};
-								} else if (width < 1550) {
-									return {
-										fontSize : 18,
-										width : 460
-									};
-								} else {
-									return {
-										fontSize : 20,
-										width : 600
-									};
-								}
-							}
-						},
-						c : [H2({
-							style : {
-								marginTop : 80,
-								fontSize : 30,
-								fontWeight : 'bold',
-								color : '#fff5cb',
-								onDisplayResize : (width, height) => {
-									if (width < 620) {
-										return {
-											marginTop : 0,
-											fontSize : 18
-										};
-									} else if (width < 820) {
-										return {
-											marginTop : 0,
-											fontSize : 22
-										};
-									} else if (width < 1550) {
-										return {
-											marginTop : 40,
-											fontSize : 26
-										};
-									} else {
-										return {
-											marginTop : 80,
-											fontSize : 30
-										};
-									}
-								}
-							},
-							c : 'Ether Fairy란 무엇입니까?'
-						}), P({
-							style : {
-								marginTop : 20
-							},
-							c : 'Ether Fairy는 이더리움을 기반으로 한 요정 거래 플랫폼입니다. 당신은 요정의 소유주가 되어 요정을 성장시키고, 당신의 요정은 다른 소유주의 요정들과 전투를 벌이게 됩니다.'
-						}), P({
-							style : {
-								marginTop : 20
-							},
-							c : '최고의 요정을 육성시켜 Ether Fairy 세계관에서 가장 영향력 있는 소유주가 되시기 바랍니다!'
-						})]
-					}), CLEAR_BOTH()]
-				}),
-				
-				P({
-					style : {
-						marginTop : 40,
-						textAlign : 'center',
-						color : '#fff5cb'
-					},
-					c : '최고의 순간이 당신 앞에 있습니다!\n지금 바로 시작해보세요!'
 				}),
 				
 				Yogurt.Button({
