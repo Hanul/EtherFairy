@@ -40,12 +40,32 @@ EtherFairy.MasterModel = OBJECT({
 			
 			profileImageFileId : {
 				id : true
+			},
+			
+			fairyCount : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			totalFairyLevel : {
+				notEmpty : true,
+				integer : true
+			},
+			
+			totalFairyRating : {
+				notEmpty : true,
+				integer : true
 			}
 		};
 		
 		return {
 			name : 'Master',
 			isNotUsingObjectId : true,
+			initData : {
+				fairyCount : 0,
+				totalFairyLevel : 0,
+				totalFairyRating : 0
+			},
 			methodConfig : {
 				create : {
 					valid : VALID(validDataSet)

@@ -12,12 +12,12 @@ EtherFairy.FairyOrigin = CLASS({
 			
 			EtherFairy.FairyOriginModel.get(fairyOriginId, (fairyOriginData) => {
 				
-				console.log(fairyOriginData);
-				
 				let masterMenu;
 				EtherFairy.Layout.setContent(DIV({
 					style : {
-						padding : 10
+						width : 800,
+						margin : 'auto',
+						padding : '30px 0'
 					},
 					c : [
 					
@@ -31,25 +31,22 @@ EtherFairy.FairyOrigin = CLASS({
 						c : fairyOriginData.name
 					}),
 					
-					IMG({
+					EtherFairy.FairyOriginCard({
 						style : {
-							width : 250
+							flt : 'left'
 						},
-						src : EtherFairy.RF(fairyOriginData.imageFileId)
+						fairyOriginData : fairyOriginData
 					}),
 					
-					P({
-						c : [
-						fairyOriginData.firePointPerLevel,
-						fairyOriginData.waterPointPerLevel,
-						fairyOriginData.windPointPerLevel,
-						fairyOriginData.earthPointPerLevel,
-						fairyOriginData.lightPointPerLevel,
-						fairyOriginData.darkPointPerLevel
-						]
+					masterMenu = DIV({
+						style : {
+							width : 420,
+							marginLeft : 20,
+							flt : 'left'
+						}
 					}),
 					
-					masterMenu = DIV()]
+					CLEAR_BOTH()]
 				}));
 				
 				// 소유주가 접속해 있으면 소유주 메뉴 추가

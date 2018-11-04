@@ -101,6 +101,19 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Master.Ranking
 			});
 			
+			// 소유주 정보
+			EtherFairy.MATCH_VIEW({
+				uri : 'master/{masterAddress}',
+				excludeURI : [
+					'master/join',
+					'master/buyfairy',
+					'master/tradefairy',
+					'master/starttradefairy',
+					'master/ranking'
+				],
+				target : EtherFairy.Master.Info
+			});
+			
 			// 디자이너로 시작하기 화면
 			EtherFairy.MATCH_VIEW({
 				uri : 'designer/start',
