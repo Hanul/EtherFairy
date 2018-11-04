@@ -140,7 +140,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								c : FontAwesome.GetIcon('home')
 							}),
 							spacing : 10,
-							title : MSG('LAYOUT_HOME_BUTTON')
+							title : MSG('SIDEBAR_HOME_BUTTON')
 						})],
 						on : {
 							tap : () => {
@@ -167,7 +167,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								c : FontAwesome.GetIcon('sign-in-alt')
 							}),
 							spacing : 10,
-							title : MSG('LAYOUT_START_BUTTON')
+							title : MSG('SIDEBAR_START_BUTTON')
 						})],
 						on : {
 							tap : () => {
@@ -194,7 +194,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								c : FontAwesome.GetIcon('trophy')
 							}),
 							spacing : 10,
-							title : MSG('LAYOUT_RANKING_BUTTON')
+							title : MSG('SIDEBAR_LEADERBOARD_BUTTON')
 						})],
 						on : {
 							tap : () => {
@@ -221,7 +221,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								c : FontAwesome.GetIcon('list-ol')
 							}),
 							spacing : 10,
-							title : MSG('LAYOUT_OWNER_RANKING_BUTTON')
+							title : MSG('SIDEBAR_OWNER_LEADERBOARD_BUTTON')
 						})],
 						on : {
 							tap : () => {
@@ -396,7 +396,7 @@ EtherFairy.Layout = CLASS((cls) => {
 												src : EtherFairy.R('layout/master.png')
 											}),
 											spacing : 10,
-											title : MSG('LAYOUT_MASTER_MENU')
+											title : MSG('SIDEBAR_OWNER_MENU_BUTTON')
 										}),
 										
 										// 소유주 홈 버튼
@@ -420,7 +420,7 @@ EtherFairy.Layout = CLASS((cls) => {
 													c : FontAwesome.GetIcon('home')
 												}),
 												spacing : 10,
-												title : MSG('MASTER_HOME')
+												title : MSG('OWNER_HOME_BUTTON')
 											}),
 											on : {
 												tap : () => {
@@ -452,7 +452,7 @@ EtherFairy.Layout = CLASS((cls) => {
 													c : FontAwesome.GetIcon('shopping-cart')
 												}),
 												spacing : 10,
-												title : MSG('BUY_FAIRY')
+												title : MSG('SIDEBAR_BUY_FAIRY_BUTTON')
 											}),
 											on : {
 												tap : () => {
@@ -484,7 +484,7 @@ EtherFairy.Layout = CLASS((cls) => {
 													c : FontAwesome.GetIcon('arrows-alt-h')
 												}),
 												spacing : 10,
-												title : MSG('TRADE_FAIRY')
+												title : MSG('SIDEBAR_TRADE_FAIRY_BUTTON')
 											}),
 											on : {
 												tap : () => {
@@ -529,7 +529,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									src : EtherFairy.R('layout/designer.png')
 								}),
 								spacing : 10,
-								title : MSG('LAYOUT_DESIGNER_MENU')
+								title : MSG('SIDEBAR_DESIGNER_MENU_NAMETAG')
 							}),
 							
 							// 디자이너 홈 버튼
@@ -553,7 +553,7 @@ EtherFairy.Layout = CLASS((cls) => {
 										c : FontAwesome.GetIcon('home')
 									}),
 									spacing : 10,
-									title : MSG('DESIGNER_HOME')
+									title : MSG('DESIGNER_HOME_BUTTON')
 								}),
 								on : {
 									tap : () => {
@@ -585,7 +585,7 @@ EtherFairy.Layout = CLASS((cls) => {
 										c : FontAwesome.GetIcon('dollar-sign')
 									}),
 									spacing : 10,
-									title : MSG('MANAGE_SALES')
+									title : MSG('SIDEBAR_MANAGE_SALES_BUTTON')
 								}),
 								on : {
 									tap : () => {

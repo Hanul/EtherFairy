@@ -132,7 +132,7 @@ EtherFairy('Master').Home = CLASS({
 										marginTop : 30,
 										fontSize : 25
 									},
-									c : MSG('OWN_FAIRY_LIST')
+									c : MSG('OWNER_HOME_OWNED_FAIRY_LIST')
 								}),
 								
 								fairyList = DIV({
@@ -150,7 +150,7 @@ EtherFairy('Master').Home = CLASS({
 							
 							EtherFairy.EtherFairyContract.balanceOf(walletAddress, (fairyCount) => {
 								
-								fairyCountPanel.append(MSG('OWN_FAIRY_COUNT') + ' : ' + fairyCount);
+								fairyCountPanel.append(MSG('OWNER_HOME_OWNED_FAIRY_COUNT') + ' : ' + fairyCount);
 								
 								fairyList.empty();
 								

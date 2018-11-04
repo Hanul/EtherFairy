@@ -32,7 +32,7 @@ EtherFairy('Designer').Start = CLASS({
 					fontWeight : 'bold',
 					color : '#FFEA4F'
 				},
-				c : MSG('START_DESIGNER')
+				c : MSG('START_DESIGNER_TITLE')
 			}),
 			
 			UUI.VALID_FORM({
@@ -41,17 +41,17 @@ EtherFairy('Designer').Start = CLASS({
 				},
 				errorMsgs : {
 					username : {
-						notEmpty : MSG('NOT_VALID_USERNAME_NOT_EMPTY'),
+						notEmpty : MSG('NULL_ID_ALERT'),
 						size : (validParams) => {
-							return MSG('NOT_VALID_USERNAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
+							return MSG('ID_MIN_MAX_ALERT').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						},
-						username : MSG('NOT_VALID_USERNAME_FORMAT'),
-						login : MSG('OAUTH_ERROR')
+						username : MSG('ID_GUIDELINE_ALERT'),
+						login : MSG('AUTHENTICATION_FAILED_ALERT')
 					},
 					password : {
-						notEmpty : MSG('NOT_VALID_PASSWORD_NOT_EMPTY'),
+						notEmpty : MSG('NULL_PW_ALERT'),
 						size : (validParams) => {
-							return MSG('NOT_VALID_PASSWORD_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
+							return MSG('PW_MIN_MAX_ALERT').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						}
 					}
 				},
@@ -68,7 +68,7 @@ EtherFairy('Designer').Start = CLASS({
 						borderRadius : 10
 					},
 					name : 'username',
-					placeholder : MSG('USERNAME')
+					placeholder : MSG('ID_NAMETAG')
 				}),
 				
 				Yogurt.Input({
@@ -80,7 +80,7 @@ EtherFairy('Designer').Start = CLASS({
 					},
 					name : 'password',
 					type : 'password',
-					placeholder : MSG('PASSWORD')
+					placeholder : MSG('PASSWORD_NAMETAG')
 				}),
 				
 				DIV({
@@ -93,7 +93,7 @@ EtherFairy('Designer').Start = CLASS({
 							padding : 10,
 							width : '46%'
 						},
-						value : MSG('LOGIN_DESIGNER')
+						value : MSG('SIGN_IN_AS_DESIGNER_BUTTON')
 					}),
 					
 					Yogurt.Button({
@@ -102,7 +102,7 @@ EtherFairy('Designer').Start = CLASS({
 							padding : 10,
 							width : '46%'
 						},
-						title : MSG('JOIN_DESIGNER'),
+						title : MSG('SIGN_UP_AS_DESIGNER_BUTTON'),
 						on : {
 							tap : () => {
 								EtherFairy.GO('designer/join');

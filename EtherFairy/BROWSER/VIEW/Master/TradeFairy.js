@@ -22,11 +22,11 @@ EtherFairy('Master').TradeFairy = CLASS({
 					color : '#FFEA4F',
 					marginBottom : 20
 				},
-				c : MSG('TRADE_TITLE')
+				c : MSG('TRADE_FAIRY_TITLE')
 			}),
 			
 			Yogurt.Button({
-				title : MSG('START_TRADE_FAIRY'),
+				title : MSG('TRADE_FAIRY_REGISTER_FAIRY_BUTTON'),
 				on : {
 					tap : () => {
 						EtherFairy.GO('master/starttradefairy');

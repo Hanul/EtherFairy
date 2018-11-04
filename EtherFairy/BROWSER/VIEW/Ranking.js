@@ -50,7 +50,7 @@ EtherFairy.Ranking = CLASS({
 					color : '#FFEA4F',
 					marginBottom : 20
 				},
-				c : MSG('RANKING_TITLE')
+				c : MSG('FAIRY_LEADERBOARD_TITLE')
 			}),
 			
 			totalFairyInfoPanel = DIV(),
@@ -65,7 +65,7 @@ EtherFairy.Ranking = CLASS({
 		}));
 		
 		EtherFairy.EtherFairyContract.getFairyCount((fairyCount) => {
-			totalFairyInfoPanel.append(MSG('TOTAL_FAIRY_COUNT') + ' : ' + fairyCount);
+			totalFairyInfoPanel.append(MSG('TOTAL_FAIRY_COUNT_NAMETAG') + ' : ' + fairyCount);
 		});
 		
 		EtherFairy.EtherFairyContract.getFairyIdsByBirthTime((fairyIds) => {

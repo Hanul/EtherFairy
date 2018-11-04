@@ -101,7 +101,7 @@ EtherFairy.Home = CLASS({
 							width : 200,
 							boxShadow : '0 0 40px #000000'
 						},
-						title : MSG('START_BUTTON'),
+						title : MSG('HOME_BODY_START_BUTTON'),
 						on : {
 							tap : () => {
 								EtherFairy.GO('start')
@@ -234,17 +234,17 @@ EtherFairy.Home = CLASS({
 									}
 								}
 							},
-							c : MSG('MAIN_TITLE_1')
+							c : MSG('HOME_BODY_1_NAMETAG')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : MSG('MAIN_DESCRIPTION_1')
+							c : MSG('HOME_BODY_1_DESCRIPTION_1')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : MSG('MAIN_DESCRIPTION_2')
+							c : MSG('HOME_BODY_1_DESCRIPTION_2')
 						}), Yogurt.Button({
 							style : {
 								margin : 'auto',
@@ -252,7 +252,7 @@ EtherFairy.Home = CLASS({
 								fontSize : 20,
 								width : 200
 							},
-							title : MSG('MAIN_BUTTON_1'),
+							title : MSG('HOME_BODY_HOW_TO_BUTTON'),
 							target : '_blank',
 							href : 'https://medium.com/@youngjaesim/'
 						})]
@@ -332,17 +332,17 @@ EtherFairy.Home = CLASS({
 									}
 								}
 							},
-							c : MSG('MAIN_TITLE_2')
+							c : MSG('HOME_BODY_2_NAMETAG')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : MSG('MAIN_DESCRIPTION_3')
+							c : MSG('HOME_BODY_2_DESCRIPTION_1')
 						}), P({
 							style : {
 								marginTop : 20
 							},
-							c : MSG('MAIN_DESCRIPTION_4')
+							c : MSG('HOME_BODY_2_DESCRIPTION_2')
 						}), Yogurt.Button({
 							style : {
 								margin : 'auto',
@@ -350,7 +350,7 @@ EtherFairy.Home = CLASS({
 								fontSize : 20,
 								width : 200
 							},
-							title : MSG('MAIN_BUTTON_2'),
+							title : MSG('HOME_BODY_CONTACT_BUTTON'),
 							href : 'mailto:contact@btncafe.com'
 						})]
 					}), IMG({
@@ -389,7 +389,7 @@ EtherFairy.Home = CLASS({
 						marginTop : 20,
 						fontSize : 30
 					},
-					title : MSG('START_BUTTON'),
+					title : MSG('HOME_BODY_START_BUTTON'),
 					on : {
 						tap : () => {
 							EtherFairy.GO('start')

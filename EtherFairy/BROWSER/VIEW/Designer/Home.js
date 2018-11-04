@@ -125,7 +125,7 @@ EtherFairy('Designer').Home = CLASS({
 							marginTop : 30,
 							fontSize : 25
 						},
-						c : MSG('DESIGN_FAIRY_LIST')
+						c : MSG('DESIGNER_HOME_DESIGNED_FAIRY_LIST')
 					}),
 					
 					fairyOriginList = DIV({
@@ -148,7 +148,7 @@ EtherFairy('Designer').Home = CLASS({
 					isToFindAll : true
 				}, (fairyOriginDataSet) => {
 					
-					fairyOriginCountPanel.append(MSG('DESIGN_FAIRY_COUNT') + ' : ' + fairyOriginDataSet.length);
+					fairyOriginCountPanel.append(MSG('DESIGNER_HOME_DESIGNED_FAIRY_COUNT') + ' : ' + fairyOriginDataSet.length);
 					
 					fairyOriginList.empty();
 					

@@ -170,7 +170,7 @@ EtherFairy.Fairy = CLASS({
 											
 											menu.append(DIV({
 												c : A({
-													c : MSG('BUY_TRADE_FAIRY'),
+													c : MSG('SIDEBAR_TRADE_FAIRY_BUTTON'),
 													on : {
 														tap : () => {
 															
@@ -1045,7 +1045,7 @@ EtherFairy.Fairy = CLASS({
 					src : EtherFairy.R('fairyinfo/arrow.png')
 				}),
 				spacing : 10,
-				title : MSG('BEFORE_BUTTON'),
+				title : MSG('PREVIOUS_BUTTON'),
 				on : {
 					tap : () => {
 						start -= count;
@@ -1072,7 +1072,7 @@ EtherFairy.Fairy = CLASS({
 				}),
 				isIconRight : true,
 				spacing : 10,
-				title : MSG('FORWARD_BUTTON'),
+				title : MSG('NEXT_BUTTON'),
 				on : {
 					tap : () => {
 						start += count;

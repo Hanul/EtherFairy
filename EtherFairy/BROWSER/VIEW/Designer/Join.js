@@ -32,7 +32,7 @@ EtherFairy('Designer').Join = CLASS({
 					fontWeight : 'bold',
 					color : '#FFEA4F'
 				},
-				c : MSG('JOIN_DESIGNER')
+				c : MSG('SIGN_UP_AS_DESIGNER_BUTTON')
 			}),
 			
 			UUI.VALID_FORM({
@@ -41,38 +41,38 @@ EtherFairy('Designer').Join = CLASS({
 				},
 				errorMsgs : {
 					username : {
-						notEmpty : MSG('NOT_VALID_USERNAME_NOT_EMPTY'),
+						notEmpty : MSG('NULL_ID_ALERT'),
 						size : (validParams) => {
-							return MSG('NOT_VALID_USERNAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
+							return MSG('ID_MIN_MAX_ALERT').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						},
-						username : MSG('NOT_VALID_USERNAME_FORMAT'),
-						existed : MSG('NOT_VALID_USERNAME_EXISTED'),
-						notAllowed : MSG('NOT_VALID_USERNAME_NOT_ALLOWED')
+						username : MSG('ID_GUIDELINE_ALERT'),
+						existed : MSG('ID_ALREADY_USED_ALERT'),
+						notAllowed : MSG('ID_NOT_POSSIBLE_ALERT')
 					},
 					password : {
-						notEmpty : MSG('NOT_VALID_PASSWORD_NOT_EMPTY'),
+						notEmpty : MSG('NULL_PW_ALERT'),
 						size : (validParams) => {
-							return MSG('NOT_VALID_PASSWORD_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
+							return MSG('PW_MIN_MAX_ALERT').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						}
 					},
 					email : {
-						notEmpty : MSG('NOT_VALID_EMAIL_NOT_EMPTY'),
+						notEmpty : MSG('NULL_EMAIL_ALERT'),
 						size : (validParams) => {
-							return MSG('NOT_VALID_EMAIL_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
+							return MSG('EMAIL_MIN_MAX_ALERT').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						},
-						email : MSG('NOT_VALID_EMAIL_FORMAT')
+						email : MSG('CHECK_EMAIL_FORM_ALERT')
 					},
 					nickname : {
-						notEmpty : MSG('NOT_VALID_NICKNAME_NOT_EMPTY'),
+						notEmpty : MSG('NULL_NICKNAME_ALERT'),
 						size : (validParams) => {
-							return MSG('NOT_VALID_NICKNAME_SIZE').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
+							return MSG('NICKNAME_MIN_MAX_ALERT').replace(/{min}/, validParams.min).replace(/{max}/, validParams.max);
 						}
 					},
 					isAgreedTerms : {
-						equal : MSG('NOT_VALID_AGREED_TERMS')
+						equal : MSG('TERMS_NO_AGREE_ALERT')
 					},
 					isAgreedPrivacy : {
-						equal : MSG('NOT_VALID_AGREED_PRIVACY')
+						equal : MSG('PRIVACY_POLICY_NO_AGREE_ALERT')
 					}
 				},
 				errorMsgStyle : {
@@ -88,7 +88,7 @@ EtherFairy('Designer').Join = CLASS({
 						borderRadius : 10
 					},
 					name : 'username',
-					placeholder : MSG('USERNAME')
+					placeholder : MSG('ID_NAMETAG')
 				}),
 				
 				Yogurt.Input({
@@ -99,7 +99,7 @@ EtherFairy('Designer').Join = CLASS({
 						borderRadius : 10
 					},
 					name : 'nickname',
-					placeholder : MSG('NICKNAME')
+					placeholder : MSG('NICKNAME_NAMETAG')
 				}),
 				
 				Yogurt.Input({
@@ -111,7 +111,7 @@ EtherFairy('Designer').Join = CLASS({
 					},
 					name : 'password',
 					type : 'password',
-					placeholder : MSG('PASSWORD')
+					placeholder : MSG('PASSWORD_NAMETAG')
 				}),
 				
 				Yogurt.Input({
@@ -122,7 +122,7 @@ EtherFairy('Designer').Join = CLASS({
 						borderRadius : 10
 					},
 					name : 'email',
-					placeholder : MSG('EMAIL_FOR_PASSWORD')
+					placeholder : MSG('RECOVERY_EMAIL_NAMETAG')
 				}),
 				
 				DIV({
@@ -132,13 +132,13 @@ EtherFairy('Designer').Join = CLASS({
 					c : [Yogurt.Button({
 						href : INFO.getLang() === 'ko' ? EtherFairy.R('terms-kr.html') : EtherFairy.R('terms.html'),
 						target : '_blank',
-						title : MSG('VIEW_TERMS')
+						title : MSG('VIEW_TERMS_BUTTON')
 					}), UUI.FULL_CHECKBOX({
 						style : {
 							marginTop : 10
 						},
 						name : 'isAgreedTerms',
-						label : MSG('AGREE_TERMS')
+						label : MSG('TERMS_AGREE_CHECKBOX')
 					})]
 				}),
 				
@@ -149,13 +149,13 @@ EtherFairy('Designer').Join = CLASS({
 					c : [Yogurt.Button({
 						href : INFO.getLang() === 'ko' ? 'https://btncafe.com/R/privacy-kr.html' : (INFO.getLang().substring(0, 2) === 'zh' ? 'https://btncafe.com/R/privacy-zh.html' : 'https://btncafe.com/R/privacy.html'),
 						target : '_blank',
-						title : MSG('VIEW_PRIVACY')
+						title : MSG('VIEW_PRIVACY_POLICY_BUTTON')
 					}), UUI.FULL_CHECKBOX({
 						style : {
 							marginTop : 10
 						},
 						name : 'isAgreedPrivacy',
-						label : MSG('AGREE_PRIVACY')
+						label : MSG('PRIVACY_POLICY_CHECKBOX')
 					})]
 				}),
 				

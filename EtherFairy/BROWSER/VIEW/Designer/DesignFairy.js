@@ -361,7 +361,7 @@ EtherFairy('Designer').DesignFairy = CLASS({
 									color : '#FFFFCC',
 									marginRight : 20
 								},
-								c : MSG('REMAIN_LEVEL_POINT')
+								c : MSG('REMAINING_STATUS_POINT_NAMETAG')
 							}), availablePointsPanel = SPAN({
 								c : availablePoints
 							})]

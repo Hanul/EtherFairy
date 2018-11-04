@@ -55,7 +55,7 @@ EtherFairy.Start = CLASS({
 						fontWeight : 'bold',
 						color : '#633618'
 					},
-					c : MSG('START_MASTER')
+					c : MSG('START_OWNER_BUTTON')
 				}), UUI.V_CENTER({
 					style : {
 						margin : 'auto',
@@ -66,7 +66,7 @@ EtherFairy.Start = CLASS({
 						textAlign : 'center',
 						lineHeight : '1.5em'
 					},
-					c : MSG('START_MASTER_DESCRIPTION')
+					c : MSG('START_OWNER_DESCRIPTION')
 				})],
 				on : {
 					tap : () => {
@@ -81,7 +81,7 @@ EtherFairy.Start = CLASS({
 										msg : [IMG({
 											src : EtherFairy.R('metamask.png')
 										}), P({
-											c : MSG('PLEASE_UNLOCK_METAMASK')
+											c : MSG('METAMASK_NOT_UNLOCKED_ALERT')
 										})]
 									});
 								}
@@ -116,7 +116,7 @@ EtherFairy.Start = CLASS({
 								msg : [IMG({
 									src : EtherFairy.R('metamask.png')
 								}), P({
-									c : MSG('PLEASE_INSTALL_METAMASK')
+									c : MSG('METAMASK_NOT_INSTALLED_ALERT')
 								})],
 								okButtonTitle : MSG('INSTALL_METAMASK_BUTTON'),
 								target : '_blank',
@@ -144,7 +144,7 @@ EtherFairy.Start = CLASS({
 						fontWeight : 'bold',
 						color : '#633618'
 					},
-					c : MSG('START_DESIGNER')
+					c : MSG('START_DESIGNER_BUTTON')
 				}), UUI.V_CENTER({
 					style : {
 						margin : 'auto',
