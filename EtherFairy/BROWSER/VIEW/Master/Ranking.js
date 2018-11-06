@@ -289,5 +289,19 @@ EtherFairy('Master').Ranking = CLASS({
 		}));
 		
 		bottom.append(CLEAR_BOTH());
+		
+		EtherFairy.EtherFairyContract.getMasterCount((masterCount) => {
+			console.log(masterCount);
+		});
+		
+		EtherFairy.EtherFairyContract.getMasterIdsByFairyCount((masterIds) => {
+			
+			EACH(masterIds, (masterId) => {
+				
+				EtherFairy.EtherFairyContract.masters(masterId, (masterAddress) => {
+					console.log(masterAddress);
+				});
+			});
+		});
 	}
 });

@@ -73,6 +73,9 @@ EtherFairy.FairyOrigin = CLASS({
 													let loadingPanel;
 													
 													masterMenu.append(loadingPanel = DIV({
+														style : {
+															padding : '20px 0'
+														},
 														c : MSG('BUYING_FAIRY')
 													}));
 													
@@ -86,7 +89,8 @@ EtherFairy.FairyOrigin = CLASS({
 														windPointPerLevel : fairyOriginData.windPointPerLevel,
 														earthPointPerLevel : fairyOriginData.earthPointPerLevel,
 														lightPointPerLevel : fairyOriginData.lightPointPerLevel,
-														darkPointPerLevel : fairyOriginData.darkPointPerLevel
+														darkPointPerLevel : fairyOriginData.darkPointPerLevel,
+														ether : 0.05
 													}, {
 														error : (errorMsg) => {
 															alert(errorMsg);
@@ -105,6 +109,14 @@ EtherFairy.FairyOrigin = CLASS({
 							});
 						});
 					}
+				});
+				
+				EtherFairy.EtherFairyContract.getFairyCountByOriginId(fairyOriginId, (fairyCount) => {
+					console.log(fairyCount);
+				});
+				
+				EtherFairy.EtherFairyContract.getFairyIdsByOriginId(fairyOriginId, (fairyIds) => {
+					console.log(fairyIds);
 				});
 			});
 		});

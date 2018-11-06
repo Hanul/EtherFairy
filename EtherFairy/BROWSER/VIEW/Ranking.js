@@ -116,5 +116,9 @@ EtherFairy.Ranking = CLASS({
 			
 			fairyList.append(CLEAR_BOTH());
 		});
+		
+		EtherFairy.EtherFairyContract.getFairyIdsByBirthTime((fairyIds) => {
+			console.log(fairyIds);
+		});
 	}
 });

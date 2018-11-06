@@ -7,6 +7,9 @@ BOOT({
 		title : 'Ether Fairy',
 		
 		isDevMode : true,
+		
+		isTestnetMode : true,
+		
 		webServerPort : 8415
 	},
 	
