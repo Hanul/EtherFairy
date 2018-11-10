@@ -350,8 +350,12 @@ EtherFairy.Home = CLASS({
 								fontSize : 20,
 								width : 200
 							},
-							title : MSG('HOME_BODY_CONTACT_BUTTON'),
-							href : 'mailto:contact@btncafe.com'
+							title : MSG('START_DESIGNER_BUTTON'),
+							on : {
+								tap : () => {
+									EtherFairy.GO('designer/start');
+								}
+							}
 						})]
 					}), IMG({
 						style : {

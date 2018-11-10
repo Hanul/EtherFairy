@@ -8,11 +8,41 @@ EtherFairy('Company').ManageService = CLASS({
 		
 		TITLE('Ether Fairy 관리자 페이지');
 		
+		let totalMasterCountPanel;
 		let menu;
 		let marketMenu;
 		EtherFairy.Layout.setContent(DIV({
 			style : {
-				padding : 10
+				margin : 'auto',
+				width : 1110,
+				padding : '30px 0 50px 10px',
+				onDisplayResize : (width, height) => {
+					if (width < 400) {
+						return {
+							width : 310
+						};
+					} else if (width < 620) {
+						return {
+							width : 380
+						};
+					} else if (width < 800) {
+						return {
+							width : 570
+						};
+					} else if (width < 1300) {
+						return {
+							width : 760
+						};
+					} else if (width < 1550) {
+						return {
+							width : 740
+						};
+					} else {
+						return {
+							width : 1110
+						};
+					}
+				}
 			},
 			c : [
 			
@@ -26,25 +56,37 @@ EtherFairy('Company').ManageService = CLASS({
 				c : '서비스 관리 페이지'
 			}),
 			
+			totalMasterCountPanel = DIV(),
+			
 			menu = DIV(),
 			
 			marketMenu = DIV()
 			]
 		}));
 		
-		EtherFairy.EtherFairyContract.getCompanyAddress((companyAddress) => {
+		EtherFairy.EtherFairyContract.company((companyAddress) => {
 			
 			EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
 				
 				if (walletAddress === companyAddress) {
 					
 					EtherFairy.EtherFairyContract.getMasterCount((masterCount) => {
-						menu.append('총 소유주 수 : ' + masterCount);
+						totalMasterCountPanel.append('총 소유주 수 : ' + masterCount);
 					});
 					
-					/*EtherFairy.EtherFairyContract.supportsInterface(0x80ac58cd, (r) => {
-						console.log(r);
-					});*/
+					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
+						c : A({
+							c : '디자이너 Identity 추가',
+							on : {
+								tap : () => {
+									EtherFairy.GO('company/createdesigneridentity');
+								}
+							}
+						})
+					}));
 					
 					/*menu.append(DIV({
 						c : A({
@@ -201,16 +243,6 @@ EtherFairy('Company').ManageService = CLASS({
 							}
 						})
 					}));*/
-				}
-			});
-		});
-		
-		
-		EtherFairy.FairyMarketContract.getCompanyAddress((companyAddress) => {
-			
-			EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
-				
-				if (walletAddress === companyAddress) {
 					
 					marketMenu.append(DIV({
 						c : A({

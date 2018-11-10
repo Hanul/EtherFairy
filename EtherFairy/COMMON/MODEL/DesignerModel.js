@@ -7,6 +7,11 @@ EtherFairy.DesignerModel = OBJECT({
 	params : () => {
 
 		let validDataSet = {
+			
+			identityCode : {
+				notEmpty : true,
+				id : true
+			},
 
 			username : {
 				notEmpty : true,
