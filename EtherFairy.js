@@ -19,8 +19,8 @@ BOOT({
 		
 		dbName : 'EtherFairy-test',
 		
-		GoogleSheetsSync : {
-			'EtherFairy/R/text.csv' : 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR5IG9gFmXavJX0O_0DKjqeP2yeDrsEL3lvHZP1OVUphApBo7RY-Ehf2tmraiu0EAXJZaVV5gX_G_z4/pub?output=csv'
+		EtherFairy : {
+			adminPassword : 'Ekqlscl9'
 		}
 	}
 });

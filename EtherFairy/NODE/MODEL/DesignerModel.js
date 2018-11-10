@@ -77,19 +77,23 @@ OVERRIDE(EtherFairy.DesignerModel, (origin) => {
 								});
 	
 							} else {
-	
-								if (clientInfo !== undefined) {
-									data.ip = clientInfo.ip;
-								}
-	
-								data.password = SHA256({
-									key : username,
-									password : password
-								});
 								
-								data.roles = [EtherFairy.ROLE.DESIGNER];
-	
-								next();
+								// 존재하는지 체크
+								EtherFairy.DesignerIdentityModel.get(data.identityCode, () => {
+									
+									if (clientInfo !== undefined) {
+										data.ip = clientInfo.ip;
+									}
+		
+									data.password = SHA256({
+										key : username,
+										password : password
+									});
+									
+									data.roles = [EtherFairy.ROLE.DESIGNER];
+		
+									next();
+								});
 							}
 						});
 					}

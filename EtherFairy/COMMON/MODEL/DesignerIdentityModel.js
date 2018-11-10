@@ -7,6 +7,8 @@ EtherFairy.DesignerIdentityModel = OBJECT({
 	params : () => {
 
 		let validDataSet = {
+			
+			adminPassword : true,
 
 			name : {
 				notEmpty : true

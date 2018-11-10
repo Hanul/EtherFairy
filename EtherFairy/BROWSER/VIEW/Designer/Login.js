@@ -123,7 +123,7 @@ EtherFairy('Designer').Login = CLASS({
 						EtherFairy.DesignerModel.login(data, {
 							notValid : form.showErrors,
 							success : (userData) => {
-								EtherFairy.REFRESH('');
+								EtherFairy.GO('designer');
 							}
 						});
 					}

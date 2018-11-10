@@ -128,7 +128,7 @@ EtherFairy.MAIN = METHOD({
 			
 			// 디자이너로 가입하기 화면
 			EtherFairy.MATCH_VIEW({
-				uri : 'designer/join',
+				uri : 'designer/join/{identityCode}',
 				target : EtherFairy.Designer.Join
 			});
 			
@@ -165,6 +165,11 @@ EtherFairy.MAIN = METHOD({
 			EtherFairy.MATCH_VIEW({
 				uri : 'company/createdesigneridentity',
 				target : EtherFairy.Company.CreateDesignerIdentity
+			});
+			
+			EtherFairy.MATCH_VIEW({
+				uri : 'company/designeridentity',
+				target : EtherFairy.Company.DesignerIdentity
 			});
 		});
 	}

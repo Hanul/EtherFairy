@@ -74,21 +74,34 @@ EtherFairy('Company').ManageService = CLASS({
 						totalMasterCountPanel.append('총 소유주 수 : ' + masterCount);
 					});
 					
-					menu.append(DIV({
+					menu.append(Yogurt.Button({
 						style : {
 							marginTop : 10
 						},
-						c : A({
-							c : '디자이너 Identity 추가',
-							on : {
-								tap : () => {
-									EtherFairy.GO('company/createdesigneridentity');
-								}
+						title : '디자이너 Identity 추가',
+						on : {
+							tap : () => {
+								EtherFairy.GO('company/createdesigneridentity');
 							}
-						})
+						}
+					}));
+					
+					menu.append(Yogurt.Button({
+						style : {
+							marginTop : 10
+						},
+						title : '디자이너 Identity 관리',
+						on : {
+							tap : () => {
+								EtherFairy.GO('company/designeridentity');
+							}
+						}
 					}));
 					
 					/*menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '소유권 이전',
 							on : {
@@ -102,6 +115,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '서비스 일시정지',
 							on : {
@@ -115,6 +131,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '서비스 재개',
 							on : {
@@ -128,6 +147,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '요정 원본 가격 변경',
 							on : {
@@ -141,6 +163,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '임의 레벨업 가격 변경',
 							on : {
@@ -154,6 +179,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '임의로 포인트를 증가시키는데 드는 포인트당 가격 변경',
 							on : {
@@ -167,6 +195,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : 'tokenMetadataBaseURI 변경',
 							on : {
@@ -180,6 +211,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));*/
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '공식 마켓 변경',
 							on : {
@@ -193,6 +227,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					/*menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '특정 소유주 차단',
 							on : {
@@ -206,6 +243,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '특정 소유주 차단 해제',
 							on : {
@@ -219,6 +259,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '특정 요정 차단',
 							on : {
@@ -232,6 +275,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					menu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '특정 요정 차단 해제',
 							on : {
@@ -245,6 +291,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));*/
 					
 					marketMenu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '마켓 소유권 이전',
 							on : {
@@ -258,6 +307,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					marketMenu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '마켓 일시정지',
 							on : {
@@ -271,6 +323,9 @@ EtherFairy('Company').ManageService = CLASS({
 					}));
 					
 					marketMenu.append(DIV({
+						style : {
+							marginTop : 10
+						},
 						c : A({
 							c : '마켓 재개',
 							on : {
