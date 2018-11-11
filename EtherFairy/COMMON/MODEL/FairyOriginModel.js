@@ -54,6 +54,10 @@ EtherFairy.FairyOriginModel = OBJECT({
 			darkPointPerLevel : {
 				notEmpty : true,
 				integer : true
+			},
+			
+			isPublished : {
+				bool : true
 			}
 		};
 		

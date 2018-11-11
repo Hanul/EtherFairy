@@ -159,7 +159,31 @@ EtherFairy('Designer').Home = CLASS({
 								marginTop : 10,
 								marginRight : 10,
 								flt : 'left',
-								cursor : 'pointer'
+								cursor : 'pointer',
+								onDisplayResize : (width, height) => {
+									if (width < 400) {
+										return {
+											transform : 'scale(0.4)',
+											transformOrigin : 'left top',
+											width : 144,
+											height : 220
+										};
+									} else if (width < 1300) {
+										return {
+											transform : 'scale(0.5)',
+											transformOrigin : 'left top',
+											width : 180,
+											height : 275
+										};
+									} else {
+										return {
+											transform : TO_DELETE,
+											transformOrigin : TO_DELETE,
+											width : 360,
+											height : 550
+										};
+									}
+								}
 							},
 							fairyOriginData : fairyOriginData,
 							on : {

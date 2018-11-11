@@ -79,27 +79,30 @@ EtherFairy.FairyOrigin = CLASS({
 														c : MSG('BUYING_FAIRY')
 													}));
 													
-													// 요정 탄생시키기
-													EtherFairy.EtherFairyContract.birthFairy({
-														fairyOriginId : fairyOriginData.id,
-														designer : '0x38b4343b3BE52374D83398159F2FA06ef78bDA7D',
-														name : fairyName,
-														firePointPerLevel : fairyOriginData.firePointPerLevel,
-														waterPointPerLevel : fairyOriginData.waterPointPerLevel,
-														windPointPerLevel : fairyOriginData.windPointPerLevel,
-														earthPointPerLevel : fairyOriginData.earthPointPerLevel,
-														lightPointPerLevel : fairyOriginData.lightPointPerLevel,
-														darkPointPerLevel : fairyOriginData.darkPointPerLevel,
-														ether : 0.05
-													}, {
-														error : (errorMsg) => {
-															alert(errorMsg);
-															loadingPanel.remove();
-														},
-														success : () => {
-															loadingPanel.remove();
-															EtherFairy.GO('master/managefairy');
-														}
+													EtherFairy.DesignerModel.get(fairyOriginData.designerId, (designerData) => {
+														
+														// 요정 탄생시키기
+														EtherFairy.EtherFairyContract.birthFairy({
+															fairyOriginId : fairyOriginData.id,
+															designer : designerData.walletAddress,
+															name : fairyName,
+															firePointPerLevel : fairyOriginData.firePointPerLevel,
+															waterPointPerLevel : fairyOriginData.waterPointPerLevel,
+															windPointPerLevel : fairyOriginData.windPointPerLevel,
+															earthPointPerLevel : fairyOriginData.earthPointPerLevel,
+															lightPointPerLevel : fairyOriginData.lightPointPerLevel,
+															darkPointPerLevel : fairyOriginData.darkPointPerLevel,
+															ether : 0.05
+														}, {
+															error : (errorMsg) => {
+																alert(errorMsg);
+																loadingPanel.remove();
+															},
+															success : () => {
+																loadingPanel.remove();
+																EtherFairy.GO('master/managefairy');
+															}
+														});
 													});
 												});
 											}

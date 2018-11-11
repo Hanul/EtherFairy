@@ -10,6 +10,8 @@ EtherFairy('Designer').Join = CLASS({
 			
 			let identityCode = params.identityCode;
 			
+			let allowMentPanel;
+			
 			EtherFairy.Layout.setContent(UUI.PANEL({
 				style : {
 					margin : 'auto',
@@ -39,9 +41,15 @@ EtherFairy('Designer').Join = CLASS({
 					c : MSG('SIGN_UP_AS_DESIGNER_BUTTON')
 				}),
 				
+				allowMentPanel = P({
+					style : {
+						marginTop : 20
+					}
+				}),
+				
 				UUI.VALID_FORM({
 					style : {
-						marginTop : 30
+						marginTop : 20
 					},
 					errorMsgs : {
 						username : {
@@ -190,6 +198,10 @@ EtherFairy('Designer').Join = CLASS({
 					}
 				})]
 			}));
+			
+			EtherFairy.DesignerIdentityModel.get(identityCode, (designerIdentityData) => {
+				allowMentPanel.append(MSG('START_DESIGNER_ALLOW_MENT').replace(/{name}/, designerIdentityData.name));
+			});
 		});
 	}
 });

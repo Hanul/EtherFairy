@@ -12,6 +12,10 @@ EtherFairy.DesignerModel = OBJECT({
 				notEmpty : true,
 				id : true
 			},
+			
+			walletAddress : {
+				size : 42
+			},
 
 			username : {
 				notEmpty : true,
