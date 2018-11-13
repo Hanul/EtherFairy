@@ -21,6 +21,13 @@ EtherFairy.FairyOriginModel = OBJECT({
 				}
 			},
 			
+			description : {
+				notEmpty : true,
+				size : {
+					max : 3000
+				}
+			},
+			
 			imageFileId : {
 				notEmpty : true,
 				id : true

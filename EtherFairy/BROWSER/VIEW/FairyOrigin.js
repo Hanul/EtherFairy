@@ -12,7 +12,7 @@ EtherFairy.FairyOrigin = CLASS({
 			
 			EtherFairy.FairyOriginModel.get(fairyOriginId, (fairyOriginData) => {
 				
-				let masterMenu;
+				let menu;
 				EtherFairy.Layout.setContent(DIV({
 					style : {
 						width : 800,
@@ -38,16 +38,52 @@ EtherFairy.FairyOrigin = CLASS({
 						fairyOriginData : fairyOriginData
 					}),
 					
-					masterMenu = DIV({
+					DIV({
 						style : {
 							width : 420,
 							marginLeft : 20,
 							flt : 'left'
-						}
+						},
+						c : [P({
+							c : fairyOriginData.description
+						}), menu = DIV()]
 					}),
 					
 					CLEAR_BOTH()]
 				}));
+				
+				// 내가 디자인한 요정인 경우
+				EtherFairy.DesignerModel.checkSigned((signedDesignerData) => {
+					
+					if (fairyOriginData.designerId === signedDesignerData.id) {
+						
+						// 수정 버튼
+						menu.append(Yogurt.Button({
+							style : {
+								marginTop : 10
+							},
+							c : MSG('MODIFY_FAIRY_BUTTON'),
+							on : {
+								tap : () => {
+									EtherFairy.GO('designer/designfairy/' + fairyOriginData.id);
+								}
+							}
+						}));
+						
+						// 심사 등록 버튼
+						menu.append(Yogurt.Button({
+							style : {
+								marginTop : 10
+							},
+							c : MSG('REGIST_EXAMINE_FAIRY_BUTTON'),
+							on : {
+								tap : () => {
+									alert('준비중입니다.');
+								}
+							}
+						}));
+					}
+				});
 				
 				// 소유주가 접속해 있으면 소유주 메뉴 추가
 				EtherFairy.WalletManager.checkIsLocked((isLocked) => {
@@ -62,7 +98,10 @@ EtherFairy.FairyOrigin = CLASS({
 								},
 								success : () => {
 									
-									masterMenu.append(Yogurt.Button({
+									menu.append(Yogurt.Button({
+										style : {
+											marginTop : 10
+										},
 										c : MSG('BUY_FAIRY_BUTTON'),
 										on : {
 											tap : () => {

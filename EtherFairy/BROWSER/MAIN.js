@@ -140,7 +140,7 @@ EtherFairy.MAIN = METHOD({
 			
 			// 페어리 원형 디자인 폼
 			EtherFairy.MATCH_VIEW({
-				uri : 'designer/designfairy',
+				uri : ['designer/designfairy', 'designer/designfairy/{fairyOriginId}'],
 				target : EtherFairy.Designer.DesignFairy
 			});
 			
