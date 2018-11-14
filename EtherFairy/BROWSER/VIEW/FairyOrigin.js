@@ -203,7 +203,7 @@ EtherFairy.FairyOrigin = CLASS({
 													
 													let loadingPanel;
 													
-													masterMenu.append(loadingPanel = DIV({
+													menu.append(loadingPanel = DIV({
 														style : {
 															padding : '20px 0'
 														},
