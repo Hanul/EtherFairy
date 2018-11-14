@@ -66,7 +66,7 @@ EtherFairy('Company').ManageService = CLASS({
 		
 		EtherFairy.EtherFairyContract.company((companyAddress) => {
 			
-			EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+			Contract2Object.getWalletAddress((walletAddress) => {
 				
 				if (walletAddress === companyAddress) {
 					

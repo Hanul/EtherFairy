@@ -44,7 +44,7 @@ EtherFairy('Master').TradeFairy = CLASS({
 			})]
 		}));
 		
-		EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+		Contract2Object.getWalletAddress((walletAddress) => {
 			
 			EtherFairy.MasterModel.get(walletAddress, {
 				notExists : () => {

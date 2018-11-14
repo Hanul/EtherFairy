@@ -72,9 +72,9 @@ EtherFairy.Start = CLASS({
 					tap : () => {
 						
 						// 메타마스크가 설치되어 있는 경우
-						if (EtherFairy.WalletManager.checkIsEnable() === true) {
+						if (Contract2Object.checkWalletEnable() === true) {
 							
-							EtherFairy.WalletManager.checkIsLocked((isLocked) => {
+							Contract2Object.checkWalletLocked((isLocked) => {
 								
 								if (isLocked === true) {
 									Yogurt.Alert({
@@ -88,7 +88,7 @@ EtherFairy.Start = CLASS({
 								
 								else {
 									
-									EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+									Contract2Object.getWalletAddress((walletAddress) => {
 										
 										EtherFairy.MasterModel.checkExists({
 											filter : {

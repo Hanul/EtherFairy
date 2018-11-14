@@ -22,7 +22,6 @@ EtherFairy.Layout = CLASS((cls) => {
 			
 			let leftMenu;
 			let startButton;
-			let bgmList;
 			
 			let menuLayout = Yogurt.MenuLayout({
 				
@@ -256,8 +255,20 @@ EtherFairy.Layout = CLASS((cls) => {
 									c : FontAwesome.GetIcon('music')
 								}),
 								spacing : 10,
-								title : MSG('BGM_TITLE')
-							}), bgmList = DIV()]
+								title : MSG('SIDEBAR_THEME_NAMETAG')
+							}), AUDIO({
+								style : {
+									borderTop : '1px solid #444',
+									width : '100%'
+								},
+								mp3 : EtherFairy.R('theme/etherfairy_theme.mp3')
+							}), AUDIO({
+								style : {
+									borderTop : '1px solid #444',
+									width : '100%'
+								},
+								mp3 : EtherFairy.R('theme/etherfairy_track2.mp3')
+							})]
 						}), DIV({
 							style : {
 								width : '100%',
@@ -365,146 +376,154 @@ EtherFairy.Layout = CLASS((cls) => {
 			NEXT([
 			(next) => {
 				
-				EtherFairy.WalletManager.checkIsLocked((isLocked) => {
+				// 메타마스크가 설치되어 있는 경우
+				if (Contract2Object.checkWalletEnable() === true) {
 					
-					if (isLocked !== true) {
+					Contract2Object.checkWalletLocked((isLocked) => {
 						
-						EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+						if (isLocked !== true) {
 							
-							EtherFairy.MasterModel.get(walletAddress, {
+							Contract2Object.getWalletAddress((walletAddress) => {
 								
-								notExists : () => {
-									next();
-								},
-								
-								success : () => {
+								EtherFairy.MasterModel.get(walletAddress, {
 									
-									leftMenu.append(DIV({
-										style : {
-											width : '100%',
-											borderBottom : '1px solid #444',
-											cursor : 'pointer'
-										},
-										c : [
-										UUI.BUTTON_H({
-											style : {
-												padding : 10,
-												paddingLeft : 10,
-												fontSize : 15
-											},
-											icon : IMG({
-												src : EtherFairy.R('layout/master.png')
-											}),
-											spacing : 10,
-											title : MSG('SIDEBAR_OWNER_MENU_BUTTON')
-										}),
-										
-										// 소유주 홈 버튼
-										DIV({
-											style : {
-												width : '100%',
-												cursor : 'pointer',
-												backgroundColor : '#33393e'
-											},
-											c : UUI.BUTTON_H({
-												style : {
-													padding : 10,
-													paddingLeft : 15,
-													fontSize : 15
-												},
-												icon : SPAN({
-													style : {
-														width : 15,
-														textAlign : 'center'
-													},
-													c : FontAwesome.GetIcon('home')
-												}),
-												spacing : 10,
-												title : MSG('OWNER_HOME_BUTTON')
-											}),
-											on : {
-												tap : () => {
-													EtherFairy.GO('master');
-													menuLayout.hideLeftMenu();
-												}
-											}
-										}),
-										
-										// 요정 구매 버튼
-										DIV({
-											style : {
-												borderTop : '1px solid #222',
-												width : '100%',
-												cursor : 'pointer',
-												backgroundColor : '#33393e'
-											},
-											c : UUI.BUTTON_H({
-												style : {
-													padding : 10,
-													paddingLeft : 15,
-													fontSize : 15
-												},
-												icon : SPAN({
-													style : {
-														width : 15,
-														textAlign : 'center'
-													},
-													c : FontAwesome.GetIcon('shopping-cart')
-												}),
-												spacing : 10,
-												title : MSG('SIDEBAR_BUY_FAIRY_BUTTON')
-											}),
-											on : {
-												tap : () => {
-													EtherFairy.GO('master/buyfairy');
-													menuLayout.hideLeftMenu();
-												}
-											}
-										}),
-										
-										// 요정 거래 버튼
-										DIV({
-											style : {
-												borderTop : '1px solid #222',
-												width : '100%',
-												cursor : 'pointer',
-												backgroundColor : '#33393e'
-											},
-											c : UUI.BUTTON_H({
-												style : {
-													padding : 10,
-													paddingLeft : 15,
-													fontSize : 15
-												},
-												icon : SPAN({
-													style : {
-														width : 15,
-														textAlign : 'center'
-													},
-													c : FontAwesome.GetIcon('arrows-alt-h')
-												}),
-												spacing : 10,
-												title : MSG('SIDEBAR_TRADE_FAIRY_BUTTON')
-											}),
-											on : {
-												tap : () => {
-													EtherFairy.GO('master/tradefairy');
-													menuLayout.hideLeftMenu();
-												}
-											}
-										})]
-									}));
+									notExists : () => {
+										next();
+									},
 									
-									next(true);
-								}
+									success : () => {
+										
+										leftMenu.append(DIV({
+											style : {
+												width : '100%',
+												borderBottom : '1px solid #444',
+												cursor : 'pointer'
+											},
+											c : [
+											UUI.BUTTON_H({
+												style : {
+													padding : 10,
+													paddingLeft : 10,
+													fontSize : 15
+												},
+												icon : IMG({
+													src : EtherFairy.R('layout/master.png')
+												}),
+												spacing : 10,
+												title : MSG('SIDEBAR_OWNER_MENU_BUTTON')
+											}),
+											
+											// 소유주 홈 버튼
+											DIV({
+												style : {
+													width : '100%',
+													cursor : 'pointer',
+													backgroundColor : '#33393e'
+												},
+												c : UUI.BUTTON_H({
+													style : {
+														padding : 10,
+														paddingLeft : 15,
+														fontSize : 15
+													},
+													icon : SPAN({
+														style : {
+															width : 15,
+															textAlign : 'center'
+														},
+														c : FontAwesome.GetIcon('home')
+													}),
+													spacing : 10,
+													title : MSG('OWNER_HOME_BUTTON')
+												}),
+												on : {
+													tap : () => {
+														EtherFairy.GO('master');
+														menuLayout.hideLeftMenu();
+													}
+												}
+											}),
+											
+											// 요정 구매 버튼
+											DIV({
+												style : {
+													borderTop : '1px solid #222',
+													width : '100%',
+													cursor : 'pointer',
+													backgroundColor : '#33393e'
+												},
+												c : UUI.BUTTON_H({
+													style : {
+														padding : 10,
+														paddingLeft : 15,
+														fontSize : 15
+													},
+													icon : SPAN({
+														style : {
+															width : 15,
+															textAlign : 'center'
+														},
+														c : FontAwesome.GetIcon('shopping-cart')
+													}),
+													spacing : 10,
+													title : MSG('SIDEBAR_BUY_FAIRY_BUTTON')
+												}),
+												on : {
+													tap : () => {
+														EtherFairy.GO('master/buyfairy');
+														menuLayout.hideLeftMenu();
+													}
+												}
+											}),
+											
+											// 요정 거래 버튼
+											DIV({
+												style : {
+													borderTop : '1px solid #222',
+													width : '100%',
+													cursor : 'pointer',
+													backgroundColor : '#33393e'
+												},
+												c : UUI.BUTTON_H({
+													style : {
+														padding : 10,
+														paddingLeft : 15,
+														fontSize : 15
+													},
+													icon : SPAN({
+														style : {
+															width : 15,
+															textAlign : 'center'
+														},
+														c : FontAwesome.GetIcon('arrows-alt-h')
+													}),
+													spacing : 10,
+													title : MSG('SIDEBAR_TRADE_FAIRY_BUTTON')
+												}),
+												on : {
+													tap : () => {
+														EtherFairy.GO('master/tradefairy');
+														menuLayout.hideLeftMenu();
+													}
+												}
+											})]
+										}));
+										
+										next(true);
+									}
+								});
 							});
-						});
-					}
-					
-					else {
-						next();
-					}
-				});
+						}
+						
+						else {
+							next();
+						}
+					});
+				}
+				
+				else {
+					next();
+				}
 			},
 			
 			() => {

@@ -6,7 +6,7 @@ EtherFairy('Master').Join = CLASS({
 	
 	init : (inner, self) => {
 		
-		EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+		Contract2Object.getWalletAddress((walletAddress) => {
 			
 			EtherFairy.Layout.setContent(UUI.PANEL({
 				style : {

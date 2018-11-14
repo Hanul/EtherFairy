@@ -7,8 +7,8 @@ EtherFairy('Master').Home = CLASS({
 	init : (inner, self) => {
 		
 		// 메타마스크가 설치되어 있는 경우
-		if (EtherFairy.WalletManager.checkIsEnable() === true) {
-			EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+		if (Contract2Object.checkWalletEnable() === true) {
+			Contract2Object.getWalletAddress((walletAddress) => {
 				
 				// 소유주가 존재하는지 체크
 				EtherFairy.MasterModel.checkExists(walletAddress, (exists) => {

@@ -89,7 +89,7 @@ EtherFairy.Fairy = CLASS({
 			};
 			
 			// 지갑을 사용할 때는 스마트 계약을 사용한다.
-			if (EtherFairy.WalletManager.checkIsEnable() === true) {
+			if (Contract2Object.checkWalletEnable() === true) {
 				
 				let fairyInfo = {};
 				PARALLEL([
@@ -142,7 +142,7 @@ EtherFairy.Fairy = CLASS({
 							EtherFairy.FairyMarketContract.findSaleIdByFairyId(fairyId, (saleId) => {
 								EtherFairy.FairyMarketContract.getSaleInfo(saleId, (seller, fairyId, price) => {
 									
-									EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+									Contract2Object.getWalletAddress((walletAddress) => {
 										
 										if (walletAddress === seller) {
 											
@@ -199,7 +199,7 @@ EtherFairy.Fairy = CLASS({
 					// 만약 소유주면 소유주 메뉴를 추가합니다.
 					EtherFairy.EtherFairyContract.ownerOf(fairyId, (ownerAddress) => {
 						
-						EtherFairy.WalletManager.getWalletAddress((walletAddress) => {
+						Contract2Object.getWalletAddress((walletAddress) => {
 							
 							if (walletAddress === ownerAddress) {
 								
