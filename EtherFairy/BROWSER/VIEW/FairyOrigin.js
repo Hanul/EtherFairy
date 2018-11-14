@@ -13,44 +13,136 @@ EtherFairy.FairyOrigin = CLASS({
 			EtherFairy.FairyOriginModel.get(fairyOriginId, (fairyOriginData) => {
 				
 				let menu;
+				let designedByPanel;
 				EtherFairy.Layout.setContent(DIV({
 					style : {
-						width : 800,
-						margin : 'auto',
-						padding : '30px 0'
+						padding : '50px 0'
 					},
-					c : [
-					
-					H1({
+					c : DIV({
 						style : {
-							fontSize : 30,
-							fontWeight : 'bold',
-							color : '#FFEA4F',
-							marginBottom : 20
+							position : 'relative',
+							margin : 'auto',
+							width : 886,
+							height : 674,
+							backgroundImage : EtherFairy.R('fairyorigin/background.png')
 						},
-						c : fairyOriginData.name
-					}),
-					
-					EtherFairy.FairyOriginCard({
-						style : {
-							flt : 'left'
-						},
-						fairyOriginData : fairyOriginData
-					}),
-					
-					DIV({
-						style : {
-							width : 420,
-							marginLeft : 20,
-							flt : 'left'
-						},
-						c : [P({
-							c : fairyOriginData.description
-						}), menu = DIV()]
-					}),
-					
-					CLEAR_BOTH()]
+						c : [
+						H1({
+							style : {
+								paddingTop : 12,
+								fontSize : 22,
+								fontWeight : 'bold',
+								color : '#ffde5c',
+								textShadow : EtherFairy.TextBorderShadow('#160b00'),
+								textAlign : 'center'
+							},
+							c : MSG('FAIRY_ORIGIN_TITLE')
+						}),
+						
+						DIV({
+							style : {
+								margin : 'auto',
+								marginTop : 40,
+								width : 760
+							},
+							c : [EtherFairy.FairyOriginCard({
+								style : {
+									flt : 'left'
+								},
+								contentStyle : {
+									backgroundImage : EtherFairy.R('fairyorigin/card.png')
+								},
+								fairyOriginData : fairyOriginData,
+								c : H4({
+									style : {
+										paddingTop : 10,
+										textAlign : 'center',
+										fontSize : 20,
+										fontWeight : 'bold',
+										color : '#9f8263',
+										textShadow : EtherFairy.TextBorderShadow('#1d0e08')
+									},
+									c : MSG('WAIT_PUBLISH')
+								})
+							}),
+							
+							DIV({
+								style : {
+									width : 360,
+									marginLeft : 20,
+									flt : 'right'
+								},
+								c : [H2({
+									style : {
+										fontSize : 20,
+										fontWeight : 'bold',
+										color : '#fff5ef',
+										textShadow : EtherFairy.TextBorderShadow('#1d0e08')
+									},
+									c : fairyOriginData.name
+								}), P({
+									style : {
+										marginTop : 10,
+										paddingBottom : 20,
+										fontSize : 16,
+										fontWeight : 'bold',
+										color : '#5c3115'
+									},
+									c : fairyOriginData.description
+								}), menu = DIV(), designedByPanel = DIV({
+									style : {
+										position : 'absolute',
+										right : 50,
+										bottom : 20
+									}
+								})]
+							}),
+							
+							CLEAR_BOTH()]
+						})]
+					})
 				}));
+				
+				EtherFairy.DesignerModel.get(fairyOriginData.designerId, (designerData) => {
+					
+					designedByPanel.append(DIV({
+						style : {
+							flt : 'left',
+							fontSize : 20,
+							fontWeight : 'bold',
+							color : '#a2834b',
+							paddingTop : 30,
+							marginRight : 10
+						},
+						c : 'Designed by'
+					}));
+					
+					designedByPanel.append(DIV({
+						style : {
+							position : 'relative',
+							flt : 'left',
+							width : 111,
+							height : 93,
+							backgroundImage : EtherFairy.R('fairyorigin/seal.png')
+						},
+						c : SPAN({
+							style : {
+								position : 'absolute',
+								width : 100,
+								textAlign : 'center',
+								left : 8,
+								top : 30,
+								fontSize : 20,
+								fontWeight : 'bold',
+								color : '#ffe7bd',
+								textShadow : EtherFairy.TextBorderShadow('#200803')
+							},
+							c : designerData.nickname
+						})
+					}));
+					
+					designedByPanel.append(CLEAR_BOTH());
+				});
 				
 				// 내가 디자인한 요정인 경우
 				EtherFairy.DesignerModel.checkSigned((signedDesignerData) => {

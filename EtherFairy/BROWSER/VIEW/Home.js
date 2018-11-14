@@ -384,7 +384,7 @@ EtherFairy.Home = CLASS({
 								}
 							}
 						},
-						src : EtherFairy.R('fairysample.png')
+						src : EtherFairy.R('fairysample2.png')
 					}), CLEAR_BOTH()]
 				}),
 				
