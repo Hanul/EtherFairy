@@ -23,6 +23,8 @@ EtherFairy.Layout = CLASS((cls) => {
 			let leftMenu;
 			let startButton;
 			
+			let audioPlayer1;
+			let audioPlayer2;
 			let menuLayout = Yogurt.MenuLayout({
 				
 				style : {
@@ -239,8 +241,7 @@ EtherFairy.Layout = CLASS((cls) => {
 						c : [DIV({
 							style : {
 								width : '100%',
-								borderBottom : '1px solid #444',
-								cursor : 'pointer'
+								borderBottom : '1px solid #444'
 							},
 							c : [UUI.BUTTON_H({
 								style : {
@@ -256,18 +257,20 @@ EtherFairy.Layout = CLASS((cls) => {
 								}),
 								spacing : 10,
 								title : MSG('SIDEBAR_THEME_NAMETAG')
-							}), AUDIO({
+							}), audioPlayer1 = EtherFairy.AudioPlayer({
 								style : {
-									borderTop : '1px solid #444',
-									width : '100%'
+									borderTop : '1px solid #444'
 								},
 								mp3 : EtherFairy.R('theme/etherfairy_theme.mp3')
-							}), AUDIO({
+							}, () => {
+								audioPlayer2.play();
+							}), audioPlayer2 = EtherFairy.AudioPlayer({
 								style : {
-									borderTop : '1px solid #444',
-									width : '100%'
+									borderTop : '1px solid #444'
 								},
 								mp3 : EtherFairy.R('theme/etherfairy_track2.mp3')
+							}, () => {
+								audioPlayer1.play();
 							})]
 						}), DIV({
 							style : {
