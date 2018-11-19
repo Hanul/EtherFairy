@@ -23,7 +23,7 @@ EtherFairy('Master').BuyFairy = CLASS({
 					color : '#FFEA4F',
 					marginBottom : 20
 				},
-				c : MSG('FAIRY_ORIGIN_LIST')
+				c : MSG('BUY_FAIRY_TITLE')
 			}),
 			
 			totalFairyOriginInfoPanel = DIV(),
@@ -39,6 +39,9 @@ EtherFairy('Master').BuyFairy = CLASS({
 		}));
 		
 		EtherFairy.FairyOriginModel.find({
+			filter : {
+				isPublished : true
+			},
 			count : 20
 		}, (fairyOriginDataSet) => {
 			

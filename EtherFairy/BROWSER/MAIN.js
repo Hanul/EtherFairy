@@ -79,6 +79,12 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Master.Home
 			});
 			
+			// 소유주 정보 수정
+			EtherFairy.MATCH_VIEW({
+				uri : 'master/updateinfo',
+				target : EtherFairy.Master.UpdateInfo
+			});
+			
 			// 요정 구매
 			EtherFairy.MATCH_VIEW({
 				uri : 'master/buyfairy',
@@ -91,11 +97,13 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Master.TradeFairy
 			});
 			
+			// 요정 거래 시작
 			EtherFairy.MATCH_VIEW({
 				uri : 'master/starttradefairy',
 				target : EtherFairy.Master.StartTradeFairy
 			});
 			
+			// 소유주 랭킹
 			EtherFairy.MATCH_VIEW({
 				uri : 'master/ranking',
 				target : EtherFairy.Master.Ranking
@@ -109,7 +117,8 @@ EtherFairy.MAIN = METHOD({
 					'master/buyfairy',
 					'master/tradefairy',
 					'master/starttradefairy',
-					'master/ranking'
+					'master/ranking',
+					'master/updateinfo'
 				],
 				target : EtherFairy.Master.Info
 			});
@@ -136,6 +145,12 @@ EtherFairy.MAIN = METHOD({
 			EtherFairy.MATCH_VIEW({
 				uri : 'designer',
 				target : EtherFairy.Designer.Home
+			});
+			
+			// 디자이너 정보 수정
+			EtherFairy.MATCH_VIEW({
+				uri : 'designer/updateinfo',
+				target : EtherFairy.Designer.UpdateInfo
 			});
 			
 			// 페어리 원형 디자인 폼

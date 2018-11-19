@@ -103,11 +103,23 @@ EtherFairy('Designer').Home = CLASS({
 							marginLeft : 20,
 							flt : 'left'
 						},
-						c : [fairyOriginCountPanel = DIV(), 
+						c : [fairyOriginCountPanel = DIV(),
 						
 						Yogurt.Button({
 							style : {
 								marginTop : 20
+							},
+							c : MSG('UPDATE_DESIGNER_INFO_BUTTON'),
+							on : {
+								tap : () => {
+									EtherFairy.GO('designer/updateinfo');
+								}
+							}
+						}),
+						
+						Yogurt.Button({
+							style : {
+								marginTop : 10
 							},
 							c : MSG('DESIGN_FAIRY'),
 							on : {

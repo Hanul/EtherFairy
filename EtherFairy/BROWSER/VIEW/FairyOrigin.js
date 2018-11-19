@@ -36,7 +36,7 @@ EtherFairy.FairyOrigin = CLASS({
 								textShadow : EtherFairy.TextBorderShadow('#160b00'),
 								textAlign : 'center'
 							},
-							c : MSG('FAIRY_ORIGIN_TITLE')
+							c : MSG('FAIRY_ORIGINAL_TITLE')
 						}),
 						
 						DIV({
@@ -62,7 +62,7 @@ EtherFairy.FairyOrigin = CLASS({
 										color : '#9f8263',
 										textShadow : EtherFairy.TextBorderShadow('#1d0e08')
 									},
-									c : MSG('WAIT_PUBLISH')
+									c : MSG('FAIRY_ORIGINAL_PENDING_NAMETAG')
 								})
 							}),
 							
@@ -144,100 +144,151 @@ EtherFairy.FairyOrigin = CLASS({
 					designedByPanel.append(CLEAR_BOTH());
 				});
 				
-				// 내가 디자인한 요정인 경우
-				EtherFairy.DesignerModel.checkSigned((signedDesignerData) => {
+				if (fairyOriginData.isInReview === true) {
 					
-					if (fairyOriginData.designerId === signedDesignerData.id) {
-						
-						// 수정 버튼
-						menu.append(Yogurt.Button({
-							style : {
-								marginTop : 10
-							},
-							c : MSG('MODIFY_FAIRY_BUTTON'),
-							on : {
-								tap : () => {
-									EtherFairy.GO('designer/designfairy/' + fairyOriginData.id);
-								}
-							}
-						}));
-						
-						// 심사 등록 버튼
-						menu.append(Yogurt.Button({
-							style : {
-								marginTop : 10
-							},
-							c : MSG('REGIST_EXAMINE_FAIRY_BUTTON'),
-							on : {
-								tap : () => {
-									alert('준비중입니다.');
-								}
-							}
-						}));
-					}
-				});
+					// 심사중인 요정
+					menu.append(P({
+						style : {
+							marginTop : 10,
+							fontStyle : 'italic',
+							fontSize : 20,
+							fontWeight : 'bold',
+							color : '#a2834b'
+						},
+						c : MSG('WAIT_EXAMINE_FAIRY')
+					}));
+				}
 				
 				// 메타마스크가 설치되어 있는 경우
 				if (Contract2Object.checkWalletEnable() === true) {
 					
-					// 소유주가 접속해 있으면 소유주 메뉴 추가
-					Contract2Object.checkWalletLocked((isLocked) => {
+					if (fairyOriginData.isPublished === true) {
 						
-						if (isLocked !== true) {
+						// 소유주가 접속해 있으면 소유주 메뉴 추가
+						Contract2Object.checkWalletLocked((isLocked) => {
 							
-							Contract2Object.getWalletAddress((walletAddress) => {
+							if (isLocked !== true) {
 								
-								EtherFairy.MasterModel.get(walletAddress, {
-									notExists : () => {
-										// ignore.
-									},
-									success : () => {
+								Contract2Object.getWalletAddress((walletAddress) => {
+									
+									EtherFairy.MasterModel.get(walletAddress, {
+										notExists : () => {
+											// ignore.
+										},
+										success : () => {
+											
+											menu.append(Yogurt.Button({
+												style : {
+													marginTop : 10
+												},
+												c : MSG('BUY_FAIRY_BUTTON'),
+												on : {
+													tap : () => {
+														
+														// 이름 입력받기
+														Yogurt.Prompt(MSG('BUY_FAIRY_BUY_DIALOGBOX_TITLE'), (fairyName) => {
+															
+															let loadingPanel;
+															
+															menu.append(loadingPanel = DIV({
+																style : {
+																	padding : '20px 0'
+																},
+																c : MSG('BUY_FAIRY_BUY_NOW_BUYING_DESCRIPTION')
+															}));
+															
+															EtherFairy.DesignerModel.get(fairyOriginData.designerId, (designerData) => {
+																
+																// 요정 탄생시키기
+																EtherFairy.EtherFairyContract.birthFairy({
+																	fairyOriginId : fairyOriginData.id,
+																	designer : designerData.walletAddress,
+																	name : fairyName,
+																	firePointPerLevel : fairyOriginData.firePointPerLevel,
+																	waterPointPerLevel : fairyOriginData.waterPointPerLevel,
+																	windPointPerLevel : fairyOriginData.windPointPerLevel,
+																	earthPointPerLevel : fairyOriginData.earthPointPerLevel,
+																	lightPointPerLevel : fairyOriginData.lightPointPerLevel,
+																	darkPointPerLevel : fairyOriginData.darkPointPerLevel,
+																	ether : 0.05
+																}, {
+																	error : (errorMsg) => {
+																		alert(errorMsg);
+																		loadingPanel.remove();
+																	},
+																	success : () => {
+																		loadingPanel.remove();
+																		EtherFairy.GO('master/managefairy');
+																	}
+																});
+															});
+														});
+													}
+												}
+											}));
+										}
+									});
+								});
+							}
+						});
+					}
+					
+					else {
+						
+						if (fairyOriginData.isInReview === true) {
+							
+							// 내가 디자인한 요정인 경우
+							EtherFairy.DesignerModel.checkSigned((signedDesignerData) => {
+								
+								if (fairyOriginData.designerId === signedDesignerData.id) {
+									
+									// 심사 취소 버튼
+									menu.append(Yogurt.Button({
+										style : {
+											marginTop : 10
+										},
+										c : MSG('CANCEL_EXAMINE_FAIRY_BUTTON'),
+										on : {
+											tap : () => {
+												
+												//TODO: 로딩 필요
+												
+												EtherFairy.FairyOriginModel.update({
+													id : fairyOriginData.id,
+													isInReview : false
+												}, () => {
+													REFRESH();
+												});
+											}
+										}
+									}));
+								}
+							});
+							
+							// 관리자인 경우
+							EtherFairy.EtherFairyContract.company((companyAddress) => {
+								
+								Contract2Object.getWalletAddress((walletAddress) => {
+									
+									if (walletAddress === companyAddress) {
 										
+										// 심사 통과 버튼
 										menu.append(Yogurt.Button({
 											style : {
 												marginTop : 10
 											},
-											c : MSG('BUY_FAIRY_BUTTON'),
+											c : '심사 통과',
 											on : {
 												tap : () => {
 													
-													// 이름 입력받기
-													Yogurt.Prompt(MSG('PLEASE_ENTER_FAIRY_NAME'), (fairyName) => {
-														
-														let loadingPanel;
-														
-														menu.append(loadingPanel = DIV({
-															style : {
-																padding : '20px 0'
-															},
-															c : MSG('BUYING_FAIRY')
-														}));
-														
-														EtherFairy.DesignerModel.get(fairyOriginData.designerId, (designerData) => {
-															
-															// 요정 탄생시키기
-															EtherFairy.EtherFairyContract.birthFairy({
-																fairyOriginId : fairyOriginData.id,
-																designer : designerData.walletAddress,
-																name : fairyName,
-																firePointPerLevel : fairyOriginData.firePointPerLevel,
-																waterPointPerLevel : fairyOriginData.waterPointPerLevel,
-																windPointPerLevel : fairyOriginData.windPointPerLevel,
-																earthPointPerLevel : fairyOriginData.earthPointPerLevel,
-																lightPointPerLevel : fairyOriginData.lightPointPerLevel,
-																darkPointPerLevel : fairyOriginData.darkPointPerLevel,
-																ether : 0.05
-															}, {
-																error : (errorMsg) => {
-																	alert(errorMsg);
-																	loadingPanel.remove();
-																},
-																success : () => {
-																	loadingPanel.remove();
-																	EtherFairy.GO('master/managefairy');
-																}
-															});
-														});
+													//TODO: 로딩 필요
+													
+													EtherFairy.FairyOriginModel.update({
+														id : fairyOriginData.id,
+														isInReview : false,
+														isPublished : true
+													}, () => {
+														REFRESH();
 													});
 												}
 											}
@@ -245,8 +296,69 @@ EtherFairy.FairyOrigin = CLASS({
 									}
 								});
 							});
+							
+						} else {
+							
+							// 내가 디자인한 요정인 경우
+							EtherFairy.DesignerModel.checkSigned((signedDesignerData) => {
+								
+								if (fairyOriginData.designerId === signedDesignerData.id) {
+									
+									// 수정 버튼
+									menu.append(Yogurt.Button({
+										style : {
+											marginTop : 10
+										},
+										c : MSG('MODIFY_FAIRY_BUTTON'),
+										on : {
+											tap : () => {
+												EtherFairy.GO('designer/designfairy/' + fairyOriginData.id);
+											}
+										}
+									}));
+									
+									// 심사 등록 버튼
+									menu.append(Yogurt.Button({
+										style : {
+											marginTop : 10
+										},
+										c : MSG('REGIST_EXAMINE_FAIRY_BUTTON'),
+										on : {
+											tap : () => {
+												
+												if (VALID.notEmpty(signedDesignerData.walletAddress) === true) {
+													
+													Yogurt.Confirm({
+														msg : MSG('REGIST_EXAMINE_FAIRY_ALERT')
+													}, () => {
+														
+														//TODO: 로딩 필요
+														
+														EtherFairy.FairyOriginModel.update({
+															id : fairyOriginData.id,
+															isInReview : true
+														}, () => {
+															REFRESH();
+														});
+													});
+												}
+												
+												else {
+													
+													Yogurt.Confirm({
+														msg : MSG('NOT_EXISTS_DESIGNER_WALLET_ADDRESS'),
+														okButtonTitle : MSG('UPDATE_DESIGNER_INFO_BUTTON')
+													}, () => {
+														EtherFairy.GO('designer/updateinfo');
+													});
+												}
+											}
+										}
+									}));
+								}
+							});
 						}
-					});
+					}
 				}
 				
 				EtherFairy.EtherFairyContract.getFairyCountByOriginId(fairyOriginId, (fairyCount) => {

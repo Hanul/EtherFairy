@@ -106,13 +106,26 @@ EtherFairy.Layout = CLASS((cls) => {
 	
 					// title
 					title : A({
-						c : IMG({
+						style : {
+							position : 'relative'
+						},
+						c : [IMG({
 							style : {
 								marginTop : -5,
 								width : 192
 							},
 							src : EtherFairy.R('logo.png')
-						}),
+						}), SPAN({
+							style : {
+								position : 'absolute',
+								right : -10,
+								bottom : 10,
+								fontStyle : 'italic',
+								fontSize : 14,
+								color : '#FFCC33'
+							},
+							c : 'beta'
+						}), CLEAR_BOTH()],
 						on : {
 							tap : () => {
 								EtherFairy.GO('');
@@ -261,14 +274,24 @@ EtherFairy.Layout = CLASS((cls) => {
 								style : {
 									borderTop : '1px solid #444'
 								},
-								mp3 : EtherFairy.R('theme/etherfairy_theme.mp3')
+								mp3 : EtherFairy.R('theme/etherfairy_theme.mp3'),
+								on : {
+									play : () => {
+										audioPlayer2.stop();
+									}
+								}
 							}, () => {
 								audioPlayer2.play();
 							}), audioPlayer2 = EtherFairy.AudioPlayer({
 								style : {
 									borderTop : '1px solid #444'
 								},
-								mp3 : EtherFairy.R('theme/etherfairy_track2.mp3')
+								mp3 : EtherFairy.R('theme/etherfairy_track2.mp3'),
+								on : {
+									play : () => {
+										audioPlayer1.stop();
+									}
+								}
 							}, () => {
 								audioPlayer1.play();
 							})]
@@ -291,7 +314,7 @@ EtherFairy.Layout = CLASS((cls) => {
 									c : FontAwesome.GetIcon('tasks')
 								}),
 								spacing : 10,
-								title : MSG('RUNNING_PROCESS_TITLE')
+								title : MSG('SIDEBAR_RUNNING_PROCESS_NAMETAG')
 							}), processList = DIV()]
 						})]
 					})
@@ -342,14 +365,14 @@ EtherFairy.Layout = CLASS((cls) => {
 								},
 								target : '_blank',
 								href : 'https://btncafe.com',
-								c : MSG('TERMS')
+								c : MSG('FOOTER_TERMS_BUTTON')
 							}), A({
 								style : {
 									marginLeft : 20
 								},
 								target : '_blank',
 								href : INFO.getLang() === 'ko' ? 'https://btncafe.com/R/privacy-kr.html' : (INFO.getLang().substring(0, 2) === 'zh' ? 'https://btncafe.com/R/privacy-zh.html' : 'https://btncafe.com/R/privacy.html'),
-								c : MSG('PRIVACY')
+								c : MSG('FOOTER_PRIVACY_BUTTON')
 							})]
 						}), DIV({
 							style : {

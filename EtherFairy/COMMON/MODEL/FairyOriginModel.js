@@ -63,6 +63,10 @@ EtherFairy.FairyOriginModel = OBJECT({
 				integer : true
 			},
 			
+			isInReview : {
+				bool : true
+			},
+			
 			isPublished : {
 				bool : true
 			}

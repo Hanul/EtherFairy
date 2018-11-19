@@ -122,7 +122,19 @@ EtherFairy('Master').Home = CLASS({
 										marginLeft : 20,
 										flt : 'left'
 									},
-									c : [fairyCountPanel = DIV()]
+									c : [fairyCountPanel = DIV(),
+									
+									Yogurt.Button({
+										style : {
+											marginTop : 20
+										},
+										c : MSG('UPDATE_MASTER_INFO_BUTTON'),
+										on : {
+											tap : () => {
+												EtherFairy.GO('master/updateinfo');
+											}
+										}
+									})]
 								}),
 								
 								CLEAR_BOTH(),

@@ -73,6 +73,8 @@ EtherFairy.AudioPlayer = CLASS((cls) => {
 							playButton.append(IMG({
 								src : EtherFairy.R('player/pause.png')
 							}));
+							
+							self.fireEvent('play');
 						}
 						
 						else {
@@ -214,6 +216,16 @@ EtherFairy.AudioPlayer = CLASS((cls) => {
 			
 			let play = self.play = () => {
 				playButton.tap();
+			};
+			
+			let stop = self.stop = () => {
+				
+				sound.stop();
+				
+				playButton.empty();
+				playButton.append(IMG({
+					src : EtherFairy.R('player/play.png')
+				}));
 			};
 		}
 	};
