@@ -20,11 +20,6 @@ EtherFairy.AdminRoom = OBJECT({
 					ret(false);
 				}
 			});
-			
-			// 운영자 로그인 체크
-			on('checkIsAdmin', (notUsing, ret) => {
-				ret(checkIsAdmin());
-			});
 		});
 	}
 });

@@ -94,6 +94,18 @@ EtherFairy('Company').ManageService = CLASS({
 				}
 			}));
 			
+			menu.append(Yogurt.Button({
+				style : {
+					marginTop : 10
+				},
+				title : '요정 관리',
+				on : {
+					tap : () => {
+						EtherFairy.GO('company/managefairyorigin');
+					}
+				}
+			}));
+			
 			/*menu.append(DIV({
 				style : {
 					marginTop : 10

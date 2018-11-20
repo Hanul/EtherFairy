@@ -251,12 +251,13 @@ EtherFairy.FairyOrigin = CLASS({
 										on : {
 											tap : () => {
 												
-												//TODO: 로딩 필요
+												let loading = EtherFairy.Loading();
 												
 												EtherFairy.FairyOriginModel.update({
 													id : fairyOriginData.id,
 													isInReview : false
 												}, () => {
+													loading.remove();
 													REFRESH();
 												});
 											}
@@ -326,16 +327,13 @@ EtherFairy.FairyOrigin = CLASS({
 														msg : MSG('REGIST_EXAMINE_FAIRY_ALERT')
 													}, () => {
 														
-														let loading = UUI.LOADING({
-															indicator : IMG({
-																src : EtherFairy.R('loading.png')
-															})
-														});
+														let loading = EtherFairy.Loading();
 														
 														EtherFairy.FairyOriginModel.update({
 															id : fairyOriginData.id,
 															isInReview : true
 														}, () => {
+															loading.remove();
 															REFRESH();
 														});
 													});

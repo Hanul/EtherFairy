@@ -4,9 +4,10 @@ EtherFairy.AdminController = OBJECT({
 		
 		let adminRoom = EtherFairy.ROOM('Admin');
 		
+		let passwordStore = EtherFairy.COOKIE_STORE('passwordStore');
+		
 		let auth = self.auth = (callback) => {
 			
-			let passwordStore = EtherFairy.COOKIE_STORE('passwordStore');
 			let password = passwordStore.get('password');
 			
 			if (password === undefined) {
@@ -32,12 +33,20 @@ EtherFairy.AdminController = OBJECT({
 		
 		let check = self.check = (callback) => {
 			
-			adminRoom.send('checkIsAdmin', (isAdmin) => {
+			let password = passwordStore.get('password');
+			
+			if (password !== undefined) {
 				
-				if (isAdmin === true) {
-					callback();
-				}
-			});
+				adminRoom.send({
+					methodName : 'auth',
+					data : password
+				}, (isOk) => {
+					if (isOk === true) {
+						
+						callback();
+					}
+				});
+			}
 		};
 	}
 });

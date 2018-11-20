@@ -186,6 +186,11 @@ EtherFairy.MAIN = METHOD({
 				uri : 'company/designeridentity',
 				target : EtherFairy.Company.DesignerIdentity
 			});
+			
+			EtherFairy.MATCH_VIEW({
+				uri : 'company/managefairyorigin',
+				target : EtherFairy.Company.ManageFairyOrigin
+			});
 		});
 	}
 });
