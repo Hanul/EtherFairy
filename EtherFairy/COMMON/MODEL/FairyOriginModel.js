@@ -67,6 +67,10 @@ EtherFairy.FairyOriginModel = OBJECT({
 				bool : true
 			},
 			
+			publishTime : {
+				date : true
+			},
+			
 			isPublished : {
 				bool : true
 			}

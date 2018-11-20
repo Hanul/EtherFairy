@@ -32,7 +32,7 @@ EtherFairy.FairyCard = CLASS({
 				textAlign : 'center'
 			},
 			c : IMG({
-				src : EtherFairy.R('loading.svg')
+				src : EtherFairy.R('loading.png')
 			})
 		}));
 		
