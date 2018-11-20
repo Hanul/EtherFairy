@@ -173,7 +173,7 @@ EtherFairy.MAIN = METHOD({
 			
 			// 서비스 관리 페이지
 			EtherFairy.MATCH_VIEW({
-				uri : 'company/manageservice',
+				uri : 'company',
 				target : EtherFairy.Company.ManageService
 			});
 			

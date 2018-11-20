@@ -266,35 +266,29 @@ EtherFairy.FairyOrigin = CLASS({
 							});
 							
 							// 관리자인 경우
-							EtherFairy.EtherFairyContract.company((companyAddress) => {
+							EtherFairy.AdminController.check(() => {
 								
-								Contract2Object.getWalletAddress((walletAddress) => {
-									
-									if (walletAddress === companyAddress) {
-										
-										// 심사 통과 버튼
-										menu.append(Yogurt.Button({
-											style : {
-												marginTop : 10
-											},
-											c : '심사 통과',
-											on : {
-												tap : () => {
-													
-													//TODO: 로딩 필요
-													
-													EtherFairy.FairyOriginModel.update({
-														id : fairyOriginData.id,
-														isInReview : false,
-														isPublished : true
-													}, () => {
-														REFRESH();
-													});
-												}
-											}
-										}));
+								// 심사 통과 버튼
+								menu.append(Yogurt.Button({
+									style : {
+										marginTop : 10
+									},
+									c : '심사 통과',
+									on : {
+										tap : () => {
+											
+											//TODO: 로딩 필요
+											
+											EtherFairy.FairyOriginModel.update({
+												id : fairyOriginData.id,
+												isInReview : false,
+												isPublished : true
+											}, () => {
+												REFRESH();
+											});
+										}
 									}
-								});
+								}));
 							});
 							
 						} else {
@@ -332,7 +326,11 @@ EtherFairy.FairyOrigin = CLASS({
 														msg : MSG('REGIST_EXAMINE_FAIRY_ALERT')
 													}, () => {
 														
-														//TODO: 로딩 필요
+														let loading = UUI.LOADING({
+															indicator : IMG({
+																src : EtherFairy.R('loading.png')
+															})
+														});
 														
 														EtherFairy.FairyOriginModel.update({
 															id : fairyOriginData.id,

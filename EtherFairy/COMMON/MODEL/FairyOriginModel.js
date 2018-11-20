@@ -81,7 +81,8 @@ EtherFairy.FairyOriginModel = OBJECT({
 				},
 				update : {
 					valid : VALID(validDataSet),
-					authKey : 'designerId'
+					authKey : 'designerId',
+					adminRole : EtherFairy.ROLE.ADMIN
 				},
 				remove : false
 			}
