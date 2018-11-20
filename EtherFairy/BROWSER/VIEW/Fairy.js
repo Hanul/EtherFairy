@@ -522,7 +522,7 @@ EtherFairy.Fairy = CLASS({
 											tap : () => {
 												EtherFairy.EtherFairyContract.increaseFirePointPerLevel({
 													fairyId : fairyId,
-													ether : 0.01 * fairyInfo.firePointPerLevel
+													ether : 0.01 * (fairyInfo.firePointPerLevel + 1)
 												}, () => {
 													EtherFairy.REFRESH('fairy/' + fairyId);
 												});
@@ -566,7 +566,7 @@ EtherFairy.Fairy = CLASS({
 											tap : () => {
 												EtherFairy.EtherFairyContract.increaseWaterPointPerLevel({
 													fairyId : fairyId,
-													ether : 0.01 * fairyInfo.waterPointPerLevel
+													ether : 0.01 * (fairyInfo.waterPointPerLevel + 1)
 												}, () => {
 													EtherFairy.REFRESH('fairy/' + fairyId);
 												});
@@ -610,7 +610,7 @@ EtherFairy.Fairy = CLASS({
 											tap : () => {
 												EtherFairy.EtherFairyContract.increaseWindPointPerLevel({
 													fairyId : fairyId,
-													ether : 0.01 * fairyInfo.windPointPerLevel
+													ether : 0.01 * (fairyInfo.windPointPerLevel + 1)
 												}, () => {
 													EtherFairy.REFRESH('fairy/' + fairyId);
 												});
@@ -654,7 +654,7 @@ EtherFairy.Fairy = CLASS({
 											tap : () => {
 												EtherFairy.EtherFairyContract.increaseEarthPointPerLevel({
 													fairyId : fairyId,
-													ether : 0.01 * fairyInfo.earthPointPerLevel
+													ether : 0.01 * (fairyInfo.earthPointPerLevel + 1)
 												}, () => {
 													EtherFairy.REFRESH('fairy/' + fairyId);
 												});
@@ -698,7 +698,7 @@ EtherFairy.Fairy = CLASS({
 											tap : () => {
 												EtherFairy.EtherFairyContract.increaseLightPointPerLevel({
 													fairyId : fairyId,
-													ether : 0.01 * fairyInfo.lightPointPerLevel
+													ether : 0.01 * (fairyInfo.lightPointPerLevel + 1)
 												}, () => {
 													EtherFairy.REFRESH('fairy/' + fairyId);
 												});
@@ -741,7 +741,7 @@ EtherFairy.Fairy = CLASS({
 											tap : () => {
 												EtherFairy.EtherFairyContract.increaseDarkPointPerLevel({
 													fairyId : fairyId,
-													ether : 0.01 * fairyInfo.darkPointPerLevel
+													ether : 0.01 * (fairyInfo.darkPointPerLevel + 1)
 												}, () => {
 													EtherFairy.REFRESH('fairy/' + fairyId);
 												});
