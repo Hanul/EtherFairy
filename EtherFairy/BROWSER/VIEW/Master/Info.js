@@ -104,7 +104,7 @@ EtherFairy('Master').Info = CLASS({
 							style : {
 								width : 100
 							},
-							src : EtherFairy.R('loading.svg')
+							src : EtherFairy.R('loading.png')
 						})
 					})]
 				}));
