@@ -19,6 +19,9 @@ BOOT({
 		
 		dbName : 'EtherFairy-test',
 		
+		infuraServerName : 'kovan',
+		infuraProjectId : '4e4b35a4604844b2b9e1fc6ef4905129',
+		
 		EtherFairy : {
 			adminPassword : 'Ekqlscl9'
 		}
