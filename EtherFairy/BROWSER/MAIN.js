@@ -12,6 +12,14 @@ EtherFairy.MAIN = METHOD({
 			ttf : EtherFairy.R('font/NanumMyeongjo-Regular.ttf')
 		});
 		
+		// 폰트 크기로 인해 메뉴가 꼬이는 현상 개선
+		FontFaceOnload('Nanum Myeongjo', {
+			success : () => {
+				EVENT.fireAll('resize');
+			},
+			glyphs : '\uE600\uE601\uE602\uE605'
+		});
+		
 		BODY.addStyle({
 			cursor : 'url(' + EtherFairy.R('cursor.png') + ') 1 2, auto',
 			overflowY : 'scroll'

@@ -146,12 +146,8 @@ EtherFairy.Layout = CLASS((cls) => {
 								padding : 10,
 								fontSize : 15
 							},
-							icon : SPAN({
-								style : {
-									width : 15,
-									textAlign : 'center'
-								},
-								c : FontAwesome.GetIcon('home')
+							icon : IMG({
+								src : EtherFairy.R('layout/home.png')
 							}),
 							spacing : 10,
 							title : MSG('SIDEBAR_HOME_BUTTON')
@@ -173,12 +169,8 @@ EtherFairy.Layout = CLASS((cls) => {
 								padding : 10,
 								fontSize : 15
 							},
-							icon : SPAN({
-								style : {
-									width : 15,
-									textAlign : 'center'
-								},
-								c : FontAwesome.GetIcon('sign-in-alt')
+							icon : IMG({
+								src : EtherFairy.R('layout/login.png')
 							}),
 							spacing : 10,
 							title : MSG('SIDEBAR_START_BUTTON')
@@ -200,12 +192,8 @@ EtherFairy.Layout = CLASS((cls) => {
 								padding : 10,
 								fontSize : 15
 							},
-							icon : SPAN({
-								style : {
-									width : 15,
-									textAlign : 'center'
-								},
-								c : FontAwesome.GetIcon('trophy')
+							icon : IMG({
+								src : EtherFairy.R('layout/trade.png')
 							}),
 							spacing : 10,
 							title : MSG('SIDEBAR_LEADERBOARD_BUTTON')
@@ -227,12 +215,8 @@ EtherFairy.Layout = CLASS((cls) => {
 								padding : 10,
 								fontSize : 15
 							},
-							icon : SPAN({
-								style : {
-									width : 15,
-									textAlign : 'center'
-								},
-								c : FontAwesome.GetIcon('list-ol')
+							icon : IMG({
+								src : EtherFairy.R('layout/masterrank.png')
 							}),
 							spacing : 10,
 							title : MSG('SIDEBAR_OWNER_LEADERBOARD_BUTTON')
@@ -261,12 +245,8 @@ EtherFairy.Layout = CLASS((cls) => {
 									padding : 10,
 									fontSize : 15
 								},
-								icon : SPAN({
-									style : {
-										width : 15,
-										textAlign : 'center'
-									},
-									c : FontAwesome.GetIcon('music')
+								icon : IMG({
+									src : EtherFairy.R('layout/music.png')
 								}),
 								spacing : 10,
 								title : MSG('SIDEBAR_THEME_NAMETAG')
@@ -306,12 +286,8 @@ EtherFairy.Layout = CLASS((cls) => {
 									padding : 10,
 									fontSize : 15
 								},
-								icon : SPAN({
-									style : {
-										width : 15,
-										textAlign : 'center'
-									},
-									c : FontAwesome.GetIcon('tasks')
+								icon : IMG({
+									src : EtherFairy.R('layout/doing.png')
 								}),
 								spacing : 10,
 								title : MSG('SIDEBAR_RUNNING_PROCESS_NAMETAG')
@@ -452,12 +428,8 @@ EtherFairy.Layout = CLASS((cls) => {
 														paddingLeft : 15,
 														fontSize : 15
 													},
-													icon : SPAN({
-														style : {
-															width : 15,
-															textAlign : 'center'
-														},
-														c : FontAwesome.GetIcon('home')
+													icon : IMG({
+														src : EtherFairy.R('layout/master.png')
 													}),
 													spacing : 10,
 													title : MSG('OWNER_HOME_BUTTON')
@@ -484,12 +456,8 @@ EtherFairy.Layout = CLASS((cls) => {
 														paddingLeft : 15,
 														fontSize : 15
 													},
-													icon : SPAN({
-														style : {
-															width : 15,
-															textAlign : 'center'
-														},
-														c : FontAwesome.GetIcon('shopping-cart')
+													icon : IMG({
+														src : EtherFairy.R('layout/buy.png')
 													}),
 													spacing : 10,
 													title : MSG('SIDEBAR_BUY_FAIRY_BUTTON')
@@ -516,12 +484,8 @@ EtherFairy.Layout = CLASS((cls) => {
 														paddingLeft : 15,
 														fontSize : 15
 													},
-													icon : SPAN({
-														style : {
-															width : 15,
-															textAlign : 'center'
-														},
-														c : FontAwesome.GetIcon('arrows-alt-h')
+													icon : IMG({
+														src : EtherFairy.R('layout/trade.png')
 													}),
 													spacing : 10,
 													title : MSG('SIDEBAR_TRADE_FAIRY_BUTTON')
@@ -590,12 +554,8 @@ EtherFairy.Layout = CLASS((cls) => {
 										paddingLeft : 15,
 										fontSize : 15
 									},
-									icon : SPAN({
-										style : {
-											width : 15,
-											textAlign : 'center'
-										},
-										c : FontAwesome.GetIcon('home')
+									icon : IMG({
+										src : EtherFairy.R('layout/designer.png')
 									}),
 									spacing : 10,
 									title : MSG('DESIGNER_HOME_BUTTON')
@@ -622,12 +582,8 @@ EtherFairy.Layout = CLASS((cls) => {
 										paddingLeft : 15,
 										fontSize : 15
 									},
-									icon : SPAN({
-										style : {
-											width : 15,
-											textAlign : 'center'
-										},
-										c : FontAwesome.GetIcon('dollar-sign')
+									icon : IMG({
+										src : EtherFairy.R('layout/income.png')
 									}),
 									spacing : 10,
 									title : MSG('SIDEBAR_MANAGE_SALES_BUTTON')
@@ -654,12 +610,8 @@ EtherFairy.Layout = CLASS((cls) => {
 										paddingLeft : 15,
 										fontSize : 15
 									},
-									icon : SPAN({
-										style : {
-											width : 15,
-											textAlign : 'center'
-										},
-										c : FontAwesome.GetIcon('sign-out-alt')
+									icon : IMG({
+										src : EtherFairy.R('layout/logout.png')
 									}),
 									spacing : 10,
 									title : MSG('LOGOUT')

@@ -31,7 +31,8 @@ EtherFairy.Start = CLASS({
 				style : {
 					fontSize : 30,
 					fontWeight : 'bold',
-					color : '#FFEA4F',
+					color : '#ffd964',
+					textShadown : EtherFairy.TextBorderShadow('#382109'),
 					marginBottom : 40,
 					textAlign : 'center'
 				},

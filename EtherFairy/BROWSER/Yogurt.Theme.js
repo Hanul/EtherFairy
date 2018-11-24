@@ -11,10 +11,11 @@ Yogurt.Theme = {
 	menuLayoutMenuBackgroundColor : '#171a1d',
 	
 	// 버튼 관련 스타일
-	buttonColor : '#336600',
-	buttonTitleColor : '#fff5cb',
+	buttonColor : '#2a4813',
+	buttonTitleColor : '#e1ceaa',
 	buttonMouseoverColor : '#509122',
-	buttonMouseoverTitleColor : '#fff5cb',
+	buttonMouseoverTitleColor : '#e1ceaa',
+	buttonBorder : '1px solid #353b40',
 	
 	// 폼 관련 스타일
 	inputBorderColor : '#999',

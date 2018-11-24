@@ -72,7 +72,7 @@ EtherFairy.Home = CLASS({
 						style : {
 							color : '#fff',
 							fontWeight : 'bold',
-							textShadow : '0 0 40px #000000, 0 0 40px #000000, 0 0 40px #000000',
+							textShadow : INFO.getOSName() === 'Android' || INFO.getOSName() === 'iOS' ? undefined : '0 0 40px #000000, 0 0 40px #000000, 0 0 40px #000000',
 							onDisplayResize : (width, height) => {
 								if (width < 620) {
 									return {
@@ -116,6 +116,7 @@ EtherFairy.Home = CLASS({
 					padding : 10,
 					margin : 'auto',
 					paddingBottom : 50,
+					color : '#fff4d8',
 					onDisplayResize : (width, height) => {
 						if (width < 620) {
 							return {
@@ -209,7 +210,8 @@ EtherFairy.Home = CLASS({
 						c : [H2({
 							style : {
 								fontWeight : 'bold',
-								color : '#fff5cb',
+								color : '#ffe4a4',
+								textShadow : EtherFairy.ThinTextBorderShadow('#775228'),
 								onDisplayResize : (width, height) => {
 									if (width < 620) {
 										return {
@@ -307,7 +309,8 @@ EtherFairy.Home = CLASS({
 								marginTop : 80,
 								fontSize : 30,
 								fontWeight : 'bold',
-								color : '#fff5cb',
+								color : '#ffe4a4',
+								textShadow : EtherFairy.ThinTextBorderShadow('#775228'),
 								onDisplayResize : (width, height) => {
 									if (width < 620) {
 										return {

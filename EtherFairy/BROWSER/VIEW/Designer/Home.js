@@ -28,7 +28,8 @@ EtherFairy('Designer').Home = CLASS({
 						style : {
 							fontSize : 30,
 							fontWeight : 'bold',
-							color : '#FFEA4F',
+							color : '#ffd964',
+							textShadow : EtherFairy.TextBorderShadow('#382109'),
 							marginBottom : 20
 						},
 						c : signedDesignerData.nickname
@@ -100,33 +101,47 @@ EtherFairy('Designer').Home = CLASS({
 					
 					DIV({
 						style : {
+							position : 'relative',
 							marginLeft : 20,
-							flt : 'left'
+							flt : 'left',
+							height : 200
 						},
-						c : [fairyOriginCountPanel = DIV(),
-						
-						Yogurt.Button({
+						c : [fairyOriginCountPanel = DIV({
 							style : {
-								marginTop : 20
-							},
-							c : MSG('UPDATE_DESIGNER_INFO_BUTTON'),
-							on : {
-								tap : () => {
-									EtherFairy.GO('designer/updateinfo');
-								}
+								color : '#fff4e7',
+								textShadow : EtherFairy.ThinTextBorderShadow('#775228')
 							}
 						}),
 						
-						Yogurt.Button({
+						DIV({
 							style : {
-								marginTop : 10
+								position : 'absolute',
+								bottom : 0,
+								width : 250
 							},
-							c : MSG('DESIGN_FAIRY'),
-							on : {
-								tap : () => {
-									EtherFairy.GO('designer/designfairy');
+							c : [Yogurt.Button({
+								style : {
+									marginTop : 20
+								},
+								c : MSG('UPDATE_DESIGNER_INFO_BUTTON'),
+								on : {
+									tap : () => {
+										EtherFairy.GO('designer/updateinfo');
+									}
 								}
-							}
+							}),
+							
+							Yogurt.Button({
+								style : {
+									marginTop : 10
+								},
+								c : MSG('DESIGN_FAIRY'),
+								on : {
+									tap : () => {
+										EtherFairy.GO('designer/designfairy');
+									}
+								}
+							})]
 						})]
 					}),
 					
@@ -135,7 +150,9 @@ EtherFairy('Designer').Home = CLASS({
 					H3({
 						style : {
 							marginTop : 30,
-							fontSize : 25
+							fontSize : 25,
+							color : '#fff4e7',
+							textShadow : EtherFairy.ThinTextBorderShadow('#775228')
 						},
 						c : MSG('DESIGNER_HOME_DESIGNED_FAIRY_LIST')
 					}),

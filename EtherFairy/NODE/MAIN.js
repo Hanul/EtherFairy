@@ -49,8 +49,20 @@ EtherFairy.MAIN = METHOD({
 					// 이미 있으면 업데이트를, 없으면 새로 생성
 					EtherFairy.FairyModel.get(fairyId, {
 						notExists : () => {
+							
 							EtherFairy.FairyModel.create(fairyInfo);
+							
+							EtherFairy.EtherFairyContract.ownerOf(fairyId, (masterId) => {
+								
+								EtherFairy.MasterModel.update({
+									id : masterId.toLowerCase(),
+									$inc : {
+										fairyCount : 1
+									}
+								});
+							});
 						},
+						
 						success : () => {
 							EtherFairy.FairyModel.update(fairyInfo);
 						}
