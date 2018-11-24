@@ -278,7 +278,7 @@ EtherFairy.Layout = CLASS((cls) => {
 						}), DIV({
 							style : {
 								width : '100%',
-								borderBottom : '1px solid #444',
+								borderBottom : '1px solid #222',
 								cursor : 'pointer'
 							},
 							c : [UUI.BUTTON_H({
@@ -398,29 +398,24 @@ EtherFairy.Layout = CLASS((cls) => {
 										leftMenu.append(DIV({
 											style : {
 												width : '100%',
-												borderBottom : '1px solid #444',
+												borderBottom : '1px solid #222',
 												cursor : 'pointer'
 											},
 											c : [
-											UUI.BUTTON_H({
+											DIV({
 												style : {
+													backgroundColor : '#33393e',
 													padding : 10,
-													paddingLeft : 10,
 													fontSize : 15
 												},
-												icon : IMG({
-													src : EtherFairy.R('layout/master.png')
-												}),
-												spacing : 10,
-												title : MSG('SIDEBAR_OWNER_MENU_BUTTON')
+												c : MSG('SIDEBAR_OWNER_MENU_BUTTON')
 											}),
 											
 											// 소유주 홈 버튼
 											DIV({
 												style : {
 													width : '100%',
-													cursor : 'pointer',
-													backgroundColor : '#33393e'
+													cursor : 'pointer'
 												},
 												c : UUI.BUTTON_H({
 													style : {
@@ -447,8 +442,7 @@ EtherFairy.Layout = CLASS((cls) => {
 												style : {
 													borderTop : '1px solid #222',
 													width : '100%',
-													cursor : 'pointer',
-													backgroundColor : '#33393e'
+													cursor : 'pointer'
 												},
 												c : UUI.BUTTON_H({
 													style : {
@@ -475,8 +469,7 @@ EtherFairy.Layout = CLASS((cls) => {
 												style : {
 													borderTop : '1px solid #222',
 													width : '100%',
-													cursor : 'pointer',
-													backgroundColor : '#33393e'
+													cursor : 'pointer'
 												},
 												c : UUI.BUTTON_H({
 													style : {
@@ -524,29 +517,24 @@ EtherFairy.Layout = CLASS((cls) => {
 						leftMenu.append(DIV({
 							style : {
 								width : '100%',
-								borderBottom : '1px solid #444',
+								borderBottom : '1px solid #222',
 								cursor : 'pointer'
 							},
 							c : [
-							UUI.BUTTON_H({
+							DIV({
 								style : {
+									backgroundColor : '#33393e',
 									padding : 10,
-									paddingLeft : 10,
 									fontSize : 15
 								},
-								icon : IMG({
-									src : EtherFairy.R('layout/designer.png')
-								}),
-								spacing : 10,
-								title : MSG('SIDEBAR_DESIGNER_MENU_NAMETAG')
+								c : MSG('SIDEBAR_DESIGNER_MENU_NAMETAG')
 							}),
 							
 							// 디자이너 홈 버튼
 							DIV({
 								style : {
 									width : '100%',
-									cursor : 'pointer',
-									backgroundColor : '#33393e'
+									cursor : 'pointer'
 								},
 								c : UUI.BUTTON_H({
 									style : {
@@ -573,8 +561,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								style : {
 									borderTop : '1px solid #222',
 									width : '100%',
-									cursor : 'pointer',
-									backgroundColor : '#33393e'
+									cursor : 'pointer'
 								},
 								c : UUI.BUTTON_H({
 									style : {
@@ -601,8 +588,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								style : {
 									borderTop : '1px solid #222',
 									width : '100%',
-									cursor : 'pointer',
-									backgroundColor : '#33393e'
+									cursor : 'pointer'
 								},
 								c : UUI.BUTTON_H({
 									style : {
