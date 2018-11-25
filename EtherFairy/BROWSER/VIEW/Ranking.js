@@ -12,7 +12,6 @@ EtherFairy.Ranking = CLASS({
 		EtherFairy.Layout.setContent(DIV({
 			style : {
 				margin : 'auto',
-				width : 1110,
 				padding : '30px 0 50px 10px',
 				onDisplayResize : (width, height) => {
 					if (width < 400) {

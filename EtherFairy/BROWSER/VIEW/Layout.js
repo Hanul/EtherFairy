@@ -70,7 +70,9 @@ EtherFairy.Layout = CLASS((cls) => {
 								}
 							}
 						},
-						icon : FontAwesome.GetIcon('bars'),
+						icon : IMG({
+							src : EtherFairy.R('layout/menu.png')
+						}),
 						on : {
 							tap : (e) => {
 								menuLayout.toggleLeftMenu();
@@ -96,7 +98,9 @@ EtherFairy.Layout = CLASS((cls) => {
 								}
 							}
 						},
-						icon : FontAwesome.GetIcon('clipboard-list'),
+						icon : IMG({
+							src : EtherFairy.R('layout/doing.png')
+						}),
 						on : {
 							tap : (e) => {
 								menuLayout.toggleRightMenu();
@@ -111,8 +115,19 @@ EtherFairy.Layout = CLASS((cls) => {
 						},
 						c : [IMG({
 							style : {
-								marginTop : -5,
-								width : 192
+								onDisplayResize : (width, height) => {
+									if (width < 1200) {
+										return {
+											marginTop : 2,
+											height : 45
+										};
+									} else {
+										return {
+											marginTop : -5,
+											height : 55
+										};
+									}
+								}
 							},
 							src : EtherFairy.R('logo.png')
 						}), SPAN({

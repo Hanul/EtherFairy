@@ -16,15 +16,36 @@ EtherFairy.FairyOrigin = CLASS({
 				let designedByPanel;
 				EtherFairy.Layout.setContent(DIV({
 					style : {
-						padding : '50px 0'
+						onDisplayResize : (width, height) => {
+							if (width < 886) {
+								return {
+									padding : 0
+								};
+							} else {
+								return {
+									padding : '50px 0'
+								};
+							}
+						}
 					},
 					c : DIV({
 						style : {
 							position : 'relative',
 							margin : 'auto',
-							width : 886,
 							height : 674,
-							backgroundImage : EtherFairy.R('fairyorigin/background.png')
+							backgroundImage : EtherFairy.R('fairyorigin/background.png'),
+							backgroundPosition : 'center center',
+							onDisplayResize : (width, height) => {
+								if (width < 886) {
+									return {
+										width : '100%'
+									};
+								} else {
+									return {
+										width : 886
+									};
+								}
+							}
 						},
 						c : [
 						H1({
@@ -42,12 +63,39 @@ EtherFairy.FairyOrigin = CLASS({
 						DIV({
 							style : {
 								margin : 'auto',
-								marginTop : 40,
-								width : 760
+								onDisplayResize : (width, height) => {
+									if (width < 886) {
+										return {
+											marginTop : 20
+										};
+									} else {
+										return {
+											marginTop : 40
+										};
+									}
+								}
 							},
 							c : [EtherFairy.FairyOriginCard({
 								style : {
-									flt : 'left'
+									margin : 'auto',
+									onDisplayResize : (width, height) => {
+										if (width < 886) {
+											return {
+												flt : 'none',
+												transform : 'scale(0.6)',
+												transformOrigin : 'left top',
+												width : 216,
+												height : 330
+											};
+										} else {
+											return {
+												flt : 'left',
+												transform : 'none',
+												width : 360,
+												height : 550
+											};
+										}
+									}
 								},
 								contentStyle : {
 									backgroundImage : EtherFairy.R('fairyorigin/card.png')
@@ -68,9 +116,25 @@ EtherFairy.FairyOrigin = CLASS({
 							
 							DIV({
 								style : {
-									width : 360,
-									marginLeft : 20,
-									flt : 'right'
+									onDisplayResize : (width, height) => {
+										if (width < 886) {
+											return {
+												marginTop : 20,
+												width : 'auto',
+												flt : 'none',
+												marginLeft : 0,
+												textAlign : 'center'
+											};
+										} else {
+											return {
+												marginTop : 0,
+												width : 360,
+												flt : 'right',
+												marginLeft : 20,
+												textAlign : 'left'
+											};
+										}
+									}
 								},
 								c : [H2({
 									style : {
@@ -83,17 +147,60 @@ EtherFairy.FairyOrigin = CLASS({
 								}), P({
 									style : {
 										marginTop : 10,
-										paddingBottom : 20,
 										fontSize : 16,
 										fontWeight : 'bold',
-										color : '#5c3115'
+										color : '#5c3115',
+										onDisplayResize : (width, height) => {
+											if (width < 886) {
+												return {
+													paddingBottom : 5
+												};
+											} else {
+												return {
+													paddingBottom : 20
+												};
+											}
+										}
 									},
 									c : fairyOriginData.description
-								}), menu = DIV(), designedByPanel = DIV({
+								}), menu = DIV({
 									style : {
-										position : 'absolute',
-										right : 50,
-										bottom : 20
+										onDisplayResize : (width, height) => {
+											if (width < 886) {
+												return {
+													margin : 'auto',
+													width : 216
+												};
+											} else {
+												return {
+													margin : 0,
+													width : 'auto'
+												};
+											}
+										}
+									}
+								}), designedByPanel = DIV({
+									style : {
+										width : 230,
+										onDisplayResize : (width, height) => {
+											if (width < 886) {
+												return {
+													margin : 'auto',
+													position : 'relative',
+													right : 0,
+													bottom : 0,
+													transform : 'scale(0.7)'
+												};
+											} else {
+												return {
+													margin : 0,
+													position : 'absolute',
+													right : 50,
+													bottom : 20,
+													transform : 'none'
+												};
+											}
+										}
 									}
 								})]
 							}),

@@ -20,8 +20,34 @@ EtherFairy('Designer').Home = CLASS({
 				EtherFairy.Layout.setContent(DIV({
 					style : {
 						margin : 'auto',
-						width : 1110,
-						padding : '30px 0 50px 10px'
+						padding : '30px 0 50px 10px',
+						onDisplayResize : (width, height) => {
+							if (width < 400) {
+								return {
+									width : 310
+								};
+							} else if (width < 620) {
+								return {
+									width : 380
+								};
+							} else if (width < 800) {
+								return {
+									width : 570
+								};
+							} else if (width < 1300) {
+								return {
+									width : 760
+								};
+							} else if (width < 1550) {
+								return {
+									width : 740
+								};
+							} else {
+								return {
+									width : 1110
+								};
+							}
+						}
 					},
 					c : [
 					H1({
@@ -30,14 +56,35 @@ EtherFairy('Designer').Home = CLASS({
 							fontWeight : 'bold',
 							color : '#ffd964',
 							textShadow : EtherFairy.TextBorderShadow('#382109'),
-							marginBottom : 20
+							marginBottom : 20,
+							onDisplayResize : (width, height) => {
+								if (width < 620) {
+									return {
+										textAlign : 'center'
+									};
+								} else {
+									return {
+										textAlign : 'left'
+									};
+								}
+							}
 						},
 						c : signedDesignerData.nickname
 					}), 
 					
 					DIV({
 						style : {
-							flt : 'left'
+							onDisplayResize : (width, height) => {
+								if (width < 620) {
+									return {
+										flt : 'none'
+									};
+								} else {
+									return {
+										flt : 'left'
+									};
+								}
+							}
 						},
 						c : [profileImage = DIV({
 							style : {
@@ -47,7 +94,18 @@ EtherFairy('Designer').Home = CLASS({
 								backgroundSize : 'cover',
 								backgroundPosition : 'center center',
 								backgroundRepeat : 'no-repeat',
-								borderRadius : 10
+								borderRadius : 10,
+								onDisplayResize : (width, height) => {
+									if (width < 620) {
+										return {
+											margin : 'auto'
+										};
+									} else {
+										return {
+											margin : 0
+										};
+									}
+								}
 							},
 							on : {
 								mouseover : () => {
@@ -102,9 +160,25 @@ EtherFairy('Designer').Home = CLASS({
 					DIV({
 						style : {
 							position : 'relative',
-							marginLeft : 20,
-							flt : 'left',
-							height : 200
+							onDisplayResize : (width, height) => {
+								if (width < 620) {
+									return {
+										marginTop : 20,
+										marginLeft : 0,
+										flt : 'none',
+										textAlign : 'center',
+										height : 'auto'
+									};
+								} else {
+									return {
+										marginTop : 0,
+										marginLeft : 20,
+										flt : 'left',
+										textAlign : 'left',
+										height : 200
+									};
+								}
+							}
 						},
 						c : [fairyOriginCountPanel = DIV({
 							style : {
@@ -115,9 +189,21 @@ EtherFairy('Designer').Home = CLASS({
 						
 						DIV({
 							style : {
-								position : 'absolute',
+								width : 250,
 								bottom : 0,
-								width : 250
+								onDisplayResize : (width, height) => {
+									if (width < 620) {
+										return {
+											margin : 'auto',
+											position : 'relative'
+										};
+									} else {
+										return {
+											margin : 0,
+											position : 'absolute'
+										};
+									}
+								}
 							},
 							c : [Yogurt.Button({
 								style : {
@@ -152,7 +238,18 @@ EtherFairy('Designer').Home = CLASS({
 							marginTop : 30,
 							fontSize : 25,
 							color : '#fff4e7',
-							textShadow : EtherFairy.ThinTextBorderShadow('#775228')
+							textShadow : EtherFairy.ThinTextBorderShadow('#775228'),
+							onDisplayResize : (width, height) => {
+								if (width < 620) {
+									return {
+										textAlign : 'center'
+									};
+								} else {
+									return {
+										textAlign : 'left'
+									};
+								}
+							}
 						},
 						c : MSG('DESIGNER_HOME_DESIGNED_FAIRY_LIST')
 					}),
