@@ -208,7 +208,7 @@ EtherFairy.Layout = CLASS((cls) => {
 								fontSize : 15
 							},
 							icon : IMG({
-								src : EtherFairy.R('layout/trade.png')
+								src : EtherFairy.R('layout/rank.png')
 							}),
 							spacing : 10,
 							title : MSG('SIDEBAR_LEADERBOARD_BUTTON')
@@ -420,7 +420,7 @@ EtherFairy.Layout = CLASS((cls) => {
 											DIV({
 												style : {
 													backgroundColor : '#33393e',
-													padding : 10,
+													padding : '8px 10px',
 													fontSize : 15
 												},
 												c : MSG('SIDEBAR_OWNER_MENU_BUTTON')
@@ -539,7 +539,7 @@ EtherFairy.Layout = CLASS((cls) => {
 							DIV({
 								style : {
 									backgroundColor : '#33393e',
-									padding : 10,
+									padding : '8px 10px',
 									fontSize : 15
 								},
 								c : MSG('SIDEBAR_DESIGNER_MENU_NAMETAG')

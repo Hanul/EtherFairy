@@ -173,6 +173,12 @@ EtherFairy.MAIN = METHOD({
 				target : EtherFairy.Designer.ManageFairyOrigin
 			});
 			
+			// 매출 관리
+			EtherFairy.MATCH_VIEW({
+				uri : 'designer/managesales',
+				target : EtherFairy.Designer.ManageSales
+			});
+			
 			// 페어리 원형 정보 보기
 			EtherFairy.MATCH_VIEW({
 				uri : 'fairyorigin/{fairyOriginId}',

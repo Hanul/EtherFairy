@@ -72,7 +72,7 @@ EtherFairy.Home = CLASS({
 						style : {
 							color : '#fff',
 							fontWeight : 'bold',
-							textShadow : INFO.getOSName() === 'Android' || INFO.getOSName() === 'iOS' ? undefined : '0 0 40px #000000, 0 0 40px #000000, 0 0 40px #000000',
+							textShadow : INFO.getOSName() === 'Android' || INFO.getOSName() === 'iOS' ? EtherFairy.ThinTextBorderShadow('#000000') : '0 0 40px #000000, 0 0 40px #000000, 0 0 40px #000000',
 							onDisplayResize : (width, height) => {
 								if (width < 620) {
 									return {
