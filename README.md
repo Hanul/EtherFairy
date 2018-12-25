@@ -22,7 +22,5 @@ Ether Fairy 세계관을 관장하는 관리자이자 요정들이 탄생하는 
 https://docs.google.com/document/d/1pXGQkmM0_iG0Efh147Z-0LktO1U7I23pMdpzrc3vYdA/edit
 
 ## TODO
-- 메타 마스크 연동
-- 계정 생성
-- 페어리 구매하기
-- 이더리움 네트워크에 페어리 정보 등록
+- 나누기 기능 개선 (나누고 난 값을 빼서 나머지 계산)
+- 수수료 줄이기
